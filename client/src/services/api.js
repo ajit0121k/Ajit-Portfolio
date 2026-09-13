@@ -6,11 +6,11 @@ const isStaticHosted =
   typeof window !== 'undefined' && 
   (window.location.hostname.includes('github.io') || window.location.protocol === 'file:');
 
-const API_BASE_URL = isStaticHosted ? '/api' : (import.meta.env.VITE_API_URL || '/api');
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: isStaticHosted ? 1000 : 8000,
+  timeout: isStaticHosted && !import.meta.env.VITE_API_URL ? 1500 : 10000,
   withCredentials: true,
 });
 
@@ -21,18 +21,24 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // On GitHub Pages, fulfill directly without network errors
-    if (isStaticHosted) {
-      const localRes = handleLocalRequest(config.method, config.url, config.data);
-      if (localRes) {
-        config.adapter = () =>
-          Promise.resolve({
-            data: localRes,
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config,
-          });
+    // On GitHub Pages without a configured external backend, fulfill mock routes directly
+    // but NEVER intercept POST /messages so message submissions can transmit to live backend!
+    if (isStaticHosted && !import.meta.env.VITE_API_URL) {
+      const isMessagePost = (config.method || '').toLowerCase() === 'post' && 
+        (config.url === '/messages' || config.url === 'messages' || config.url?.endsWith('/messages'));
+      
+      if (!isMessagePost) {
+        const localRes = handleLocalRequest(config.method, config.url, config.data);
+        if (localRes) {
+          config.adapter = () =>
+            Promise.resolve({
+              data: localRes,
+              status: 200,
+              statusText: 'OK',
+              headers: {},
+              config,
+            });
+        }
       }
     }
 
@@ -46,8 +52,8 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Fallback if network call failed or backend is offline
-    if (originalRequest) {
+    // Fallback ONLY when network call completely failed (e.g. offline / no response), NOT for actual server errors
+    if (originalRequest && !error.response) {
       try {
         const localRes = handleLocalRequest(originalRequest.method, originalRequest.url, originalRequest.data);
         if (localRes) {

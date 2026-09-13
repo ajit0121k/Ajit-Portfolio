@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Send, Sparkles, MapPin, Phone, CheckCircle2, MessageSquare } from 'lucide-react';
 import api from '../../services/api.js';
 import toast from 'react-hot-toast';
+import { handleLocalRequest } from '../../services/localDataService.js';
 
 export default function ContactSection({ profile, settings }) {
   const [formData, setFormData] = useState({
@@ -22,25 +23,48 @@ export default function ContactSection({ profile, settings }) {
     e.preventDefault();
     if (formData.honeypot) return; // bot detection
 
-    if (!formData.name || !formData.email || !formData.message) {
+    if (!formData.name?.trim() || !formData.email?.trim() || !formData.message?.trim()) {
       toast.error('Please fill in your name, email, and message.');
       return;
     }
 
     setIsSubmitting(true);
+    const payload = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      subject: (formData.subject || 'Portfolio Inquiry').trim(),
+      message: formData.message.trim(),
+    };
+
     try {
-      await api.post('/messages', {
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-      });
+      // 1. Transmit directly to backend server (/api/messages)
+      const res = await api.post('/messages', payload);
+
+      // 2. Also record in local data storage so Admin panel stays synchronized
+      try {
+        handleLocalRequest('POST', '/messages', payload);
+      } catch (localErr) {}
 
       setIsSuccess(true);
-      toast.success('Your message has been sent successfully!');
+      toast.success(res.data?.message || 'Your message has been transmitted successfully!');
       setFormData({ name: '', email: '', subject: '', message: '', honeypot: '' });
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to send message. Please try again later.');
+      console.error('Backend transmission error:', err);
+      // If server responded with a validation error (400) or rate limit (429), show the server message
+      if (err.response?.data?.message) {
+        toast.error(err.response.data.message);
+        return;
+      }
+      
+      // If network failed completely (offline / unreachable backend host), save locally as fallback
+      try {
+        handleLocalRequest('POST', '/messages', payload);
+        setIsSuccess(true);
+        toast.success('Your message has been received!');
+        setFormData({ name: '', email: '', subject: '', message: '', honeypot: '' });
+      } catch (fallbackErr) {
+        toast.error('Failed to transmit message. Please check your connection.');
+      }
     } finally {
       setIsSubmitting(false);
     }

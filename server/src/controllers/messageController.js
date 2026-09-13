@@ -4,8 +4,9 @@ import ApiResponse from '../utils/ApiResponse.js';
 import * as messageService from '../services/messageService.js';
 
 export const createMessage = asyncHandler(async (req, res) => {
-  const ipHash = crypto.createHash('sha256').update(req.ip).digest('hex');
-  const userAgent = req.headers['user-agent'];
+  const clientIp = req.ip || req.connection?.remoteAddress || req.headers['x-forwarded-for'] || '127.0.0.1';
+  const ipHash = crypto.createHash('sha256').update(String(clientIp)).digest('hex');
+  const userAgent = req.headers['user-agent'] || 'Browser';
   const messageData = { ...req.body, ipHash, userAgent };
   const message = await messageService.createMessage(messageData);
   return ApiResponse.created(res, 'Message created successfully', message);

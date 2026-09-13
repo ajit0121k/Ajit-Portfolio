@@ -20,6 +20,9 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
+// Trust reverse proxies (Vite, Nginx, Render)
+app.set('trust proxy', 1);
+
 // Security HTTP headers
 app.use(helmet());
 
