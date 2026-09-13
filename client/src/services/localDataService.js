@@ -601,20 +601,51 @@ export function handleLocalRequest(method, url, data) {
     }
 
     if (upperMethod === "POST") {
+      let fileName = "Ajit_Kumar_Resume.pdf";
+      let fileSize = 7737;
+      let fileUrl = "/resume.pdf";
+
+      if (typeof FormData !== "undefined" && body instanceof FormData) {
+        const fileObj = body.get("file");
+        if (fileObj) {
+          fileName = fileObj.name || fileName;
+          fileSize = fileObj.size || fileSize;
+          try {
+            fileUrl = URL.createObjectURL(fileObj);
+          } catch (e) {}
+        }
+      } else if (body && typeof body === "object") {
+        fileName = body.filename || body.originalName || fileName;
+        fileSize = body.size || fileSize;
+        fileUrl = body.url || fileUrl;
+      }
+
       const newResume = {
         _id: "res_" + Date.now(),
         id: "res_" + Date.now(),
-        filename: body?.filename || "Ajit_Kumar_Resume.pdf",
-        originalName: body?.originalName || "Ajit_Kumar_Resume.pdf",
-        url: body?.url || "/resume.pdf",
-        size: body?.size || 10240,
+        filename: fileName,
+        originalName: fileName,
+        url: fileUrl,
+        size: fileSize,
         isActive: true,
+        version: (resumes.length || 0) + 1,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
       resumes = resumes.map(r => ({ ...r, isActive: false }));
       resumes.unshift(newResume);
       setStorage(STORAGE_KEYS.RESUME, resumes);
+
+      // Sync active resume to profile
+      const prof = getStorage(STORAGE_KEYS.PROFILE, {});
+      prof.resume = {
+        url: fileUrl,
+        originalName: fileName,
+        size: fileSize,
+        uploadedAt: new Date().toISOString()
+      };
+      setStorage(STORAGE_KEYS.PROFILE, prof);
+
       return { success: true, message: "Resume uploaded and activated successfully", data: newResume };
     }
 
@@ -624,8 +655,19 @@ export function handleLocalRequest(method, url, data) {
         ...r,
         isActive: r._id === targetId || r.id === targetId
       }));
+      const activeOne = resumes.find(r => r.isActive);
+      if (activeOne) {
+        const prof = getStorage(STORAGE_KEYS.PROFILE, {});
+        prof.resume = {
+          url: activeOne.url,
+          originalName: activeOne.originalName || activeOne.filename,
+          size: activeOne.size,
+          uploadedAt: new Date().toISOString()
+        };
+        setStorage(STORAGE_KEYS.PROFILE, prof);
+      }
       setStorage(STORAGE_KEYS.RESUME, resumes);
-      return { success: true, message: "Resume activated", data: resumes.find(r => r.isActive) };
+      return { success: true, message: "Resume activated", data: activeOne };
     }
 
     if (upperMethod === "DELETE") {
