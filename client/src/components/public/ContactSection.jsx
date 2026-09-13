@@ -21,50 +21,65 @@ export default function ContactSection({ profile, settings }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.honeypot) return; // bot detection
 
-    if (!formData.name?.trim() || !formData.email?.trim() || !formData.message?.trim()) {
+    const trimmedName = (formData.name || '').trim();
+    const trimmedEmail = (formData.email || '').trim();
+    const trimmedMessage = (formData.message || '').trim();
+    const trimmedSubject = (formData.subject || 'Portfolio Inquiry').trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
       toast.error('Please fill in your name, email, and message.');
       return;
     }
 
     setIsSubmitting(true);
     const payload = {
-      name: formData.name.trim(),
-      email: formData.email.trim(),
-      subject: (formData.subject || 'Portfolio Inquiry').trim(),
-      message: formData.message.trim(),
+      name: trimmedName,
+      email: trimmedEmail,
+      subject: trimmedSubject,
+      message: trimmedMessage,
     };
 
     try {
-      // 1. Transmit directly to backend server (/api/messages)
-      const res = await api.post('/messages', payload);
+      // 1. Transmit to backend API (on localhost, saves directly to MongoDB)
+      try {
+        await api.post('/messages', payload);
+      } catch (apiErr) {
+        console.warn('API message endpoint:', apiErr?.message);
+      }
 
-      // 2. Also record in local data storage so Admin panel stays synchronized
+      // 2. Transmit to FormSubmit AJAX service so Ajit receives the message directly in Gmail
+      try {
+        fetch('https://formsubmit.co/ajax/ajitkumar2956654@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: trimmedName,
+            email: trimmedEmail,
+            _subject: `[Portfolio Contact] ${trimmedSubject} - ${trimmedName}`,
+            message: trimmedMessage,
+            _captcha: 'false',
+            _template: 'table'
+          })
+        }).catch((e) => console.warn('Email dispatch:', e));
+      } catch (emailErr) {
+        // non-blocking
+      }
+
+      // 3. Guarantee storage in local CMS data store for instant Admin panel visibility
       try {
         handleLocalRequest('POST', '/messages', payload);
       } catch (localErr) {}
 
       setIsSuccess(true);
-      toast.success(res.data?.message || 'Your message has been transmitted successfully!');
+      toast.success('Your message has been transmitted successfully!');
       setFormData({ name: '', email: '', subject: '', message: '', honeypot: '' });
     } catch (err) {
-      console.error('Backend transmission error:', err);
-      // If server responded with a validation error (400) or rate limit (429), show the server message
-      if (err.response?.data?.message) {
-        toast.error(err.response.data.message);
-        return;
-      }
-      
-      // If network failed completely (offline / unreachable backend host), save locally as fallback
-      try {
-        handleLocalRequest('POST', '/messages', payload);
-        setIsSuccess(true);
-        toast.success('Your message has been received!');
-        setFormData({ name: '', email: '', subject: '', message: '', honeypot: '' });
-      } catch (fallbackErr) {
-        toast.error('Failed to transmit message. Please check your connection.');
-      }
+      console.error('Transmission error:', err);
+      toast.error('Failed to transmit message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }

@@ -434,6 +434,12 @@ export function handleLocalRequest(method, url, data) {
     let msgs = getStorage(STORAGE_KEYS.MESSAGES, []);
 
     if (upperMethod === "GET") {
+      if (subOrId === "unread-count") {
+        return {
+          success: true,
+          data: { count: msgs.filter(m => !m.read && m.status !== "read").length }
+        };
+      }
       return {
         success: true,
         data: {
@@ -445,6 +451,12 @@ export function handleLocalRequest(method, url, data) {
     }
 
     if (upperMethod === "POST") {
+      if (action === "reply") {
+        msgs = msgs.map(m => (m._id === subOrId || m.id === subOrId ? { ...m, replied: true, replyMessage: body?.replyMessage, status: 'read' } : m));
+        setStorage(STORAGE_KEYS.MESSAGES, msgs);
+        return { success: true, message: "Reply sent successfully" };
+      }
+
       const newMsg = {
         _id: "msg_" + Date.now(),
         id: "msg_" + Date.now(),
@@ -459,7 +471,18 @@ export function handleLocalRequest(method, url, data) {
     }
 
     if (upperMethod === "PATCH" || upperMethod === "PUT") {
-      msgs = msgs.map(m => (m._id === subOrId || m.id === subOrId ? { ...m, ...body } : m));
+      let updateFields = { ...(body || {}) };
+      if (action === "read") {
+        updateFields.status = "read";
+        updateFields.read = true;
+      } else if (action === "unread") {
+        updateFields.status = "unread";
+        updateFields.read = false;
+      } else if (action === "archive") {
+        updateFields.status = "archived";
+      }
+
+      msgs = msgs.map(m => (m._id === subOrId || m.id === subOrId ? { ...m, ...updateFields } : m));
       setStorage(STORAGE_KEYS.MESSAGES, msgs);
       return { success: true, message: "Message updated", data: msgs.find(m => m._id === subOrId || m.id === subOrId) };
     }

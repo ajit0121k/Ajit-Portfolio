@@ -22,23 +22,17 @@ api.interceptors.request.use(
     }
 
     // On GitHub Pages without a configured external backend, fulfill mock routes directly
-    // but NEVER intercept POST /messages so message submissions can transmit to live backend!
     if (isStaticHosted && !import.meta.env.VITE_API_URL) {
-      const isMessagePost = (config.method || '').toLowerCase() === 'post' && 
-        (config.url === '/messages' || config.url === 'messages' || config.url?.endsWith('/messages'));
-      
-      if (!isMessagePost) {
-        const localRes = handleLocalRequest(config.method, config.url, config.data);
-        if (localRes) {
-          config.adapter = () =>
-            Promise.resolve({
-              data: localRes,
-              status: 200,
-              statusText: 'OK',
-              headers: {},
-              config,
-            });
-        }
+      const localRes = handleLocalRequest(config.method, config.url, config.data);
+      if (localRes) {
+        config.adapter = () =>
+          Promise.resolve({
+            data: localRes,
+            status: 200,
+            statusText: 'OK',
+            headers: {},
+            config,
+          });
       }
     }
 
