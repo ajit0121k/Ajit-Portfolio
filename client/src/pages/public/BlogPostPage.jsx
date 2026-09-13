@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Tag, Share2, Sparkles, User } from 'lucide-react';
 import api from '../../services/api.js';
@@ -121,7 +122,7 @@ export default function BlogPostPage() {
       {post.coverImage?.url && (
         <div className="rounded-3xl overflow-hidden border border-white/60 dark:border-white/10 shadow-2xl mb-10 bg-slate-900/10">
           <img
-            src={post.coverImage.url}
+            src={resolveAssetUrl(post.coverImage.url)}
             alt={post.title}
             className="w-full max-h-[400px] object-cover"
           />

@@ -151,7 +151,11 @@ export default function LoginPage() {
           {/* Go to Portfolio Website Option */}
           <div className="mt-5 pt-3 border-t border-white/15 text-center">
             <a
-              href="/"
+              href={
+                typeof window !== 'undefined' && window.location.hostname.includes('github.io')
+                  ? 'https://ajit0121k.github.io/Ajit-Portfolio/'
+                  : '/'
+              }
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/75 hover:text-white transition-colors group cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" />

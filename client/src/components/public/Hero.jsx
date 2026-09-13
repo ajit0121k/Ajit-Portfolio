@@ -1,4 +1,5 @@
 import React from 'react';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 import {
   ArrowRight,
   Github,
@@ -13,7 +14,7 @@ export default function Hero({ profile, settings }) {
   const title = profile?.title || 'Full Stack Developer & AI Engineer';
   const tagline = profile?.tagline || 'Skilled in MERN Stack, Generative AI, JWT authentication, and Scalable Cloud Systems.';
   const years = profile?.yearsOfExperience || 2;
-  const photoUrl = profile?.profileImage?.url || '/profile.jpg';
+  const photoUrl = resolveAssetUrl(profile?.profileImage?.url || '/profile.jpg');
 
   // Typewriter effect phrases
   const phrases = [

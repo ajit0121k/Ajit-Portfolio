@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 import { MessageSquareQuote, Quote, Star } from 'lucide-react';
 import api from '../../services/api.js';
 
@@ -50,7 +51,7 @@ export default function TestimonialsSection() {
               <div className="flex items-center gap-3 pt-4 border-t border-[#dfd6c7]/60 dark:border-white/10">
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-[#3d4b3e]/15 text-[#3d4b3e] dark:text-[#a8bba9] font-bold text-xs flex items-center justify-center border border-[#3d4b3e]/20 flex-shrink-0">
                   {t.avatar?.url ? (
-                    <img src={t.avatar.url} alt={t.name} className="w-full h-full object-cover" />
+                    <img src={resolveAssetUrl(t.avatar.url)} alt={t.name} className="w-full h-full object-cover" />
                   ) : (
                     <span>{t.name ? t.name[0] : 'U'}</span>
                   )}

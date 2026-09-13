@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 import { 
   Wrench, 
   Sparkles, 
@@ -84,7 +85,7 @@ export default function MaintenanceScreen({ settings, profile, onCheckStatus }) 
           <div className="flex items-center gap-3">
             {profile?.profileImage?.url ? (
               <img
-                src={profile.profileImage.url}
+                src={resolveAssetUrl(profile.profileImage.url)}
                 alt={authorName}
                 className="w-12 h-12 rounded-2xl object-cover border border-white/10"
               />

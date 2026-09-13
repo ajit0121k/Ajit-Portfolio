@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 import { Link } from 'react-router-dom';
 import {
   FolderGit2,
@@ -113,7 +114,7 @@ export default function ProjectsPage() {
                 <div className="relative h-48 w-full overflow-hidden bg-slate-900/10 dark:bg-black/30">
                   {project.coverImage?.url ? (
                     <img
-                      src={project.coverImage.url}
+                      src={resolveAssetUrl(project.coverImage.url)}
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

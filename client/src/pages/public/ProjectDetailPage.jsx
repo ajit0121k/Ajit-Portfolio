@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -128,7 +129,7 @@ export default function ProjectDetailPage() {
       {project.coverImage?.url && (
         <div className="rounded-3xl overflow-hidden border border-white/60 dark:border-white/10 shadow-2xl mb-12 bg-slate-900/10 dark:bg-black/30">
           <img
-            src={project.coverImage.url}
+            src={resolveAssetUrl(project.coverImage.url)}
             alt={project.title}
             className="w-full max-h-[480px] object-cover"
           />
@@ -258,11 +259,11 @@ export default function ProjectDetailPage() {
               {project.gallery.map((img, idx) => (
                 <div
                   key={idx}
-                  onClick={() => setActiveImage(img.url)}
+                  onClick={() => setActiveImage(resolveAssetUrl(img.url))}
                   className="rounded-2xl overflow-hidden border border-slate-200/80 dark:border-white/10 cursor-pointer group relative bg-slate-900/20"
                 >
                   <img
-                    src={img.url}
+                    src={resolveAssetUrl(img.url)}
                     alt={img.caption || `Screenshot ${idx + 1}`}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />

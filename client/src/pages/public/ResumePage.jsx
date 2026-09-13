@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 import { FileDown, Sparkles, ExternalLink, ArrowLeft, CheckCircle2, ShieldCheck } from 'lucide-react';
 import api from '../../services/api.js';
 import { Link } from 'react-router-dom';
@@ -53,7 +54,7 @@ export default function ResumePage() {
         {profile?.resume?.url ? (
           <div className="space-y-4 max-w-sm mx-auto">
             <a
-              href={profile.resume.url}
+              href={resolveAssetUrl(profile.resume.url)}
               target="_blank"
               rel="noreferrer"
               className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-primary-600 via-indigo-600 to-primary-600 hover:bg-pos-100 text-white font-bold text-xs shadow-xl shadow-primary-600/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
@@ -63,7 +64,7 @@ export default function ResumePage() {
             </a>
 
             <a
-              href={profile.resume.url}
+              href={resolveAssetUrl(profile.resume.url)}
               target="_blank"
               rel="noreferrer"
               className="w-full py-3 rounded-2xl liquid-glass-pill text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center justify-center gap-2 hover:scale-[1.02] transition-all"

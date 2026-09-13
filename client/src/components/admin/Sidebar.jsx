@@ -18,6 +18,10 @@ import {
   ExternalLink,
   Sparkles,
   FileText,
+  BookOpen,
+  BarChart3,
+  Activity,
+  Globe,
 } from 'lucide-react';
 import useAuthStore from '../../store/authStore.js';
 import { ADMIN_ROUTES } from '../../constants/routes.js';
@@ -45,7 +49,7 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
     { label: 'Experience', path: '/admin/experience', icon: Briefcase },
     { label: 'Education', path: '/admin/education', icon: GraduationCap },
     { label: 'Certifications', path: '/admin/certifications', icon: Award },
-    { label: 'Testimonials', path: '/admin/testimonials', icon: MessageSquareQuote },
+    { label: 'Articles & Blog', path: '/admin/blog', icon: BookOpen },
     {
       label: 'Messages',
       path: '/admin/messages',
@@ -53,6 +57,9 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
       badge: unreadCount > 0 ? unreadCount : null,
     },
     { label: 'Media Library', path: '/admin/media', icon: Image },
+    { label: 'Analytics', path: '/admin/analytics', icon: BarChart3 },
+    { label: 'Activity Logs', path: '/admin/activity', icon: Activity },
+    { label: 'SEO Settings', path: '/admin/seo', icon: Globe },
     { label: 'Site Settings', path: '/admin/settings', icon: Settings },
   ];
 
@@ -92,7 +99,11 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
         {/* Quick Link to Public Site */}
         <div className="px-3 py-2">
           <a
-            href="/"
+            href={
+              typeof window !== 'undefined' && window.location.hostname.includes('github.io')
+                ? 'https://ajit0121k.github.io/Ajit-Portfolio/'
+                : '/'
+            }
             target="_blank"
             rel="noreferrer"
             className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#153f31] dark:text-emerald-300 bg-[#e7efe8] dark:bg-emerald-950/40 hover:bg-[#dce8dd] dark:hover:bg-emerald-900/40 shadow-xs transition-all ${

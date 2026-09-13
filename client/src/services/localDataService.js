@@ -12,12 +12,13 @@ const STORAGE_KEYS = {
   MEDIA: "portfolio_cms_media",
   SETTINGS: "portfolio_cms_settings",
   SEO: "portfolio_cms_seo",
+  BLOG: "portfolio_cms_blog",
   RESUME: "portfolio_cms_resume",
   ACTIVITY: "portfolio_cms_activity",
   VERSION: "portfolio_cms_dump_version",
 };
 
-const CURRENT_VERSION = "2026_09_13_v3";
+const CURRENT_VERSION = "2026_09_13_v5";
 
 function getStorage(key, defaultVal) {
   try {
@@ -40,18 +41,29 @@ export function initLocalData() {
   const shouldReset = storedVersion !== CURRENT_VERSION;
 
   if (shouldReset || !localStorage.getItem(STORAGE_KEYS.PROFILE)) {
-    setStorage(STORAGE_KEYS.PROFILE, initialDump.profiles[0] || {});
+    const prof = initialDump.profiles?.[0] || {};
+    setStorage(STORAGE_KEYS.PROFILE, prof);
     setStorage(STORAGE_KEYS.PROJECTS, initialDump.projects || []);
     setStorage(STORAGE_KEYS.SKILLS, initialDump.skills || []);
     setStorage(STORAGE_KEYS.EXPERIENCE, initialDump.experiences || []);
     setStorage(STORAGE_KEYS.EDUCATION, initialDump.educations || []);
     setStorage(STORAGE_KEYS.CERTIFICATIONS, initialDump.certifications || []);
-    setStorage(STORAGE_KEYS.SETTINGS, initialDump.sitesettings[0] || {});
-    setStorage(STORAGE_KEYS.RESUME, initialDump.resumes[0] || {});
+    setStorage(STORAGE_KEYS.SETTINGS, initialDump.sitesettings?.[0] || {});
+    setStorage(STORAGE_KEYS.RESUME, initialDump.resumes?.[0] || {});
     setStorage(STORAGE_KEYS.MEDIA, initialDump.media || []);
     setStorage(STORAGE_KEYS.ACTIVITY, initialDump.activitylogs || []);
     setStorage(STORAGE_KEYS.TESTIMONIALS, initialDump.testimonials || []);
     setStorage(STORAGE_KEYS.MESSAGES, initialDump.messages || []);
+    setStorage(STORAGE_KEYS.BLOG, initialDump.blogposts || []);
+    setStorage(STORAGE_KEYS.SEO, prof.seo || {
+      title: "Ajit Kumar | Full Stack MERN Developer & AI Engineer",
+      description: "Portfolio of Ajit Kumar - Full Stack MERN Developer skilled in React, Node.js, Express, MongoDB, and Generative AI.",
+      keywords: ["Ajit Kumar", "MERN Stack Developer", "React.js", "Node.js", "Generative AI"],
+      ogImage: "/profile.jpg",
+      twitterHandle: "@ajit0121k",
+      canonicalUrl: "https://ajit0121k.github.io/Ajit-Portfolio/",
+      robots: "index, follow"
+    });
     setStorage(STORAGE_KEYS.VERSION, CURRENT_VERSION);
   }
 }
@@ -134,6 +146,19 @@ export function handleLocalRequest(method, url, data) {
   if (resource === "profile") {
     let profile = getStorage(STORAGE_KEYS.PROFILE, initialDump.profiles[0] || {});
     if (upperMethod === "GET") {
+      if (subOrId === "completeness") {
+        let score = 0;
+        if (profile.name) score += 10;
+        if (profile.title) score += 10;
+        if (profile.bio) score += 15;
+        if (profile.profileImage?.url || profile.avatar) score += 15;
+        if (profile.location) score += 10;
+        if (profile.email) score += 10;
+        if (profile.phone) score += 5;
+        if (profile.resume?.url || profile.resumeUrl) score += 15;
+        if (profile.socialLinks?.github || profile.socialLinks?.linkedin) score += 10;
+        return { success: true, data: { completeness: Math.min(score, 100) } };
+      }
       return { success: true, data: profile };
     }
     if (upperMethod === "PUT" || upperMethod === "PATCH") {
@@ -592,6 +617,18 @@ export function handleLocalRequest(method, url, data) {
 
     const sortedActivity = [...allActivity].sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
 
+    if (subOrId === "projects") {
+      const projects = getStorage(STORAGE_KEYS.PROJECTS, initialDump.projects || []);
+      return {
+        success: true,
+        data: projects.map((p, idx) => ({
+          title: p.title,
+          slug: p.slug,
+          views: Math.max(25 - idx * 5, 5),
+        }))
+      };
+    }
+
     return {
       success: true,
       data: {
@@ -615,9 +652,11 @@ export function handleLocalRequest(method, url, data) {
         recentActivity: sortedActivity.slice(0, 8),
         profileCompleteness: Math.min(score, 100),
         settings: settings,
-        viewsToday: 1,
-        viewsWeek: 7,
-        viewsMonth: allActivity.length
+        viewsToday: 4,
+        viewsThisWeek: 28,
+        viewsWeek: 28,
+        viewsThisMonth: Math.max(allActivity.length * 3, 64),
+        viewsMonth: Math.max(allActivity.length * 3, 64)
       }
     };
   }
@@ -626,6 +665,135 @@ export function handleLocalRequest(method, url, data) {
   if (resource === "activity") {
     const logs = getStorage(STORAGE_KEYS.ACTIVITY, initialDump.activitylogs || []);
     return { success: true, data: logs };
+  }
+
+  // 15. SEO
+  if (resource === "seo") {
+    let seo = getStorage(STORAGE_KEYS.SEO, {
+      title: "Ajit Kumar | Full Stack MERN Developer & AI Engineer",
+      description: "Portfolio of Ajit Kumar - Full Stack MERN Developer skilled in React, Node.js, Express, MongoDB, and Generative AI.",
+      keywords: ["Ajit Kumar", "MERN Stack Developer", "React.js", "Node.js", "Generative AI"],
+      ogImage: "/profile.jpg",
+      twitterHandle: "@ajit0121k",
+      canonicalUrl: "https://ajit0121k.github.io/Ajit-Portfolio/",
+      robots: "index, follow"
+    });
+
+    if (upperMethod === "GET") {
+      return { success: true, data: seo };
+    }
+
+    if (upperMethod === "PUT" || upperMethod === "PATCH") {
+      seo = { ...seo, ...body };
+      setStorage(STORAGE_KEYS.SEO, seo);
+      return { success: true, message: "SEO settings updated successfully", data: seo };
+    }
+  }
+
+  // 16. BLOG
+  if (resource === "blog") {
+    let posts = getStorage(STORAGE_KEYS.BLOG, initialDump.blogposts || []);
+
+    if (upperMethod === "GET") {
+      if (subOrId) {
+        const found = posts.find(p => p._id === subOrId || p.id === subOrId || p.slug === subOrId);
+        return { success: true, data: found || posts[0] || null };
+      }
+      return {
+        success: true,
+        data: {
+          posts: posts,
+          total: posts.length,
+          page: 1,
+          totalPages: 1
+        }
+      };
+    }
+
+    if (upperMethod === "POST") {
+      const newPost = {
+        _id: "blog_" + Date.now(),
+        id: "blog_" + Date.now(),
+        title: body.title || "Untitled Post",
+        slug: body.slug || (body.title ? body.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") : "post-" + Date.now()),
+        excerpt: body.excerpt || "",
+        content: body.content || "",
+        coverImage: body.coverImage || { url: "/profile.jpg" },
+        category: body.category || "Engineering",
+        tags: Array.isArray(body.tags) ? body.tags : (body.tags ? body.tags.split(",").map(t => t.trim()) : []),
+        status: body.status || "published",
+        createdAt: new Date().toISOString(),
+        publishedAt: new Date().toISOString(),
+        author: { name: "Ajit Kumar" },
+        readingTime: "5 min read"
+      };
+      posts.unshift(newPost);
+      setStorage(STORAGE_KEYS.BLOG, posts);
+      return { success: true, message: "Blog post created successfully", data: newPost };
+    }
+
+    if (upperMethod === "PUT" || upperMethod === "PATCH") {
+      posts = posts.map(p => (p._id === subOrId || p.id === subOrId ? { ...p, ...body, updatedAt: new Date().toISOString() } : p));
+      setStorage(STORAGE_KEYS.BLOG, posts);
+      const updated = posts.find(p => p._id === subOrId || p.id === subOrId) || posts[0];
+      return { success: true, message: "Blog post updated successfully", data: updated };
+    }
+
+    if (upperMethod === "DELETE") {
+      posts = posts.filter(p => p._id !== subOrId && p.id !== subOrId);
+      setStorage(STORAGE_KEYS.BLOG, posts);
+      return { success: true, message: "Blog post deleted successfully" };
+    }
+  }
+
+  // 17. GITHUB
+  if (resource === "github") {
+    if (subOrId === "profile") {
+      return {
+        success: true,
+        data: {
+          login: "ajit0121k",
+          name: "Ajit Kumar",
+          avatar_url: "https://github.com/ajit0121k.png",
+          html_url: "https://github.com/ajit0121k",
+          public_repos: 12,
+          followers: 18,
+          following: 15
+        }
+      };
+    }
+    if (subOrId === "stats") {
+      return {
+        success: true,
+        data: {
+          totalRepos: 12,
+          totalStars: 24,
+          totalForks: 8,
+          followers: 18
+        }
+      };
+    }
+    if (subOrId === "repos") {
+      return {
+        success: true,
+        data: [
+          { id: 1, name: "smart-resume-screener", html_url: "https://github.com/ajit0121k/smart-resume-screener", description: "AI-Powered Resume Screener & Candidate Ranking Tool" },
+          { id: 2, name: "startup-trend-analyzer", html_url: "https://github.com/ajit0121k/startup-trend-analyzer", description: "Full-stack AI web application analyzing tech trends" },
+          { id: 3, name: "Ajit-Portfolio", html_url: "https://github.com/ajit0121k/Ajit-Portfolio", description: "Production MERN Full Stack Developer Portfolio & CMS" }
+        ]
+      };
+    }
+    if (subOrId === "import") {
+      return {
+        success: true,
+        message: "Repository imported successfully",
+        data: {
+          title: body.repoName || "Imported Project",
+          slug: (body.repoName || "imported-project").toLowerCase(),
+          description: "Imported from GitHub repository"
+        }
+      };
+    }
   }
 
   return { success: true, data: {} };
