@@ -1,0 +1,88 @@
+import Profile from '../models/Profile.js';
+import * as mediaService from './mediaService.js';
+import ApiError from '../utils/ApiError.js';
+
+export const getProfile = async () => {
+  let profile = await Profile.findOne();
+  if (!profile) {
+    profile = await Profile.create({
+      name: 'Developer',
+      title: 'Full Stack Engineer',
+      tagline: 'Crafting high performance applications',
+      availability: 'available',
+      socialLinks: {},
+      seo: {},
+    });
+  }
+  return profile;
+};
+
+export const updateProfile = async (data) => {
+  let profile = await Profile.findOne();
+  if (!profile) {
+    profile = new Profile(data);
+  } else {
+    Object.assign(profile, data);
+  }
+  await profile.save();
+  return profile;
+};
+
+export const updateProfilePhoto = async (fileData, adminId) => {
+  if (!fileData) throw ApiError.badRequest('No file provided');
+
+  const media = await mediaService.upload(fileData, adminId, 'Profile Photo');
+  const profile = await getProfile();
+
+  profile.profileImage = {
+    url: media.url,
+    publicId: media.publicId,
+  };
+  await profile.save();
+
+  return profile;
+};
+
+export const updateResume = async (fileData, adminId) => {
+  if (!fileData) throw ApiError.badRequest('No file provided');
+
+  const media = await mediaService.upload(fileData, adminId, 'Resume PDF');
+  const profile = await getProfile();
+
+  profile.resume = {
+    url: media.url,
+    publicId: media.publicId,
+    originalName: fileData.originalname,
+    uploadedAt: new Date(),
+  };
+  await profile.save();
+
+  return profile;
+};
+
+export const calculateCompleteness = (profile) => {
+  if (!profile) return 0;
+
+  const checks = [
+    Boolean(profile.name),
+    Boolean(profile.title),
+    Boolean(profile.tagline),
+    Boolean(profile.bio),
+    Boolean(profile.profileImage?.url),
+    Boolean(profile.location),
+    Boolean(profile.yearsOfExperience),
+    Boolean(profile.currentlyBuilding),
+    Boolean(profile.resume?.url),
+    Boolean(profile.email),
+    Boolean(profile.socialLinks && Object.values(profile.socialLinks).some((v) => Boolean(v))),
+    Boolean(profile.seo?.title || profile.seo?.description),
+  ];
+
+  const completed = checks.filter(Boolean).length;
+  return Math.round((completed / checks.length) * 100);
+};
+
+export const getProfileCompleteness = async () => {
+  const profile = await getProfile();
+  return { completeness: calculateCompleteness(profile) };
+};

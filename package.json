@@ -1,0 +1,25 @@
+{
+  "name": "ajit-portfolio",
+  "version": "1.0.0",
+  "description": "Full-Stack Developer Portfolio & CMS Application",
+  "private": true,
+  "scripts": {
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "build:client": "cd client && npm run build",
+    "start:server": "cd server && npm start",
+    "install:all": "npm --prefix client install && npm --prefix server install"
+  },
+  "keywords": [
+    "portfolio",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "tailwindcss",
+    "vite",
+    "cms"
+  ],
+  "author": "Ajit Kumar",
+  "license": "MIT"
+}

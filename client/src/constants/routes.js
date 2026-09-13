@@ -1,0 +1,33 @@
+export const PUBLIC_ROUTES = {
+  HOME: '/',
+  PROJECTS: '/projects',
+  PROJECT_DETAIL: '/projects/:slug',
+  BLOG: '/blog',
+  BLOG_POST: '/blog/:slug',
+  RESUME: '/resume',
+  CONTACT: '/contact',
+};
+
+export const ADMIN_ROUTES = {
+  LOGIN: '/admin/login',
+  DASHBOARD: '/admin/dashboard',
+  PROFILE: '/admin/profile',
+  PROJECTS: '/admin/projects',
+  PROJECT_NEW: '/admin/projects/new',
+  PROJECT_EDIT: '/admin/projects/:id/edit',
+  SKILLS: '/admin/skills',
+  EXPERIENCE: '/admin/experience',
+  EDUCATION: '/admin/education',
+  CERTIFICATIONS: '/admin/certifications',
+  TESTIMONIALS: '/admin/testimonials',
+  MESSAGES: '/admin/messages',
+  MEDIA: '/admin/media',
+  BLOG: '/admin/blog',
+  BLOG_NEW: '/admin/blog/new',
+  BLOG_EDIT: '/admin/blog/:id/edit',
+  SETTINGS: '/admin/settings',
+  SEO: '/admin/seo',
+  ANALYTICS: '/admin/analytics',
+  ACTIVITY: '/admin/activity',
+  PREVIEW: '/admin/preview',
+};
