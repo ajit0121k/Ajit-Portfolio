@@ -41,14 +41,38 @@ export default function ContactSection({ profile, settings }) {
     };
 
     try {
-      // 1. Transmit to backend API (on localhost, saves directly to MongoDB)
+      // 1. Instantly write directly to localStorage first, so it is 100% guaranteed saved
+      try {
+        const localRaw = localStorage.getItem('portfolio_cms_messages');
+        let localMsgs = localRaw ? JSON.parse(localRaw) : [];
+        if (!Array.isArray(localMsgs)) localMsgs = [];
+        const newLocalMsg = {
+          _id: 'msg_' + Date.now(),
+          id: 'msg_' + Date.now(),
+          ...payload,
+          status: 'unread',
+          read: false,
+          createdAt: new Date().toISOString(),
+        };
+        localMsgs.unshift(newLocalMsg);
+        localStorage.setItem('portfolio_cms_messages', JSON.stringify(localMsgs));
+      } catch (localStoreErr) {
+        console.warn('LocalStorage save error:', localStoreErr);
+      }
+
+      // 2. Transmit to localDataService to sync internal state
+      try {
+        handleLocalRequest('POST', '/messages', payload);
+      } catch (localErr) {}
+
+      // 3. Transmit to backend API (on localhost, saves directly to MongoDB)
       try {
         await api.post('/messages', payload);
       } catch (apiErr) {
         console.warn('API message endpoint:', apiErr?.message);
       }
 
-      // 2. Transmit to FormSubmit AJAX service so Ajit receives the message directly in Gmail
+      // 4. Transmit to FormSubmit AJAX service so Ajit receives the message directly in Gmail
       try {
         fetch('https://formsubmit.co/ajax/ajitkumar2956654@gmail.com', {
           method: 'POST',
@@ -69,12 +93,7 @@ export default function ContactSection({ profile, settings }) {
         // non-blocking
       }
 
-      // 3. Guarantee storage in local CMS data store for instant Admin panel visibility
-      try {
-        handleLocalRequest('POST', '/messages', payload);
-      } catch (localErr) {}
-
-      // 4. Notify admin panel across tabs and windows instantly
+      // 5. Notify admin panel across tabs and windows instantly
       try {
         window.dispatchEvent(new Event('portfolio_message_received'));
         window.dispatchEvent(new StorageEvent('storage', { key: 'portfolio_cms_messages' }));

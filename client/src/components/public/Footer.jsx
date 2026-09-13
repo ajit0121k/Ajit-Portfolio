@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUp, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Footer({ profile, settings }) {
   const scrollToTop = () => {
@@ -18,13 +19,13 @@ export default function Footer({ profile, settings }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <a
-            href="/admin"
+          <Link
+            to="/admin"
             className="p-2.5 rounded-full border border-[#dfd6c7] dark:border-white/20 hover:bg-[#2d3a2e] hover:text-[#f5f0e8] dark:hover:bg-[#f3eee5] dark:hover:text-[#1a241d] transition-all opacity-50 hover:opacity-100"
             title="Admin CMS Panel"
           >
             <Lock className="w-3.5 h-3.5" />
-          </a>
+          </Link>
           <button
             onClick={scrollToTop}
             className="p-2.5 rounded-full border border-[#dfd6c7] dark:border-white/20 hover:bg-[#2d3a2e] hover:text-[#f5f0e8] dark:hover:bg-[#f3eee5] dark:hover:text-[#1a241d] transition-all"

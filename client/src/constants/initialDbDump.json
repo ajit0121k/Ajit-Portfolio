@@ -1072,6 +1072,86 @@
       "description": "Admin logged in with Email and Password",
       "createdAt": "2026-09-13T17:46:31.210Z",
       "__v": 0
+    },
+    {
+      "_id": "6aa6e1ce89f0f20ccbcdb1c7",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:47:58.421Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6e23e89f0f20ccbcdb1d0",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:49:50.199Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6e24989f0f20ccbcdb1ed",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:50:01.276Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6e25089f0f20ccbcdb1f9",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:50:08.664Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6e25c89f0f20ccbcdb202",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:50:20.054Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6e26289f0f20ccbcdb20a",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:50:26.885Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6e26989f0f20ccbcdb213",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:50:33.733Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6e38e89f0f20ccbcdb22d",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:55:26.778Z",
+      "__v": 0
     }
   ],
   "resumes": [
@@ -1091,5 +1171,19 @@
       "__v": 0
     }
   ],
-  "messages": []
+  "messages": [
+    {
+      "_id": "6aa6e38e89f0f20ccbcdb227",
+      "name": "Ajit Kumar Test",
+      "email": "ajitkumar2956654@gmail.com",
+      "subject": "Real Test Message",
+      "message": "This is a direct test to check if message saves to MongoDB and appears in Admin.",
+      "status": "unread",
+      "replied": false,
+      "ipHash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9444",
+      "createdAt": "2026-09-13T17:55:26.480Z",
+      "__v": 0
+    }
+  ]
 }

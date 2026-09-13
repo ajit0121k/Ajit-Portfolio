@@ -53,7 +53,11 @@ export function initLocalData() {
     setStorage(STORAGE_KEYS.MEDIA, initialDump.media || []);
     setStorage(STORAGE_KEYS.ACTIVITY, initialDump.activitylogs || []);
     setStorage(STORAGE_KEYS.TESTIMONIALS, initialDump.testimonials || []);
-    setStorage(STORAGE_KEYS.MESSAGES, initialDump.messages || []);
+    // Preserve any existing user-submitted messages across version resets
+    const existingMsgs = getStorage(STORAGE_KEYS.MESSAGES, []);
+    if (!Array.isArray(existingMsgs) || existingMsgs.length === 0) {
+      setStorage(STORAGE_KEYS.MESSAGES, initialDump.messages || []);
+    }
     setStorage(STORAGE_KEYS.BLOG, initialDump.blogposts || []);
     setStorage(STORAGE_KEYS.SEO, prof.seo || {
       title: "Ajit Kumar | Full Stack MERN Developer & AI Engineer",
