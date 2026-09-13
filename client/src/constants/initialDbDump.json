@@ -635,7 +635,7 @@
         "projects": true,
         "education": true,
         "certifications": true,
-        "testimonials": true,
+        "testimonials": false,
         "blog": false,
         "contact": true,
         "github": true,
@@ -1019,5 +1019,6 @@
       "createdAt": "2026-09-13T05:52:04.115Z",
       "__v": 0
     }
-  ]
+  ],
+  "testimonials": []
 }

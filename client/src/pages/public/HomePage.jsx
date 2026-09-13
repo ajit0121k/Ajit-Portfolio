@@ -107,7 +107,7 @@ export default function HomePage() {
       )}
 
       {/* Testimonials */}
-      {visibility.testimonials !== false && (
+      {visibility.testimonials === true && (
         <motion.div
           variants={scrollAnimation}
           initial="hidden"

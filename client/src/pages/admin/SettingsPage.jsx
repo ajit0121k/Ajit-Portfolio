@@ -21,7 +21,7 @@ export default function SettingsPage() {
       projects: true,
       education: true,
       certifications: true,
-      testimonials: true,
+      testimonials: false,
       blog: true,
       contact: true,
       github: true,

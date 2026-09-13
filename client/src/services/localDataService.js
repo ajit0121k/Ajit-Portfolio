@@ -1,4 +1,4 @@
-﻿import initialDump from "../constants/initialDbDump.json";
+import initialDump from "../constants/initialDbDump.json";
 
 const STORAGE_KEYS = {
   PROFILE: "portfolio_cms_profile",
@@ -17,7 +17,7 @@ const STORAGE_KEYS = {
   VERSION: "portfolio_cms_dump_version",
 };
 
-const CURRENT_VERSION = "2026_09_13_v1";
+const CURRENT_VERSION = "2026_09_13_v2";
 
 function getStorage(key, defaultVal) {
   try {
@@ -50,28 +50,7 @@ export function initLocalData() {
     setStorage(STORAGE_KEYS.RESUME, initialDump.resumes[0] || {});
     setStorage(STORAGE_KEYS.MEDIA, initialDump.media || []);
     setStorage(STORAGE_KEYS.ACTIVITY, initialDump.activitylogs || []);
-    setStorage(STORAGE_KEYS.TESTIMONIALS, initialDump.testimonials || [
-      {
-        _id: "test_1",
-        name: "Rohan Verma",
-        role: "Project Manager",
-        company: "TechNexus Solutions",
-        quote: "Ajit demonstrated strong full-stack proficiency, delivering high-performance components with clean architecture.",
-        avatar: "/profile.jpg",
-        visible: true,
-        featured: true
-      },
-      {
-        _id: "test_2",
-        name: "Sneha Patel",
-        role: "Lead Architect",
-        company: "CloudVibe",
-        quote: "Exceptional grasp of React, Node.js, and API security. His attention to detail in UI/UX made a tremendous impact.",
-        avatar: "/profile.jpg",
-        visible: true,
-        featured: true
-      }
-    ]);
+    setStorage(STORAGE_KEYS.TESTIMONIALS, initialDump.testimonials || []);
     setStorage(STORAGE_KEYS.MESSAGES, initialDump.messages || [
       {
         _id: "msg_1",
@@ -594,7 +573,7 @@ export function handleLocalRequest(method, url, data) {
           experience: exp.length,
           education: edu.length,
           certifications: certs.length,
-          testimonials: 2,
+          testimonials: getStorage(STORAGE_KEYS.TESTIMONIALS, []).length,
           messages: msgs.length,
           unreadMessages: unreadCount,
           media: media.length,
