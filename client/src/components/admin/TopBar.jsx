@@ -7,7 +7,6 @@ import {
   Search,
 } from 'lucide-react';
 import useThemeStore from '../../store/themeStore.js';
-import BackendLiveBeacon from '../common/BackendLiveBeacon.jsx';
 
 export default function TopBar({ onOpenCommandPalette }) {
   const location = useLocation();
@@ -45,9 +44,6 @@ export default function TopBar({ onOpenCommandPalette }) {
 
       {/* Right Controls */}
       <div className="flex items-center gap-3">
-        {/* Live Backend Connection Animated Telemetry */}
-        <BackendLiveBeacon inline />
-
         {/* Command Palette Button - Tactile Inset Pill */}
         <button
           onClick={onOpenCommandPalette}
