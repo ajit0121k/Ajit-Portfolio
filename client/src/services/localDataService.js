@@ -17,7 +17,7 @@ const STORAGE_KEYS = {
   VERSION: "portfolio_cms_dump_version",
 };
 
-const CURRENT_VERSION = "2026_09_13_v2";
+const CURRENT_VERSION = "2026_09_13_v3";
 
 function getStorage(key, defaultVal) {
   try {
@@ -51,18 +51,7 @@ export function initLocalData() {
     setStorage(STORAGE_KEYS.MEDIA, initialDump.media || []);
     setStorage(STORAGE_KEYS.ACTIVITY, initialDump.activitylogs || []);
     setStorage(STORAGE_KEYS.TESTIMONIALS, initialDump.testimonials || []);
-    setStorage(STORAGE_KEYS.MESSAGES, initialDump.messages || [
-      {
-        _id: "msg_1",
-        name: "Priya Sharma",
-        email: "priya.sharma@talentcraft.io",
-        subject: "Opportunity: Full-Stack Developer Role",
-        message: "Hi Ajit, loved your portfolio and your projects on GitHub. We have an exciting opening for a Full Stack Engineer.",
-        status: "unread",
-        read: false,
-        createdAt: new Date().toISOString()
-      }
-    ]);
+    setStorage(STORAGE_KEYS.MESSAGES, initialDump.messages || []);
     setStorage(STORAGE_KEYS.VERSION, CURRENT_VERSION);
   }
 }
@@ -558,9 +547,27 @@ export function handleLocalRequest(method, url, data) {
     const msgs = getStorage(STORAGE_KEYS.MESSAGES, []);
     const media = getStorage(STORAGE_KEYS.MEDIA, initialDump.media || []);
     const settings = getStorage(STORAGE_KEYS.SETTINGS, initialDump.sitesettings[0] || {});
+    const profile = getStorage(STORAGE_KEYS.PROFILE, initialDump.profiles[0] || {});
+    const allActivity = getStorage(STORAGE_KEYS.ACTIVITY, initialDump.activitylogs || []);
 
     const pubCount = projects.filter(p => p.status === "published" || p.status === undefined).length;
     const unreadCount = msgs.filter(m => !m.read && m.status !== "read").length;
+
+    // Calculate real dynamic profile completeness
+    let score = 0;
+    if (profile) {
+      if (profile.name) score += 10;
+      if (profile.title) score += 10;
+      if (profile.bio) score += 15;
+      if (profile.profileImage?.url || profile.avatar) score += 15;
+      if (profile.location) score += 10;
+      if (profile.email) score += 10;
+      if (profile.phone) score += 5;
+      if (profile.resume?.url || profile.resumeUrl || getStorage(STORAGE_KEYS.RESUME, null)?.url) score += 15;
+      if (profile.socialLinks?.github || profile.socialLinks?.linkedin) score += 10;
+    }
+
+    const sortedActivity = [...allActivity].sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
 
     return {
       success: true,
@@ -577,15 +584,17 @@ export function handleLocalRequest(method, url, data) {
           messages: msgs.length,
           unreadMessages: unreadCount,
           media: media.length,
+          activity: allActivity.length,
         },
+        profile,
         recentProjects: projects.slice(0, 5),
         recentMessages: msgs.slice(0, 5),
-        recentActivity: getStorage(STORAGE_KEYS.ACTIVITY, initialDump.activitylogs || []).slice(0, 8),
-        profileCompleteness: 95,
+        recentActivity: sortedActivity.slice(0, 8),
+        profileCompleteness: Math.min(score, 100),
         settings: settings,
-        viewsToday: 48,
-        viewsWeek: 312,
-        viewsMonth: 1240
+        viewsToday: 1,
+        viewsWeek: 7,
+        viewsMonth: allActivity.length
       }
     };
   }

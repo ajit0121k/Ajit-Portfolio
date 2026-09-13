@@ -57,7 +57,8 @@ export const getDashboardSummary = async () => {
     recentMessages,
     recentActivity,
     profile,
-    settings
+    settings,
+    totalActivity
   ] = await Promise.all([
     Project.countDocuments(),
     Project.countDocuments({ status: 'published' }),
@@ -70,11 +71,12 @@ export const getDashboardSummary = async () => {
     Message.countDocuments(),
     Message.countDocuments({ status: 'unread' }),
     Media.countDocuments(),
-    Project.find().sort({ createdAt: -1 }).limit(5).select('title slug coverImage status publishedAt createdAt'),
+    Project.find().sort({ createdAt: -1 }).limit(5).select('title slug coverImage status publishedAt createdAt technologies'),
     Message.find().sort({ createdAt: -1 }).limit(5).select('name email subject status createdAt'),
-    ActivityLog.find().sort({ createdAt: -1 }).limit(5),
+    ActivityLog.find().sort({ createdAt: -1 }).limit(6),
     Profile.findOne(),
-    SiteSettings.findOne()
+    SiteSettings.findOne(),
+    ActivityLog.countDocuments()
   ]);
 
   // Calculate profile completeness
@@ -104,11 +106,13 @@ export const getDashboardSummary = async () => {
       messages: totalMessages,
       unreadMessages,
       media: totalMedia,
+      activity: totalActivity,
     },
+    profile,
     recentProjects,
     recentMessages,
     recentActivity,
-    profileCompleteness: score,
+    profileCompleteness: Math.min(score, 100),
     settings: {
       siteName: settings?.siteName || 'Portfolio',
       maintenanceMode: settings?.maintenanceMode || false,

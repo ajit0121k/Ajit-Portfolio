@@ -20,17 +20,18 @@ export default function DashboardPage() {
       experience: 0,
       education: 0,
       certifications: 0,
-      testimonials: 0,
       messages: 0,
       unreadMessages: 0,
       media: 0,
+      activity: 0,
     },
+    profile: null,
     recentProjects: [],
     recentMessages: [],
     recentActivity: [],
     profileCompleteness: 0,
     settings: {
-      siteName: 'Portfolio',
+      siteName: 'Ajit Kumar | Portfolio',
       maintenanceMode: false,
     }
   });
@@ -44,10 +45,14 @@ export default function DashboardPage() {
     try {
       setLoading(true);
       const res = await api.get('/analytics/summary');
-      const payload = res.data?.data || res.data;
-      if (payload) {
-        setData(payload);
+      const payload = res.data?.data || res.data || {};
+      if (!payload.profile) {
+        try {
+          const profRes = await api.get('/profile');
+          payload.profile = profRes.data?.data || profRes.data;
+        } catch (e) {}
       }
+      setData(payload);
     } catch (err) {
       toast.error('Failed to load dashboard summary');
     } finally {
@@ -59,25 +64,25 @@ export default function DashboardPage() {
     return (
       <div className="flex flex-col justify-center items-center h-96 gap-3">
         <div className="animate-spin rounded-full h-9 w-9 border-3 border-emerald-600 border-t-transparent"></div>
-        <span className="text-xs text-slate-500 font-bold tracking-wide">Loading 3D Bento CMS...</span>
+        <span className="text-xs text-slate-500 font-bold tracking-wide">Loading Real-Time Portfolio CMS...</span>
       </div>
     );
   }
 
-  const { counts, recentProjects = [], recentMessages = [], recentActivity = [], profileCompleteness = 0 } = data;
+  const { counts = {}, recentProjects = [], recentMessages = [], recentActivity = [], profileCompleteness = 0, profile = null } = data;
 
   const kpiCards = [
     {
       title: 'Total Projects',
-      count: counts.projects,
-      sub: `${counts.publishedProjects} Published · ${counts.draftProjects} Draft`,
+      count: counts.projects ?? 0,
+      sub: `${counts.publishedProjects ?? 0} Published · ${counts.draftProjects ?? 0} Draft`,
       icon: FolderGit2,
       link: '/admin/projects',
       accent: 'emerald',
     },
     {
       title: 'Active Skills',
-      count: counts.skills,
+      count: counts.skills ?? 0,
       sub: 'Categorized technical stack',
       icon: Cpu,
       link: '/admin/skills',
@@ -85,7 +90,7 @@ export default function DashboardPage() {
     },
     {
       title: 'Experience Entries',
-      count: counts.experience,
+      count: counts.experience ?? 0,
       sub: 'Roles & career history',
       icon: Briefcase,
       link: '/admin/experience',
@@ -93,7 +98,7 @@ export default function DashboardPage() {
     },
     {
       title: 'Education Entries',
-      count: counts.education,
+      count: counts.education ?? 0,
       sub: 'Degrees & academics',
       icon: GraduationCap,
       link: '/admin/education',
@@ -101,36 +106,36 @@ export default function DashboardPage() {
     },
     {
       title: 'Certifications',
-      count: counts.certifications,
+      count: counts.certifications ?? 0,
       sub: 'Verified credentials',
       icon: Award,
       link: '/admin/certifications',
       accent: 'indigo',
     },
     {
-      title: 'Testimonials',
-      count: counts.testimonials,
-      sub: 'Client & peer reviews',
-      icon: MessageSquareQuote,
-      link: '/admin/testimonials',
-      accent: 'rose',
+      title: 'Activity & Audit',
+      count: counts.activity || recentActivity.length || 0,
+      sub: 'Security & action logs',
+      icon: Activity,
+      link: '/admin/activity',
+      accent: 'emerald',
     },
     {
       title: 'Contact Messages',
-      count: counts.messages,
-      sub: counts.unreadMessages > 0 ? `${counts.unreadMessages} New Unread` : 'Inbox up to date',
+      count: counts.messages ?? 0,
+      sub: counts.unreadMessages > 0 ? `${counts.unreadMessages} New Unread` : 'Inbox up to date (0 new)',
       badge: counts.unreadMessages > 0 ? `${counts.unreadMessages} Unread` : null,
       icon: Mail,
       link: '/admin/messages',
       accent: 'orange',
     },
     {
-      title: 'Media Library',
-      count: counts.media,
-      sub: 'Images & PDF assets',
+      title: 'Media Assets',
+      count: counts.media ?? 0,
+      sub: 'Images & PDF documents',
       icon: Image,
       link: '/admin/media',
-      accent: 'emerald',
+      accent: 'rose',
     },
   ];
 
@@ -147,7 +152,7 @@ export default function DashboardPage() {
         className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch"
       >
         
-        {/* BENTO CARD 1: "Writll Vision" Style Editorial Clay Card (Left Top) */}
+        {/* BENTO CARD 1: Developer Profile & Real-Time Status Clay Card (Left Top) */}
         <motion.div 
           whileHover={{ y: -8, scale: 1.008 }}
           whileTap={{ scale: 0.99 }}
@@ -161,17 +166,20 @@ export default function DashboardPage() {
             <div className="flex items-center gap-2 mb-4">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-[11px] font-bold uppercase tracking-widest text-[#153f31] dark:text-emerald-400">
-                System Active &bull; V3.0
+                Portfolio CMS &bull; {profile?.availability === 'available' ? 'Available for Hire' : 'Online'}
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15] mb-3">
-              Portfolio <br />
-              <span className="font-serif italic font-normal text-[#153f31] dark:text-emerald-300">CMS Vision</span>
+            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15] mb-2">
+              {profile?.name || 'Ajit Kumar'}
             </h1>
 
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm mb-6">
-              Full control over showcase projects, professional credentials, verified skills, and incoming visitor inquiries.
+            <p className="text-sm font-extrabold text-[#153f31] dark:text-emerald-300 mb-2">
+              {profile?.title || 'Full Stack Developer & AI Engineer'}
+            </p>
+
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm mb-6">
+              {profile?.tagline || 'Skilled in MERN Stack (MongoDB, Express, React, Node.js), GenAI, and Scalable Cloud Systems'}
             </p>
 
             {/* Profile Setup Progress Inset Well */}
@@ -188,6 +196,10 @@ export default function DashboardPage() {
                   className="bg-gradient-to-r from-[#f97316] to-[#fb923c] h-2 rounded-full transition-all duration-700 shadow-xs"
                   style={{ width: `${Math.min(profileCompleteness, 100)}%` }}
                 />
+              </div>
+              <div className="flex items-center justify-between text-[11px] text-slate-400 font-semibold pt-1">
+                <span>{profile?.location || 'Lucknow, India'}</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">{profile?.phone || '+91 7379247197'}</span>
               </div>
             </div>
           </div>
@@ -206,10 +218,16 @@ export default function DashboardPage() {
             >
               Edit Profile
             </Link>
+            <Link
+              to="/admin/resume"
+              className="px-4 py-3 rounded-full bg-[#edf2ed] dark:bg-white/5 hover:bg-[#e2eae2] dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all"
+            >
+              Resume
+            </Link>
           </div>
         </motion.div>
 
-        {/* BENTO CARD 2: "Vision colors" Deep Glossy Emerald Bento Card (Center) */}
+        {/* BENTO CARD 2: Live Portfolio Showcase Metrics (Center) */}
         <motion.div 
           whileHover={{ y: -8, scale: 1.008 }}
           whileTap={{ scale: 0.99 }}
@@ -224,14 +242,14 @@ export default function DashboardPage() {
             <div className="flex items-center justify-between mb-6">
               <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-300 flex items-center gap-2">
                 <Compass className="w-4 h-4 text-emerald-400" />
-                Visions &bull; Metrics
+                Live Showcase
               </span>
               <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
             </div>
 
             <div className="my-3">
               <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-200/70">
-                Portfolio Showcase
+                Verified Portfolio
               </p>
               <div className="flex items-baseline gap-2 mt-1">
                 <span className="text-4xl sm:text-5xl font-black text-white tracking-tight">
@@ -242,7 +260,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Split counter list */}
-            <div className="mt-6 pt-4 border-t border-emerald-500/20 space-y-2 text-xs">
+            <div className="mt-6 pt-4 border-t border-emerald-500/20 space-y-2.5 text-xs">
               <div className="flex items-center justify-between text-emerald-100/90 font-medium">
                 <span className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -256,6 +274,20 @@ export default function DashboardPage() {
                   Drafts in Progress
                 </span>
                 <strong className="font-mono font-bold text-white text-sm">{counts.draftProjects}</strong>
+              </div>
+              <div className="flex items-center justify-between text-emerald-100/80 font-medium">
+                <span className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-300" />
+                  Technical Stack
+                </span>
+                <strong className="font-mono font-bold text-white text-sm">{counts.skills} Skills</strong>
+              </div>
+              <div className="flex items-center justify-between text-emerald-100/80 font-medium">
+                <span className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-300" />
+                  Certifications
+                </span>
+                <strong className="font-mono font-bold text-white text-sm">{counts.certifications} Credentials</strong>
               </div>
             </div>
           </div>
@@ -271,7 +303,7 @@ export default function DashboardPage() {
           </div>
         </motion.div>
 
-        {/* BENTO CARD 3: Warm Coral / Peach Slab with 3D Glossy Pebble Pills (Right) */}
+        {/* BENTO CARD 3: Warm Coral / Peach Slab with Quick Actions (Right) */}
         <motion.div 
           whileHover={{ y: -8, scale: 1.008 }}
           whileTap={{ scale: 0.99 }}
@@ -286,12 +318,12 @@ export default function DashboardPage() {
               Quick Center
             </span>
             <h3 className="text-xl font-black text-white tracking-tight mb-4">
-              Tactile Actions
+              Real-Time Control
             </h3>
 
             {/* 3D Glossy Pebble / Capsule Pills */}
             <div className="space-y-3">
-              {/* Glossy Emerald Capsule */}
+              {/* Glossy Emerald Capsule - Inquiries */}
               <Link
                 to="/admin/messages"
                 className="w-full rounded-2xl bg-gradient-to-b from-[#10b981] via-[#059669] to-[#047857] text-white shadow-[0_8px_16px_rgba(5,150,105,0.35),inset_0_2px_2px_rgba(255,255,255,0.6),inset_0_-2px_4px_rgba(0,0,0,0.3)] border border-emerald-300/40 p-3 flex items-center justify-between group active:scale-[0.98] transition-all cursor-pointer"
@@ -307,13 +339,13 @@ export default function DashboardPage() {
                     {counts.unreadMessages} New
                   </span>
                 ) : (
-                  <ArrowRight className="w-3.5 h-3.5 text-white/80 group-hover:translate-x-1 transition-transform" />
+                  <span className="text-[10px] font-mono text-emerald-100 font-bold">{counts.messages} Total</span>
                 )}
               </Link>
 
-              {/* Glossy Ceramic White Capsule */}
+              {/* Glossy Ceramic White Capsule - Public Site */}
               <a
-                href="/"
+                href={typeof window !== 'undefined' && window.location.hostname.includes('github.io') ? 'https://ajit0121k.github.io/Ajit-Portfolio/' : '/'}
                 target="_blank"
                 rel="noreferrer"
                 className="w-full rounded-2xl bg-gradient-to-b from-white via-[#fbfdfb] to-[#e4eae4] text-[#123e2f] shadow-[0_8px_16px_rgba(0,0,0,0.1),inset_0_2px_2px_rgba(255,255,255,1),inset_0_-2px_4px_rgba(0,0,0,0.06)] border border-white p-3 flex items-center justify-between group active:scale-[0.98] transition-all cursor-pointer"
@@ -327,7 +359,7 @@ export default function DashboardPage() {
                 <ArrowRight className="w-3.5 h-3.5 text-[#123e2f]/60 group-hover:translate-x-1 transition-transform" />
               </a>
 
-              {/* Glossy Emerald Capsule 2 */}
+              {/* Glossy Emerald Capsule 2 - Media Library */}
               <Link
                 to="/admin/media"
                 className="w-full rounded-2xl bg-gradient-to-b from-[#10b981] via-[#059669] to-[#047857] text-white shadow-[0_8px_16px_rgba(5,150,105,0.35),inset_0_2px_2px_rgba(255,255,255,0.6),inset_0_-2px_4px_rgba(0,0,0,0.3)] border border-emerald-300/40 p-3 flex items-center justify-between group active:scale-[0.98] transition-all cursor-pointer"
@@ -415,7 +447,7 @@ export default function DashboardPage() {
       </div>
 
       {/* ========================================================================= */}
-      {/* SPLIT COLUMNS: RECENT PROJECTS & RECENT INQUIRIES                         */}
+      {/* SPLIT COLUMNS: RECENT PROJECTS & LIVE ACTIVITY AUDIT                      */}
       {/* ========================================================================= */}
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
@@ -431,10 +463,10 @@ export default function DashboardPage() {
             <div className="flex justify-between items-center mb-5">
               <h2 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                 <FolderGit2 className="w-4 h-4 text-[#153f31] dark:text-emerald-400" />
-                <span>Recent Projects</span>
+                <span>Showcase Projects</span>
               </h2>
               <Link to="/admin/projects" className="text-xs font-bold text-[#153f31] dark:text-emerald-400 hover:underline">
-                View All ({counts.projects})
+                View All ({counts.projects ?? 0})
               </Link>
             </div>
 
@@ -453,18 +485,25 @@ export default function DashboardPage() {
                       <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
                         {p.title}
                       </p>
-                      <p className="text-[10px] text-slate-400 font-medium">
-                        {p.publishedAt ? new Date(p.publishedAt).toLocaleDateString() : 'Draft Mode'}
-                      </p>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="text-[10px] text-slate-400 font-medium">
+                          {p.publishedAt ? new Date(p.publishedAt).toLocaleDateString() : (p.createdAt ? new Date(p.createdAt).toLocaleDateString() : 'Active')}
+                        </span>
+                        {p.technologies && p.technologies.length > 0 && (
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 truncate max-w-[200px]">
+                            &bull; {p.technologies.slice(0, 3).join(', ')}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${
-                        p.status === 'published'
+                        p.status === 'published' || p.status === undefined
                           ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
                           : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
                       }`}>
-                        {p.status}
+                        {p.status || 'published'}
                       </span>
                       <Link
                         to={`/admin/projects/${p._id}/edit`}
@@ -490,67 +529,65 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Recent Contact Messages Clay Card */}
+        {/* Live Security & Activity Audit Log Card */}
         <div className="rounded-[30px] bg-white dark:bg-[#111c13] p-6 sm:p-7 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.02),inset_0_1px_2px_rgba(255,255,255,0.8)] border border-white/80 dark:border-white/5 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-center mb-5">
               <h2 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#f97316]" />
-                <span>Recent Contact Messages</span>
+                <Activity className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <span>Live Audit &amp; Activity Log</span>
               </h2>
-              <Link to="/admin/messages" className="text-xs font-bold text-[#f97316] hover:underline">
-                View Inbox ({counts.messages})
+              <Link to="/admin/activity" className="text-xs font-bold text-[#153f31] dark:text-emerald-400 hover:underline">
+                All Logs ({counts.activity || recentActivity.length})
               </Link>
             </div>
 
-            {recentMessages.length === 0 ? (
+            {recentActivity.length === 0 ? (
               <div className="text-center py-10 text-xs text-slate-400 border border-dashed border-black/10 dark:border-white/10 rounded-2xl bg-[#fafbfa] dark:bg-white/[0.02]">
-                No inquiries received yet. When visitors submit the contact form, they will appear here.
+                No recent activity logs found.
               </div>
             ) : (
               <div className="space-y-3">
-                {recentMessages.map((msg) => (
+                {recentActivity.slice(0, 5).map((log, idx) => (
                   <div
-                    key={msg._id}
+                    key={log._id || idx}
                     className="p-3.5 rounded-2xl bg-[#f4f7f4] dark:bg-[#0c160e] shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] border border-black/5 dark:border-white/5 flex items-center justify-between gap-3 hover:bg-[#ebf1eb] dark:hover:bg-[#121f15] transition-colors"
                   >
                     <div className="truncate">
                       <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+                          {log.action || 'ACTION'}
+                        </span>
                         <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                          {msg.name}
+                          {log.description || `${log.action} on ${log.entity || 'System'}`}
                         </p>
-                        {msg.status === 'unread' && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#f97316]" />
-                        )}
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                        {msg.subject || msg.email}
+                      <p className="text-[10px] text-slate-400 font-medium mt-0.5">
+                        {log.createdAt ? new Date(log.createdAt).toLocaleString() : 'Recent'}
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className="text-[10px] text-slate-400">
-                        {new Date(msg.createdAt).toLocaleDateString()}
-                      </span>
-                      <Link
-                        to="/admin/messages"
-                        className="text-[11px] font-bold text-[#153f31] dark:text-emerald-400 hover:underline"
-                      >
-                        Read
-                      </Link>
-                    </div>
+                    <span className="text-[10px] text-slate-400 font-mono flex-shrink-0">
+                      {log.entity || 'Admin'}
+                    </span>
                   </div>
                 ))}
               </div>
             )}
           </div>
 
-          <div className="pt-5 mt-5 border-t border-black/[0.04] dark:border-white/5">
+          <div className="pt-5 mt-5 border-t border-black/[0.04] dark:border-white/5 flex items-center justify-between">
+            <Link
+              to="/admin/activity"
+              className="text-xs font-bold text-[#153f31] dark:text-emerald-400 hover:underline flex items-center gap-1.5"
+            >
+              <span>View full audit history &rarr;</span>
+            </Link>
             <Link
               to="/admin/messages"
-              className="w-full py-2.5 rounded-xl bg-[#edf3ed] dark:bg-white/5 hover:bg-[#e2ebe2] dark:hover:bg-white/10 text-xs font-bold text-[#153f31] dark:text-emerald-300 flex items-center justify-center gap-2 transition"
+              className="text-xs font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
             >
-              <span>Open Full Messages Inbox &rarr;</span>
+              Inquiries Inbox ({counts.messages ?? 0})
             </Link>
           </div>
         </div>
