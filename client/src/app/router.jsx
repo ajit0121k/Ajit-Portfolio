@@ -1,10 +1,14 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import PublicLayout from '../layouts/PublicLayout.jsx';
 import AdminLayout from '../layouts/AdminLayout.jsx';
 import ProtectedRoute from '../routes/ProtectedRoute.jsx';
 import LoadingScreen from '../components/common/LoadingScreen.jsx';
 import { PUBLIC_ROUTES, ADMIN_ROUTES } from '../constants/routes.js';
+
+const isAdminOnly = 
+  typeof window !== 'undefined' && 
+  window.location.pathname.toLowerCase().includes('portfolio-admin');
 
 // Public Lazy Imports
 const HomePage = lazy(() => import('../pages/public/HomePage.jsx'));
@@ -85,21 +89,30 @@ const router = createBrowserRouter([
     ]
   },
 
-  // Public Website routes
-  {
-    path: PUBLIC_ROUTES.HOME,
-    element: <PublicLayout />,
-    children: [
-      { index: true, element: <Suspense fallback={<LoadingScreen />}><HomePage /></Suspense> },
-      { path: PUBLIC_ROUTES.PROJECTS.slice(1), element: <Suspense fallback={<LoadingScreen />}><ProjectsPage /></Suspense> },
-      { path: PUBLIC_ROUTES.PROJECT_DETAIL.slice(1), element: <Suspense fallback={<LoadingScreen />}><ProjectDetailPage /></Suspense> },
-      { path: PUBLIC_ROUTES.BLOG.slice(1), element: <Suspense fallback={<LoadingScreen />}><BlogPage /></Suspense> },
-      { path: PUBLIC_ROUTES.BLOG_POST.slice(1), element: <Suspense fallback={<LoadingScreen />}><BlogPostPage /></Suspense> },
-      { path: PUBLIC_ROUTES.RESUME.slice(1), element: <Suspense fallback={<LoadingScreen />}><ResumePage /></Suspense> },
-      { path: PUBLIC_ROUTES.CONTACT.slice(1), element: <Suspense fallback={<LoadingScreen />}><ContactPage /></Suspense> },
-      { path: '*', element: <Suspense fallback={<LoadingScreen />}><NotFoundPage /></Suspense> }
-    ]
-  }
-]);
+  // Public Website routes or Standalone Admin Redirect
+  ...(isAdminOnly
+    ? [
+        { path: '/', element: <Navigate to="/admin/dashboard" replace /> },
+        { path: '*', element: <Navigate to="/admin/dashboard" replace /> }
+      ]
+    : [
+        {
+          path: PUBLIC_ROUTES.HOME,
+          element: <PublicLayout />,
+          children: [
+            { index: true, element: <Suspense fallback={<LoadingScreen />}><HomePage /></Suspense> },
+            { path: PUBLIC_ROUTES.PROJECTS.slice(1), element: <Suspense fallback={<LoadingScreen />}><ProjectsPage /></Suspense> },
+            { path: PUBLIC_ROUTES.PROJECT_DETAIL.slice(1), element: <Suspense fallback={<LoadingScreen />}><ProjectDetailPage /></Suspense> },
+            { path: PUBLIC_ROUTES.BLOG.slice(1), element: <Suspense fallback={<LoadingScreen />}><BlogPage /></Suspense> },
+            { path: PUBLIC_ROUTES.BLOG_POST.slice(1), element: <Suspense fallback={<LoadingScreen />}><BlogPostPage /></Suspense> },
+            { path: PUBLIC_ROUTES.RESUME.slice(1), element: <Suspense fallback={<LoadingScreen />}><ResumePage /></Suspense> },
+            { path: PUBLIC_ROUTES.CONTACT.slice(1), element: <Suspense fallback={<LoadingScreen />}><ContactPage /></Suspense> },
+            { path: '*', element: <Suspense fallback={<LoadingScreen />}><NotFoundPage /></Suspense> }
+          ]
+        }
+      ])
+], {
+  basename: import.meta.env.BASE_URL,
+});
 
 export default router;
