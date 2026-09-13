@@ -18,7 +18,7 @@ const STORAGE_KEYS = {
   VERSION: "portfolio_cms_dump_version",
 };
 
-const CURRENT_VERSION = "2026_09_13_v5";
+const CURRENT_VERSION = "2026_09_13_v6";
 
 function getStorage(key, defaultVal) {
   try {
@@ -49,7 +49,7 @@ export function initLocalData() {
     setStorage(STORAGE_KEYS.EDUCATION, initialDump.educations || []);
     setStorage(STORAGE_KEYS.CERTIFICATIONS, initialDump.certifications || []);
     setStorage(STORAGE_KEYS.SETTINGS, initialDump.sitesettings?.[0] || {});
-    setStorage(STORAGE_KEYS.RESUME, initialDump.resumes?.[0] || {});
+    setStorage(STORAGE_KEYS.RESUME, initialDump.resumes || []);
     setStorage(STORAGE_KEYS.MEDIA, initialDump.media || []);
     setStorage(STORAGE_KEYS.ACTIVITY, initialDump.activitylogs || []);
     setStorage(STORAGE_KEYS.TESTIMONIALS, initialDump.testimonials || []);
@@ -170,8 +170,9 @@ export function handleLocalRequest(method, url, data) {
 
   // 3. SETTINGS
   if (resource === "settings") {
-    let settings = getStorage(STORAGE_KEYS.SETTINGS, initialDump.sitesettings[0] || {});
+    let settings = getStorage(STORAGE_KEYS.SETTINGS, initialDump.sitesettings?.[0] || {});
     if (upperMethod === "GET") {
+      // Both /settings and /settings/public return same data locally
       return { success: true, data: settings };
     }
     if (upperMethod === "PUT" || upperMethod === "PATCH") {
@@ -197,6 +198,16 @@ export function handleLocalRequest(method, url, data) {
             totalPages: 1
           }
         };
+      }
+      // Handle /projects/slug/:slug and /projects/slug/:slug/related
+      if (subOrId === "slug" && action) {
+        const extraAction = pathParts[3] || "";
+        const found = projects.find(p => p.slug === action);
+        if (extraAction === "related") {
+          const related = projects.filter(p => p.slug !== action && (p.status === "published" || p.status === undefined)).slice(0, 3);
+          return { success: true, data: related };
+        }
+        return { success: true, data: found || projects[0] };
       }
       if (subOrId) {
         const found = projects.find(p => p._id === subOrId || p.id === subOrId || p.slug === subOrId);
@@ -556,27 +567,63 @@ export function handleLocalRequest(method, url, data) {
   }
 
   // 12. RESUME
+  // 12. RESUME
   if (resource === "resume") {
-    let resume = getStorage(STORAGE_KEYS.RESUME, initialDump.resumes[0] || {
+    let resumes = getStorage(STORAGE_KEYS.RESUME, initialDump.resumes || []);
+    if (!Array.isArray(resumes)) {
+      resumes = resumes && resumes.url ? [resumes] : (initialDump.resumes || []);
+    }
+    const activeResume = resumes.find(r => r.isActive) || resumes[0] || {
       _id: "res_primary",
       filename: "Ajit_Kumar_Resume.pdf",
+      originalName: "Ajit_Kumar_Resume.pdf",
       url: "/resume.pdf",
       size: 7737,
       isActive: true,
       updatedAt: new Date().toISOString()
-    });
+    };
 
     if (upperMethod === "GET") {
-      return { success: true, data: resume };
+      if (subOrId === "active" || subOrId === "preview" || subOrId === "download") {
+        return { success: true, data: activeResume };
+      }
+      return { success: true, data: resumes };
     }
 
-    if (upperMethod === "POST" || upperMethod === "PATCH") {
-      resume = { ...resume, ...body, updatedAt: new Date().toISOString() };
-      setStorage(STORAGE_KEYS.RESUME, resume);
-      return { success: true, message: "Resume updated successfully", data: resume };
+    if (upperMethod === "POST") {
+      const newResume = {
+        _id: "res_" + Date.now(),
+        id: "res_" + Date.now(),
+        filename: body?.filename || "Ajit_Kumar_Resume.pdf",
+        originalName: body?.originalName || "Ajit_Kumar_Resume.pdf",
+        url: body?.url || "/resume.pdf",
+        size: body?.size || 10240,
+        isActive: true,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      resumes = resumes.map(r => ({ ...r, isActive: false }));
+      resumes.unshift(newResume);
+      setStorage(STORAGE_KEYS.RESUME, resumes);
+      return { success: true, message: "Resume uploaded and activated successfully", data: newResume };
+    }
+
+    if (upperMethod === "PATCH") {
+      const targetId = action === "activate" ? subOrId : subOrId;
+      resumes = resumes.map(r => ({
+        ...r,
+        isActive: r._id === targetId || r.id === targetId
+      }));
+      setStorage(STORAGE_KEYS.RESUME, resumes);
+      return { success: true, message: "Resume activated", data: resumes.find(r => r.isActive) };
     }
 
     if (upperMethod === "DELETE") {
+      resumes = resumes.filter(r => r._id !== subOrId && r.id !== subOrId);
+      if (resumes.length > 0 && !resumes.some(r => r.isActive)) {
+        resumes[0].isActive = true;
+      }
+      setStorage(STORAGE_KEYS.RESUME, resumes);
       return { success: true, message: "Resume deleted" };
     }
   }
@@ -695,6 +742,31 @@ export function handleLocalRequest(method, url, data) {
     let posts = getStorage(STORAGE_KEYS.BLOG, initialDump.blogposts || []);
 
     if (upperMethod === "GET") {
+      if (subOrId === "published") {
+        const pub = posts.filter(p => p.status === "published" || p.status === undefined);
+        return {
+          success: true,
+          data: {
+            posts: pub,
+            total: pub.length,
+            page: 1,
+            totalPages: 1
+          }
+        };
+      }
+      if (subOrId === "tags") {
+        const allTags = new Set();
+        posts.forEach(p => {
+          if (Array.isArray(p.tags)) {
+            p.tags.forEach(t => allTags.add(t));
+          }
+        });
+        return { success: true, data: Array.from(allTags) };
+      }
+      if (subOrId === "slug" && action) {
+        const found = posts.find(p => p.slug === action);
+        return { success: true, data: found || posts[0] || null };
+      }
       if (subOrId) {
         const found = posts.find(p => p._id === subOrId || p.id === subOrId || p.slug === subOrId);
         return { success: true, data: found || posts[0] || null };
