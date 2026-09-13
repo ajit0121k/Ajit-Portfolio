@@ -74,6 +74,12 @@ export default function ContactSection({ profile, settings }) {
         handleLocalRequest('POST', '/messages', payload);
       } catch (localErr) {}
 
+      // 4. Notify admin panel across tabs and windows instantly
+      try {
+        window.dispatchEvent(new Event('portfolio_message_received'));
+        window.dispatchEvent(new StorageEvent('storage', { key: 'portfolio_cms_messages' }));
+      } catch (evtErr) {}
+
       setIsSuccess(true);
       toast.success('Your message has been transmitted successfully!');
       setFormData({ name: '', email: '', subject: '', message: '', honeypot: '' });

@@ -18,7 +18,7 @@ const STORAGE_KEYS = {
   VERSION: "portfolio_cms_dump_version",
 };
 
-const CURRENT_VERSION = "2026_09_13_v6";
+const CURRENT_VERSION = "2026_09_13_v7";
 
 function getStorage(key, defaultVal) {
   try {
@@ -476,11 +476,17 @@ export function handleLocalRequest(method, url, data) {
           data: { count: msgs.filter(m => !m.read && m.status !== "read").length }
         };
       }
+      let filtered = [...msgs];
+      const params = new URLSearchParams(queryStr || "");
+      const statusFilter = params.get("status");
+      if (statusFilter && statusFilter !== "all") {
+        filtered = filtered.filter(m => m.status === statusFilter);
+      }
       return {
         success: true,
         data: {
-          messages: msgs,
-          total: msgs.length,
+          messages: filtered,
+          total: filtered.length,
           unread: msgs.filter(m => !m.read && m.status !== "read").length
         }
       };

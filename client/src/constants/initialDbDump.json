@@ -636,7 +636,7 @@
         "projects": true,
         "education": true,
         "certifications": true,
-        "testimonials": true,
+        "testimonials": false,
         "blog": false,
         "contact": true,
         "github": true,
@@ -1022,6 +1022,56 @@
       "description": "Admin logged in with Email and Password",
       "createdAt": "2026-09-13T06:36:37.912Z",
       "__v": 0
+    },
+    {
+      "_id": "6aa649605d2d892c66449e23",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T06:57:36.764Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6df1d89f0f20ccbcdb15a",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:36:29.736Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6e12c89f0f20ccbcdb19e",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:45:16.553Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6e13389f0f20ccbcdb1a7",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:45:23.536Z",
+      "__v": 0
+    },
+    {
+      "_id": "6aa6e17789f0f20ccbcdb1bc",
+      "adminId": "6a848ad88cc0c72c733f9d34",
+      "action": "LOGIN",
+      "entity": "Admin",
+      "entityId": "6a848ad88cc0c72c733f9d34",
+      "description": "Admin logged in with Email and Password",
+      "createdAt": "2026-09-13T17:46:31.210Z",
+      "__v": 0
     }
   ],
   "resumes": [
@@ -1041,97 +1091,5 @@
       "__v": 0
     }
   ],
-  "messages": [
-    {
-      "_id": "6aa640bc2127c0fa6fc65a39",
-      "name": "Test Visitor",
-      "email": "test@example.com",
-      "subject": "Hello Ajit",
-      "message": "This is a test message from node",
-      "status": "unread",
-      "replied": false,
-      "ipHash": "3e48ef9d22e096da6838540fb846999890462c8a32730a4f7a5eaee6945315f7",
-      "userAgent": "node",
-      "createdAt": "2026-09-13T06:20:44.360Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa640c52127c0fa6fc65a3b",
-      "name": "Frontend Test Visitor",
-      "email": "frontend@test.com",
-      "subject": "Testing Vite Proxy",
-      "message": "Testing if localhost:5173 proxies to 5000",
-      "status": "unread",
-      "replied": false,
-      "ipHash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3",
-      "userAgent": "node",
-      "createdAt": "2026-09-13T06:20:53.620Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa641a75d2d892c66449e01",
-      "name": "Browser Simulation Test",
-      "email": "visitor@company.com",
-      "subject": "Senior Full Stack Role",
-      "message": "Testing message delivery through Vite proxy after fixes",
-      "status": "unread",
-      "replied": false,
-      "ipHash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3",
-      "userAgent": "node",
-      "createdAt": "2026-09-13T06:24:39.349Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6432a5d2d892c66449e03",
-      "name": "Final Transmission Test",
-      "email": "finaltest@portfolio.dev",
-      "subject": "Verification of Frontend Transmission",
-      "message": "Message transmitting reliably from frontend to backend",
-      "status": "unread",
-      "replied": false,
-      "ipHash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3",
-      "userAgent": "node",
-      "createdAt": "2026-09-13T06:31:06.642Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa643d65d2d892c66449e05",
-      "name": "Tester",
-      "email": "test@example.com",
-      "subject": "Test via Vite Proxy",
-      "message": "Testing proxy",
-      "status": "unread",
-      "replied": false,
-      "ipHash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3",
-      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9278",
-      "createdAt": "2026-09-13T06:33:58.919Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6449f5d2d892c66449e17",
-      "name": "User Simulation",
-      "email": "user@gmail.com",
-      "subject": "Inquiry",
-      "message": "Hello from browser simulation",
-      "status": "unread",
-      "replied": false,
-      "ipHash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3",
-      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-      "createdAt": "2026-09-13T06:37:19.846Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6454b5d2d892c66449e19",
-      "name": "Ajit Verification",
-      "email": "ajitkumar2956654@gmail.com",
-      "subject": "Live Pipeline Verification",
-      "message": "Testing message pipeline transmission end to end.",
-      "status": "unread",
-      "replied": false,
-      "ipHash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3",
-      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9278",
-      "createdAt": "2026-09-13T06:40:11.050Z",
-      "__v": 0
-    }
-  ]
+  "messages": []
 }

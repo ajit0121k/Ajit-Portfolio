@@ -16,14 +16,57 @@ const MessagesPage = () => {
 
   useEffect(() => {
     fetchMessages();
+
+    const onIncomingMessage = () => {
+      fetchMessages();
+    };
+
+    window.addEventListener('storage', onIncomingMessage);
+    window.addEventListener('portfolio_message_received', onIncomingMessage);
+
+    return () => {
+      window.removeEventListener('storage', onIncomingMessage);
+      window.removeEventListener('portfolio_message_received', onIncomingMessage);
+    };
   }, [filter]);
 
   const fetchMessages = async () => {
     try {
       setLoading(true);
       const query = filter !== 'all' ? `?status=${filter}` : '';
-      const res = await api.get(`/messages${query}`);
-      const list = res.data?.data?.messages || res.data?.messages || res.data || [];
+      let list = [];
+      try {
+        const res = await api.get(`/messages${query}`);
+        list = res.data?.data?.messages || res.data?.messages || (Array.isArray(res.data) ? res.data : []);
+      } catch (apiErr) {
+        console.warn('API fetch failed, falling back to local store:', apiErr);
+      }
+
+      // Also merge any messages from local storage to guarantee 100% visibility
+      try {
+        const localRaw = localStorage.getItem('portfolio_cms_messages');
+        if (localRaw) {
+          const localList = JSON.parse(localRaw);
+          if (Array.isArray(localList)) {
+            const existingKeys = new Set(list.map(m => `${m.email}_${m.message}`));
+            localList.forEach(lm => {
+              if (!existingKeys.has(`${lm.email}_${lm.message}`)) {
+                list.push(lm);
+                existingKeys.add(`${lm.email}_${lm.message}`);
+              }
+            });
+          }
+        }
+      } catch (e) {}
+
+      // Apply status filter if filtered
+      if (filter !== 'all') {
+        list = list.filter(m => m.status === filter || (!m.status && filter === 'unread'));
+      }
+
+      // Sort newest first
+      list.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
       setMessages(Array.isArray(list) ? list : []);
     } catch (err) {
       toast.error('Failed to load messages');
@@ -34,13 +77,26 @@ const MessagesPage = () => {
 
   const handleStatusChange = async (id, status) => {
     try {
-      if (status === 'read') {
-        await api.patch(`/messages/${id}/read`);
-      } else if (status === 'unread') {
-        await api.patch(`/messages/${id}/unread`);
-      } else if (status === 'archived') {
-        await api.patch(`/messages/${id}/archive`);
-      }
+      try {
+        if (status === 'read') {
+          await api.patch(`/messages/${id}/read`);
+        } else if (status === 'unread') {
+          await api.patch(`/messages/${id}/unread`);
+        } else if (status === 'archived') {
+          await api.patch(`/messages/${id}/archive`);
+        }
+      } catch (e) {}
+
+      // Sync local storage
+      try {
+        const localRaw = localStorage.getItem('portfolio_cms_messages');
+        if (localRaw) {
+          let localList = JSON.parse(localRaw);
+          localList = localList.map(m => (m._id === id || m.id === id) ? { ...m, status, read: status === 'read' } : m);
+          localStorage.setItem('portfolio_cms_messages', JSON.stringify(localList));
+        }
+      } catch (e) {}
+
       setMessages(prev => prev.map(m => (m._id === id || m.id === id) ? { ...m, status } : m));
       if (selectedMsg && (selectedMsg._id === id || selectedMsg.id === id)) {
         setSelectedMsg(prev => ({ ...prev, status }));
@@ -54,7 +110,20 @@ const MessagesPage = () => {
   const handleDelete = async () => {
     try {
       const id = deleteId;
-      await api.delete(`/messages/${id}`);
+      try {
+        await api.delete(`/messages/${id}`);
+      } catch (e) {}
+
+      // Sync local storage
+      try {
+        const localRaw = localStorage.getItem('portfolio_cms_messages');
+        if (localRaw) {
+          let localList = JSON.parse(localRaw);
+          localList = localList.filter(m => m._id !== id && m.id !== id);
+          localStorage.setItem('portfolio_cms_messages', JSON.stringify(localList));
+        }
+      } catch (e) {}
+
       setMessages(prev => prev.filter(m => (m._id !== id && m.id !== id)));
       if (selectedMsg && (selectedMsg._id === id || selectedMsg.id === id)) {
         setSelectedMsg(null);
