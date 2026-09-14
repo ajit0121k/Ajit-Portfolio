@@ -4,6 +4,7 @@ import api from '../../services/api';
 import toast from 'react-hot-toast';
 import RichTextEditor from '../../components/admin/RichTextEditor';
 import ImageUploadZone from '../../components/admin/ImageUploadZone';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 
 export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
@@ -140,15 +141,16 @@ export default function ProfilePage() {
         currentlyBuilding: formData.currentlyBuilding?.name || '',
         currentlyBuildingUrl: formData.currentlyBuilding?.url || '',
         socialLinks: formData.socialLinks,
+        profileImage: {
+          url: formData.avatar || '',
+          publicId: formData.avatar ? 'profile_avatar' : '',
+        },
+        resume: {
+          url: formData.resumeUrl || '',
+          originalName: 'Ajit_Kumar_Resume.pdf',
+          uploadedAt: new Date().toISOString(),
+        },
       };
-
-      if (formData.avatar) {
-        payload.profileImage = { url: formData.avatar };
-      }
-
-      if (formData.resumeUrl) {
-        payload.resume = { url: formData.resumeUrl, originalName: 'Ajit_Kumar_Resume.pdf' };
-      }
 
       await api.put('/profile', payload);
       toast.success('Profile updated successfully! Live on public portfolio.');
@@ -194,10 +196,19 @@ export default function ProfilePage() {
         </div>
 
         <div className="flex items-center gap-3">
+          <a
+            href={resolveAssetUrl('/')}
+            target="_blank"
+            rel="noreferrer"
+            className="px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+            title="Open live public portfolio in a new tab"
+          >
+            <ExternalLink size={14} /> View Site
+          </a>
           <button
             type="button"
             onClick={handleCancel}
-            className="px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition flex items-center gap-1.5"
+            className="px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
           >
             <RotateCcw size={14} /> Cancel
           </button>

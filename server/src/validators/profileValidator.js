@@ -10,17 +10,24 @@ export const updateProfileSchema = z.object({
   availability: z.enum(['available', 'limited', 'unavailable']).optional(),
   availabilityText: z.string().optional(),
   currentlyBuilding: z.string().optional(),
-  currentlyBuildingUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')),
-  email: z.string().email('Invalid email format').optional(),
-  phone: z.string().optional(),
-  socialLinks: z.object({
-    github: z.string().url('Must be a valid URL').optional().or(z.literal('')),
-    linkedin: z.string().url('Must be a valid URL').optional().or(z.literal('')),
-    twitter: z.string().url('Must be a valid URL').optional().or(z.literal('')),
-    website: z.string().url('Must be a valid URL').optional().or(z.literal('')),
-    youtube: z.string().url('Must be a valid URL').optional().or(z.literal('')),
-    dribbble: z.string().url('Must be a valid URL').optional().or(z.literal('')),
-    medium: z.string().url('Must be a valid URL').optional().or(z.literal('')),
-    devto: z.string().url('Must be a valid URL').optional().or(z.literal('')),
-  }).optional(),
-});
+  currentlyBuildingUrl: z.string().optional().or(z.literal('')),
+  email: z.string().email('Invalid email format').optional().or(z.literal('')),
+  phone: z.string().optional().or(z.literal('')),
+  profileImage: z.object({
+    url: z.string().optional().or(z.literal('')),
+    publicId: z.string().optional().or(z.literal('')),
+  }).passthrough().optional(),
+  resume: z.object({
+    url: z.string().optional().or(z.literal('')),
+    publicId: z.string().optional().or(z.literal('')),
+    originalName: z.string().optional().or(z.literal('')),
+    uploadedAt: z.any().optional(),
+  }).passthrough().optional(),
+  socialLinks: z.record(z.string().optional().or(z.literal(''))).optional(),
+  seo: z.object({
+    title: z.string().optional(),
+    description: z.string().optional(),
+    keywords: z.array(z.string()).optional(),
+    ogImage: z.string().optional(),
+  }).passthrough().optional(),
+}).passthrough();

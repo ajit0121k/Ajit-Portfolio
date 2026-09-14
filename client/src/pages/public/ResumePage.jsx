@@ -51,33 +51,34 @@ export default function ResumePage() {
           Complete verified overview of professional experience, core technologies, software architecture accomplishments, and education.
         </p>
 
-        {profile?.resume?.url ? (
-          <div className="space-y-4 max-w-sm mx-auto">
-            <a
-              href={resolveAssetUrl(profile.resume.url)}
-              target="_blank"
-              rel="noreferrer"
-              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-primary-600 via-indigo-600 to-primary-600 hover:bg-pos-100 text-white font-bold text-xs shadow-xl shadow-primary-600/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <FileDown className="w-4 h-4" />
-              <span>Download Official Resume (PDF)</span>
-            </a>
+        {(() => {
+          const resumeUrl = resolveAssetUrl(profile?.resume?.url || '/resume.pdf');
+          const resumeName = profile?.resume?.originalName || 'Ajit_Kumar_Resume.pdf';
+          return (
+            <div className="space-y-4 max-w-sm mx-auto">
+              <a
+                href={resumeUrl}
+                download={resumeName}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-primary-600 via-indigo-600 to-primary-600 hover:bg-pos-100 text-white font-bold text-xs shadow-xl shadow-primary-600/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+              >
+                <FileDown className="w-4 h-4" />
+                <span>Download Official Resume (PDF)</span>
+              </a>
 
-            <a
-              href={resolveAssetUrl(profile.resume.url)}
-              target="_blank"
-              rel="noreferrer"
-              className="w-full py-3 rounded-2xl liquid-glass-pill text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center justify-center gap-2 hover:scale-[1.02] transition-all"
-            >
-              <ExternalLink className="w-4 h-4 text-primary-500" />
-              <span>Open in New Browser Tab</span>
-            </a>
-          </div>
-        ) : (
-          <div className="p-6 rounded-2xl bg-slate-100 dark:bg-white/5 text-xs text-slate-500 dark:text-slate-400">
-            Resume document is currently being updated. Please check back shortly or connect directly via the contact form.
-          </div>
-        )}
+              <a
+                href={resumeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full py-3 rounded-2xl liquid-glass-pill text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center justify-center gap-2 hover:scale-[1.02] transition-all cursor-pointer"
+              >
+                <ExternalLink className="w-4 h-4 text-primary-500" />
+                <span>Open in New Browser Tab</span>
+              </a>
+            </div>
+          );
+        })()}
 
         <div className="grid grid-cols-3 gap-3 mt-10 pt-8 border-t border-slate-200/60 dark:border-white/10 text-left text-xs">
           <div>

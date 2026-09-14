@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { UploadCloud, Image as ImageIcon, X, Check, Copy, FolderOpen } from 'lucide-react';
+import { UploadCloud, Image as ImageIcon, X, Check, Copy, FolderOpen, FileText, ExternalLink, Download } from 'lucide-react';
 import api from '../../services/api.js';
 import toast from 'react-hot-toast';
 import MediaPickerModal from './MediaPickerModal.jsx';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 
 export default function ImageUploadZone({
   value = '',
@@ -29,7 +30,7 @@ export default function ImageUploadZone({
   const handleUpload = async (file) => {
     if (!file) return;
 
-    if (!file.type.startsWith('image/') && !file.type.includes('pdf')) {
+    if (!file.type.startsWith('image/') && !file.type.includes('pdf') && !file.name.toLowerCase().endsWith('.pdf')) {
       toast.error('Only image and PDF files are allowed');
       return;
     }
@@ -82,6 +83,9 @@ export default function ImageUploadZone({
     if (onChange) onChange(selectedUrl, mediaObj);
   };
 
+  const resolvedUrl = resolveAssetUrl(previewUrl);
+  const isPdf = previewUrl && (previewUrl.toLowerCase().includes('.pdf') || (accept && accept.includes('pdf') && !previewUrl.match(/\.(png|jpg|jpeg|webp|gif|svg)$/i)));
+
   return (
     <div className={`space-y-2 ${className}`}>
       {/* Label and Pick from Library action */}
@@ -94,7 +98,7 @@ export default function ImageUploadZone({
         <button
           type="button"
           onClick={() => setIsPickerOpen(true)}
-          className="text-xs font-bold text-amber-500 hover:text-amber-400 flex items-center gap-1 transition"
+          className="text-xs font-bold text-amber-500 hover:text-amber-400 flex items-center gap-1 transition cursor-pointer"
         >
           <FolderOpen className="w-3.5 h-3.5" />
           <span>Choose from Library</span>
@@ -103,18 +107,36 @@ export default function ImageUploadZone({
 
       {previewUrl ? (
         <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 group bg-slate-900/10 dark:bg-black/30 p-2">
-          {previewUrl.endsWith('.pdf') ? (
-            <div className="h-36 flex flex-col items-center justify-center p-4 text-center">
-              <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
+          {isPdf ? (
+            <div className="h-44 flex flex-col items-center justify-center p-4 text-center bg-slate-950/40 rounded-xl">
+              <FileText className="w-10 h-10 text-amber-500 mb-2" />
+              <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
                 PDF Document Attached
               </span>
               <span className="text-[10px] text-slate-400 truncate max-w-xs mt-1">
                 {previewUrl}
               </span>
+              <div className="flex items-center gap-2 mt-3">
+                <a
+                  href={resolvedUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 text-xs font-bold flex items-center gap-1 transition cursor-pointer"
+                >
+                  <ExternalLink size={12} /> Preview
+                </a>
+                <a
+                  href={resolvedUrl}
+                  download="Ajit_Kumar_Resume.pdf"
+                  className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold flex items-center gap-1 transition cursor-pointer"
+                >
+                  <Download size={12} /> Download
+                </a>
+              </div>
             </div>
           ) : (
             <img
-              src={previewUrl}
+              src={resolvedUrl}
               alt="Upload preview"
               className="w-full h-44 object-cover rounded-xl"
             />
@@ -125,7 +147,7 @@ export default function ImageUploadZone({
             <button
               type="button"
               onClick={handleCopyLink}
-              className="p-2 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-black/80 transition-all shadow-md"
+              className="p-2 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-black/80 transition-all shadow-md cursor-pointer"
               title="Copy URL"
             >
               <Copy className="w-3.5 h-3.5" />
@@ -133,7 +155,7 @@ export default function ImageUploadZone({
             <button
               type="button"
               onClick={() => setIsPickerOpen(true)}
-              className="p-2 rounded-xl bg-amber-500 text-white hover:bg-amber-600 transition-all shadow-md"
+              className="p-2 rounded-xl bg-amber-500 text-white hover:bg-amber-600 transition-all shadow-md cursor-pointer"
               title="Change Asset"
             >
               <FolderOpen className="w-3.5 h-3.5" />
@@ -141,7 +163,7 @@ export default function ImageUploadZone({
             <button
               type="button"
               onClick={handleRemove}
-              className="p-2 rounded-xl bg-rose-500 text-white hover:bg-rose-600 transition-all shadow-md"
+              className="p-2 rounded-xl bg-rose-500 text-white hover:bg-rose-600 transition-all shadow-md cursor-pointer"
               title="Remove"
             >
               <X className="w-3.5 h-3.5" />

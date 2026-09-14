@@ -166,7 +166,71 @@ export function handleLocalRequest(method, url, data) {
       return { success: true, data: profile };
     }
     if (upperMethod === "PUT" || upperMethod === "PATCH") {
+      if (subOrId === "photo") {
+        let photoUrl = "/profile.jpg";
+        if (typeof FormData !== "undefined" && body instanceof FormData) {
+          const fileObj = body.get("file");
+          if (fileObj) {
+            try { photoUrl = URL.createObjectURL(fileObj); } catch (e) {}
+          }
+        } else if (body?.url) {
+          photoUrl = body.url;
+        }
+        profile.profileImage = { url: photoUrl, publicId: "profile_photo" };
+        profile.avatar = photoUrl;
+        profile.updatedAt = new Date().toISOString();
+        setStorage(STORAGE_KEYS.PROFILE, profile);
+        return { success: true, message: "Profile photo updated", data: profile };
+      }
+
+      if (subOrId === "resume") {
+        let resumeUrl = "/resume.pdf";
+        let resumeName = "Ajit_Kumar_Resume.pdf";
+        if (typeof FormData !== "undefined" && body instanceof FormData) {
+          const fileObj = body.get("file");
+          if (fileObj) {
+            resumeName = fileObj.name || resumeName;
+            try { resumeUrl = URL.createObjectURL(fileObj); } catch (e) {}
+          }
+        } else if (body?.url) {
+          resumeUrl = body.url;
+          resumeName = body.originalName || resumeName;
+        }
+        profile.resume = { url: resumeUrl, originalName: resumeName, uploadedAt: new Date().toISOString() };
+        profile.resumeUrl = resumeUrl;
+        profile.updatedAt = new Date().toISOString();
+        setStorage(STORAGE_KEYS.PROFILE, profile);
+        return { success: true, message: "Resume updated", data: profile };
+      }
+
       profile = { ...profile, ...body, updatedAt: new Date().toISOString() };
+      // Keep avatar and resumeUrl mirrors in sync
+      if (profile.profileImage?.url) profile.avatar = profile.profileImage.url;
+      if (profile.resume?.url) {
+        profile.resumeUrl = profile.resume.url;
+        // Also sync resume document collection
+        let resumes = getStorage(STORAGE_KEYS.RESUME, initialDump.resumes || []);
+        if (!Array.isArray(resumes)) resumes = [resumes];
+        const existingIdx = resumes.findIndex(r => r.url === profile.resume.url);
+        if (existingIdx >= 0) {
+          resumes = resumes.map((r, i) => ({ ...r, isActive: i === existingIdx }));
+        } else {
+          resumes = resumes.map(r => ({ ...r, isActive: false }));
+          resumes.unshift({
+            _id: "res_" + Date.now(),
+            id: "res_" + Date.now(),
+            filename: profile.resume.originalName || "Ajit_Kumar_Resume.pdf",
+            originalName: profile.resume.originalName || "Ajit_Kumar_Resume.pdf",
+            url: profile.resume.url,
+            size: 7737,
+            isActive: true,
+            version: resumes.length + 1,
+            createdAt: new Date().toISOString()
+          });
+        }
+        setStorage(STORAGE_KEYS.RESUME, resumes);
+      }
+
       setStorage(STORAGE_KEYS.PROFILE, profile);
       return { success: true, message: "Profile updated successfully", data: profile };
     }
@@ -555,13 +619,38 @@ export function handleLocalRequest(method, url, data) {
     }
 
     if (upperMethod === "POST") {
+      let fileName = "upload_" + Date.now() + ".jpg";
+      let fileSize = 150000;
+      let fileUrl = "/profile.jpg";
+      let fileType = "image/jpeg";
+
+      if (typeof FormData !== "undefined" && body instanceof FormData) {
+        const fileObj = body.get("file");
+        if (fileObj) {
+          fileName = fileObj.name || fileName;
+          fileSize = fileObj.size || fileSize;
+          fileType = fileObj.type || fileType;
+          try {
+            fileUrl = URL.createObjectURL(fileObj);
+          } catch (e) {}
+        }
+      } else if (body && typeof body === "object") {
+        fileName = body.filename || body.originalName || fileName;
+        fileSize = body.size || fileSize;
+        fileType = body.type || body.fileType || fileType;
+        fileUrl = body.url || fileUrl;
+      }
+
+      const isDoc = fileType.includes("pdf") || fileName.toLowerCase().endsWith(".pdf");
       const newMedia = {
         _id: "med_" + Date.now(),
         id: "med_" + Date.now(),
-        filename: "upload_" + Date.now() + ".jpg",
-        url: "/profile.jpg",
-        fileType: "image/jpeg",
-        size: 150000,
+        filename: fileName,
+        originalName: fileName,
+        url: fileUrl,
+        type: isDoc ? "document" : "image",
+        mimeType: fileType,
+        size: fileSize,
         createdAt: new Date().toISOString()
       };
       media.unshift(newMedia);

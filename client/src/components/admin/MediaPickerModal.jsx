@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Search, Image as ImageIcon, FileText, UploadCloud, Check } from 'lucide-react';
 import api from '../../services/api.js';
 import toast from 'react-hot-toast';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 
 export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType = 'all' }) {
   const [mediaList, setMediaList] = useState([]);
@@ -164,7 +165,7 @@ export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType
                         </div>
                       ) : (
                         <img
-                          src={m.url}
+                          src={resolveAssetUrl(m.url)}
                           alt={m.alt || m.originalName}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />

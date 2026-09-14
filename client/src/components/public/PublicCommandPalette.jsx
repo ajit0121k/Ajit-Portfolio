@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import useThemeStore from '../../store/themeStore.js';
 import api from '../../services/api.js';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 
 export default function PublicCommandPalette({ isOpen, onClose }) {
   const [query, setQuery] = useState('');
@@ -89,7 +90,7 @@ export default function PublicCommandPalette({ isOpen, onClose }) {
     { title: 'Direct Contact Form', category: 'Sections', icon: Mail, action: () => scrollTo('contact') },
     { title: 'Browse All Projects', category: 'Pages', icon: FolderGit2, action: () => { onClose(); navigate('/projects'); } },
     { title: 'Technical Journal & Articles', category: 'Pages', icon: BookOpen, action: () => { onClose(); navigate('/blog'); } },
-    { title: 'Download Official Resume (PDF)', category: 'Pages', icon: FileDown, action: () => { onClose(); window.open('/resume.pdf', '_blank'); } },
+    { title: 'Download Official Resume (PDF)', category: 'Pages', icon: FileDown, action: () => { onClose(); const a = document.createElement('a'); a.href = resolveAssetUrl('/resume.pdf'); a.download = 'Ajit_Kumar_Resume.pdf'; a.target = '_blank'; document.body.appendChild(a); a.click(); document.body.removeChild(a); } },
     { title: 'Toggle Light / Dark Mode', category: 'Preferences', icon: theme === 'dark' ? Sun : Moon, action: () => setTheme(theme === 'dark' ? 'light' : 'dark') },
   ];
 

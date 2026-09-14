@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles, MapPin, Briefcase, Calendar, Check, Layers, Cpu, Database, ShieldCheck, ArrowRight, FileDown, ExternalLink } from 'lucide-react';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 
 export default function AboutSection({ profile }) {
   const [activeStackMode, setActiveStackMode] = useState('fullstack');
@@ -8,6 +9,8 @@ export default function AboutSection({ profile }) {
   const title = profile?.title || 'Full Stack Developer & AI Engineer';
   const location = profile?.location || 'Lucknow, India';
   const years = profile?.yearsOfExperience || 2;
+  const resumeUrl = resolveAssetUrl(profile?.resume?.url || '/resume.pdf');
+  const resumeFileName = profile?.resume?.originalName || 'Ajit_Kumar_Resume.pdf';
 
   return (
     <section id="about" className="scroll-mt-24 py-16 px-4 sm:px-6 max-w-6xl mx-auto relative">
@@ -73,10 +76,11 @@ export default function AboutSection({ profile }) {
           {/* Resume Download (Warm Terracotta Pill Action) */}
           <div className="pt-2">
             <a
-              href="/api/resume/download"
+              href={resumeUrl}
+              download={resumeFileName}
               target="_blank"
               rel="noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-xs font-bold tracking-wider text-white uppercase rounded-full bg-[#c66a3d] hover:bg-[#b2572b] shadow-[0_10px_25px_-5px_rgba(198,106,61,0.4)] hover:shadow-[0_15px_35px_-5px_rgba(198,106,61,0.6)] border border-white/20 transition-all duration-300 active:scale-95 group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-xs font-bold tracking-wider text-white uppercase rounded-full bg-[#c66a3d] hover:bg-[#b2572b] shadow-[0_10px_25px_-5px_rgba(198,106,61,0.4)] hover:shadow-[0_15px_35px_-5px_rgba(198,106,61,0.6)] border border-white/20 transition-all duration-300 active:scale-95 group cursor-pointer"
               title="Download Official Resume PDF"
             >
               <FileDown className="w-4 h-4 text-white group-hover:translate-y-0.5 transition-transform" />

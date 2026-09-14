@@ -1,6 +1,8 @@
 import Profile from '../models/Profile.js';
+import Resume from '../models/Resume.js';
 import * as mediaService from './mediaService.js';
 import ApiError from '../utils/ApiError.js';
+import logger from '../utils/logger.js';
 
 export const getProfile = async () => {
   let profile = await Profile.findOne();
@@ -25,6 +27,33 @@ export const updateProfile = async (data) => {
     Object.assign(profile, data);
   }
   await profile.save();
+
+  // If a resume URL was updated, also sync active status in Resume collection
+  if (data.resume?.url) {
+    try {
+      await Resume.updateMany({}, { isActive: false });
+      let existing = await Resume.findOne({ url: data.resume.url });
+      if (existing) {
+        existing.isActive = true;
+        await existing.save();
+      } else {
+        const count = await Resume.countDocuments();
+        await Resume.create({
+          originalName: data.resume.originalName || 'Ajit_Kumar_Resume.pdf',
+          filename: data.resume.originalName || 'Ajit_Kumar_Resume.pdf',
+          url: data.resume.url,
+          publicId: data.resume.publicId,
+          size: data.resume.size || 7737,
+          mimeType: 'application/pdf',
+          isActive: true,
+          version: count + 1,
+        });
+      }
+    } catch (err) {
+      logger.warn(`Failed to sync Resume collection from profile update: ${err.message}`);
+    }
+  }
+
   return profile;
 };
 

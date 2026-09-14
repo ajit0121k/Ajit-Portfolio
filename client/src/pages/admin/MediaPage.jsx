@@ -16,6 +16,7 @@ import api from '../../services/api';
 import toast from 'react-hot-toast';
 import ConfirmDialog from '../../components/admin/ConfirmDialog';
 import ImageUploadZone from '../../components/admin/ImageUploadZone';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 
 const MediaPage = () => {
   const [media, setMedia] = useState([]);
@@ -185,7 +186,7 @@ const MediaPage = () => {
                 <div className="aspect-square bg-slate-100 dark:bg-[#0c160e] flex items-center justify-center overflow-hidden relative">
                   {item.type === 'image' ? (
                     <img 
-                      src={item.url} 
+                      src={resolveAssetUrl(item.url)} 
                       alt={item.alt || item.filename} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                     />
@@ -282,7 +283,7 @@ const MediaPage = () => {
                 </button>
 
                 <a 
-                  href={previewMedia.url} 
+                  href={resolveAssetUrl(previewMedia.url)} 
                   target="_blank" 
                   rel="noreferrer" 
                   className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-1.5"
@@ -296,7 +297,7 @@ const MediaPage = () => {
                   onClick={() => {
                     const idToDelete = previewMedia.id || previewMedia._id;
                     setDeleteId(idToDelete);
-                  }}
+                  }} 
                   className="px-3 py-1.5 rounded-xl bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white text-xs font-bold border border-rose-500/30 transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Trash2 size={14} />
@@ -309,7 +310,7 @@ const MediaPage = () => {
             <div className="flex items-center justify-center min-h-[300px] max-h-[65vh] bg-[#0c160e] rounded-2xl p-4 overflow-hidden border border-white/5">
               {previewMedia.type === 'image' ? (
                 <img 
-                  src={previewMedia.url} 
+                  src={resolveAssetUrl(previewMedia.url)} 
                   alt={previewMedia.filename} 
                   className="max-w-full max-h-[60vh] object-contain rounded-xl shadow-lg" 
                 />
@@ -318,7 +319,7 @@ const MediaPage = () => {
                   <FileText size={64} className="text-emerald-500 mx-auto" />
                   <p className="text-xs text-slate-300 font-medium">Document Preview</p>
                   <a 
-                    href={previewMedia.url} 
+                    href={resolveAssetUrl(previewMedia.url)} 
                     target="_blank" 
                     rel="noreferrer" 
                     className="inline-block px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-500 transition"
