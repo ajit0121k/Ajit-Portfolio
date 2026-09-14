@@ -852,7 +852,16 @@ export function handleLocalRequest(method, url, data) {
   // 14. ACTIVITY
   if (resource === "activity") {
     const logs = getStorage(STORAGE_KEYS.ACTIVITY, initialDump.activitylogs || []);
-    return { success: true, data: logs };
+    if (subOrId === "recent") {
+      return { success: true, data: logs.slice(0, 10) };
+    }
+    return {
+      success: true,
+      data: {
+        activities: logs,
+        total: logs.length,
+      },
+    };
   }
 
   // 15. SEO
