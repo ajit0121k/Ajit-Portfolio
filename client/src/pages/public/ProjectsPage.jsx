@@ -11,6 +11,7 @@ import {
   Tag,
 } from 'lucide-react';
 import api from '../../services/api.js';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
@@ -18,16 +19,19 @@ export default function ProjectsPage() {
   const [selectedTech, setSelectedTech] = useState('All');
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchProjects = async () => {
+    try {
+      const { data } = await api.get('/projects/published');
+      setProjects(data.data?.projects || data.projects || []);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  usePortfolioSync(['projects'], fetchProjects);
+
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const { data } = await api.get('/projects/published');
-        setProjects(data.data?.projects || data.projects || []);
-      } catch (e) {
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchProjects();
   }, []);
 

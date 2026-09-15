@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, Calendar, Clock, Tag, Search, ArrowUpRight, Sparkles } from 'lucide-react';
 import api from '../../services/api.js';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function BlogPage() {
   const [posts, setPosts] = useState([]);
@@ -10,20 +11,23 @@ export default function BlogPage() {
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchBlog = async () => {
+    try {
+      const [postsRes, tagsRes] = await Promise.all([
+        api.get('/blog/published'),
+        api.get('/blog/tags'),
+      ]);
+      setPosts(postsRes.data.data?.posts || postsRes.data.posts || []);
+      setTags(tagsRes.data.data || tagsRes.data || []);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  usePortfolioSync(['blog'], fetchBlog);
+
   useEffect(() => {
-    const fetchBlog = async () => {
-      try {
-        const [postsRes, tagsRes] = await Promise.all([
-          api.get('/blog/published'),
-          api.get('/blog/tags'),
-        ]);
-        setPosts(postsRes.data.data?.posts || postsRes.data.posts || []);
-        setTags(tagsRes.data.data || tagsRes.data || []);
-      } catch (e) {
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchBlog();
   }, []);
 

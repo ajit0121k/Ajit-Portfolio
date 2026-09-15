@@ -2,26 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { GraduationCap, Award, ExternalLink, Sparkles, Calendar, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../services/api.js';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function EducationSection() {
   const [education, setEducation] = useState([]);
   const [certifications, setCertifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchEduAndCerts = async () => {
+    try {
+      const [eduRes, certRes] = await Promise.all([
+        api.get('/education/visible'),
+        api.get('/certifications/visible'),
+      ]);
+      setEducation(eduRes.data.data || eduRes.data || []);
+      setCertifications(certRes.data.data || certRes.data || []);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  usePortfolioSync(['education', 'certifications'], fetchEduAndCerts);
+
   useEffect(() => {
-    const fetchEduAndCerts = async () => {
-      try {
-        const [eduRes, certRes] = await Promise.all([
-          api.get('/education/visible'),
-          api.get('/certifications/visible'),
-        ]);
-        setEducation(eduRes.data.data || eduRes.data || []);
-        setCertifications(certRes.data.data || certRes.data || []);
-      } catch (e) {
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchEduAndCerts();
   }, []);
 

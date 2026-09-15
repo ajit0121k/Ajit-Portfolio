@@ -3,26 +3,30 @@ import { resolveAssetUrl } from '../../utils/assetUrl.js';
 import { FileDown, Sparkles, ExternalLink, ArrowLeft, CheckCircle2, ShieldCheck } from 'lucide-react';
 import api from '../../services/api.js';
 import { Link } from 'react-router-dom';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function ResumePage() {
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const { data } = await api.get('/profile');
-        setProfile(data.data || data);
+  const fetchProfile = async () => {
+    try {
+      const { data } = await api.get('/profile');
+      setProfile(data.data || data);
 
-        // Track resume download intent
-        try {
-          api.post('/analytics/track', { type: 'resume_download', path: '/resume' });
-        } catch (e) {}
-      } catch (e) {
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      // Track resume download intent
+      try {
+        api.post('/analytics/track', { type: 'resume_download', path: '/resume' });
+      } catch (e) {}
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  usePortfolioSync(['profile', 'resume'], fetchProfile);
+
+  useEffect(() => {
     fetchProfile();
   }, []);
 

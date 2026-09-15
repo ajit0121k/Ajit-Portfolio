@@ -10,21 +10,25 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../services/api.js';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function ProjectsSection() {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchProjects = async () => {
+    try {
+      const { data } = await api.get('/projects/published');
+      setProjects(data.data?.projects || data.projects || []);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  usePortfolioSync(['projects'], fetchProjects);
+
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const { data } = await api.get('/projects/published');
-        setProjects(data.data?.projects || data.projects || []);
-      } catch (e) {
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchProjects();
   }, []);
 

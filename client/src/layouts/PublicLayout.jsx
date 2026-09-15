@@ -5,6 +5,7 @@ import Footer from '../components/public/Footer.jsx';
 import PublicCommandPalette from '../components/public/PublicCommandPalette.jsx';
 import MaintenanceScreen from '../components/public/MaintenanceScreen.jsx';
 import api from '../services/api.js';
+import { usePortfolioSync } from '../services/syncBus.js';
 
 export default function PublicLayout() {
   const [profile, setProfile] = useState(null);
@@ -27,6 +28,9 @@ export default function PublicLayout() {
       setLoadingMeta(false);
     }
   };
+
+  // Keep profile and settings synchronized with Admin Panel changes in real time
+  usePortfolioSync(['profile', 'settings'], fetchMeta);
 
   useEffect(() => {
     // Disable browser's automatic scroll restoration on refresh

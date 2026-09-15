@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import api from '../../services/api.js';
 import toast from 'react-hot-toast';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function ProjectDetailPage() {
   const { slug } = useParams();
@@ -26,28 +27,31 @@ export default function ProjectDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(null);
 
-  useEffect(() => {
-    const fetchProject = async () => {
-      setIsLoading(true);
-      try {
-        const { data } = await api.get(`/projects/slug/${slug}`);
-        const projData = data.data || data;
-        setProject(projData);
+  const fetchProject = async () => {
+    try {
+      const { data } = await api.get(`/projects/slug/${slug}`);
+      const projData = data.data || data;
+      setProject(projData);
 
-        // Fetch related projects
-        if (projData?.id || projData?._id) {
-          try {
-            const relRes = await api.get(`/projects/slug/${slug}/related`);
-            setRelated(relRes.data.data || relRes.data || []);
-          } catch (e) {}
-        }
-      } catch (err) {
-        toast.error('Project not found');
-        navigate('/projects');
-      } finally {
-        setIsLoading(false);
+      // Fetch related projects
+      if (projData?.id || projData?._id) {
+        try {
+          const relRes = await api.get(`/projects/slug/${slug}/related`);
+          setRelated(relRes.data.data || relRes.data || []);
+        } catch (e) {}
       }
-    };
+    } catch (err) {
+      toast.error('Project not found');
+      navigate('/projects');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  usePortfolioSync(['projects'], fetchProject);
+
+  useEffect(() => {
+    setIsLoading(true);
     fetchProject();
   }, [slug, navigate]);
 

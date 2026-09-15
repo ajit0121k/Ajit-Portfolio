@@ -2,21 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { resolveAssetUrl } from '../../utils/assetUrl.js';
 import { MessageSquareQuote, Quote, Star } from 'lucide-react';
 import api from '../../services/api.js';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function TestimonialsSection() {
   const [testimonials, setTestimonials] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchTestimonials = async () => {
+    try {
+      const { data } = await api.get('/testimonials/visible');
+      setTestimonials(data.data || data || []);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  usePortfolioSync(['testimonials'], fetchTestimonials);
+
   useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const { data } = await api.get('/testimonials/visible');
-        setTestimonials(data.data || data || []);
-      } catch (e) {
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchTestimonials();
   }, []);
 

@@ -15,23 +15,27 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../services/api.js';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function SkillsSection() {
   const [skills, setSkills] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchSkills = async () => {
+    try {
+      const { data } = await api.get('/skills/visible');
+      setSkills(data.data || data || []);
+    } catch (e) {
+      console.error('Failed to fetch skills:', e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  usePortfolioSync(['skills'], fetchSkills);
+
   useEffect(() => {
-    const fetchSkills = async () => {
-      try {
-        const { data } = await api.get('/skills/visible');
-        setSkills(data.data || data || []);
-      } catch (e) {
-        console.error('Failed to fetch skills:', e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchSkills();
   }, []);
 

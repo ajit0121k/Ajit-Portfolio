@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import ThemeToggle from './ThemeToggle.jsx';
 import api from '../../services/api.js';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function Navbar({ onOpenCommandPalette }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,17 +20,20 @@ export default function Navbar({ onOpenCommandPalette }) {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const fetchPublicData = async () => {
+    try {
+      const [settingsRes, profileRes] = await Promise.all([
+        api.get('/settings/public'),
+        api.get('/profile'),
+      ]);
+      setSettings(settingsRes.data.data || settingsRes.data);
+      setProfile(profileRes.data.data || profileRes.data);
+    } catch (e) {}
+  };
+
+  usePortfolioSync(['profile', 'settings'], fetchPublicData);
+
   useEffect(() => {
-    const fetchPublicData = async () => {
-      try {
-        const [settingsRes, profileRes] = await Promise.all([
-          api.get('/settings/public'),
-          api.get('/profile'),
-        ]);
-        setSettings(settingsRes.data.data || settingsRes.data);
-        setProfile(profileRes.data.data || profileRes.data);
-      } catch (e) {}
-    };
     fetchPublicData();
   }, []);
 

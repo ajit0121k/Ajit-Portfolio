@@ -2,21 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Briefcase, Calendar, MapPin, Sparkles, Building2, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../services/api.js';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function ExperienceTimeline() {
   const [experiences, setExperiences] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchExperience = async () => {
+    try {
+      const { data } = await api.get('/experience/visible');
+      setExperiences(data.data || data || []);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  usePortfolioSync(['experience'], fetchExperience);
+
   useEffect(() => {
-    const fetchExperience = async () => {
-      try {
-        const { data } = await api.get('/experience/visible');
-        setExperiences(data.data || data || []);
-      } catch (e) {
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchExperience();
   }, []);
 

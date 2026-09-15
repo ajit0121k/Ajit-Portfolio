@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Tag, Share2, Sparkles, User } from 'lucide-react';
 import api from '../../services/api.js';
 import toast from 'react-hot-toast';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function BlogPostPage() {
   const { slug } = useParams();
@@ -11,19 +12,22 @@ export default function BlogPostPage() {
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchPost = async () => {
+    try {
+      const { data } = await api.get(`/blog/slug/${slug}`);
+      setPost(data.data || data);
+    } catch (err) {
+      toast.error('Article not found');
+      navigate('/blog');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  usePortfolioSync(['blog'], fetchPost);
+
   useEffect(() => {
-    const fetchPost = async () => {
-      setIsLoading(true);
-      try {
-        const { data } = await api.get(`/blog/slug/${slug}`);
-        setPost(data.data || data);
-      } catch (err) {
-        toast.error('Article not found');
-        navigate('/blog');
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    setIsLoading(true);
     fetchPost();
   }, [slug, navigate]);
 

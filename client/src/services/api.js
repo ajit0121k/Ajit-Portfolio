@@ -1,6 +1,7 @@
 import axios from 'axios';
 import useAuthStore from '../store/authStore.js';
 import { handleLocalRequest } from './localDataService.js';
+import { notifyDataChange, extractEntityFromUrl } from './syncBus.js';
 
 const isStaticHosted = 
   typeof window !== 'undefined' && 
@@ -42,7 +43,18 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Automatically notify sync bus whenever a mutation completes successfully
+    const method = response.config?.method?.toLowerCase();
+    if (['post', 'put', 'patch', 'delete'].includes(method)) {
+      const url = response.config?.url || '';
+      if (!url.includes('/analytics/track') && !url.includes('/auth/refresh')) {
+        const entity = extractEntityFromUrl(url);
+        notifyDataChange(entity);
+      }
+    }
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
 

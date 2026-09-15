@@ -1,4 +1,5 @@
 import initialDump from "../constants/initialDbDump.json";
+import { notifyDataChange } from "./syncBus.js";
 
 const STORAGE_KEYS = {
   PROFILE: "portfolio_cms_profile",
@@ -18,7 +19,25 @@ const STORAGE_KEYS = {
   VERSION: "portfolio_cms_dump_version",
 };
 
+const KEY_TO_ENTITY = {
+  [STORAGE_KEYS.PROFILE]: "profile",
+  [STORAGE_KEYS.PROJECTS]: "projects",
+  [STORAGE_KEYS.SKILLS]: "skills",
+  [STORAGE_KEYS.EXPERIENCE]: "experience",
+  [STORAGE_KEYS.EDUCATION]: "education",
+  [STORAGE_KEYS.CERTIFICATIONS]: "certifications",
+  [STORAGE_KEYS.TESTIMONIALS]: "testimonials",
+  [STORAGE_KEYS.MESSAGES]: "messages",
+  [STORAGE_KEYS.MEDIA]: "media",
+  [STORAGE_KEYS.SETTINGS]: "settings",
+  [STORAGE_KEYS.SEO]: "seo",
+  [STORAGE_KEYS.BLOG]: "blog",
+  [STORAGE_KEYS.RESUME]: "resume",
+  [STORAGE_KEYS.ACTIVITY]: "activity",
+};
+
 const CURRENT_VERSION = "2026_09_13_v7";
+let isInitializing = false;
 
 function getStorage(key, defaultVal) {
   try {
@@ -32,17 +51,22 @@ function getStorage(key, defaultVal) {
 function setStorage(key, val) {
   try {
     localStorage.setItem(key, JSON.stringify(val));
+    if (!isInitializing && KEY_TO_ENTITY[key]) {
+      notifyDataChange(KEY_TO_ENTITY[key]);
+    }
   } catch (e) {}
 }
 
 export function initLocalData() {
   if (typeof window === "undefined") return;
-  const storedVersion = localStorage.getItem(STORAGE_KEYS.VERSION);
-  const shouldReset = storedVersion !== CURRENT_VERSION;
+  isInitializing = true;
+  try {
+    const storedVersion = localStorage.getItem(STORAGE_KEYS.VERSION);
+    const shouldReset = storedVersion !== CURRENT_VERSION;
 
-  if (shouldReset || !localStorage.getItem(STORAGE_KEYS.PROFILE)) {
-    const prof = initialDump.profiles?.[0] || {};
-    setStorage(STORAGE_KEYS.PROFILE, prof);
+    if (shouldReset || !localStorage.getItem(STORAGE_KEYS.PROFILE)) {
+      const prof = initialDump.profiles?.[0] || {};
+      setStorage(STORAGE_KEYS.PROFILE, prof);
     setStorage(STORAGE_KEYS.PROJECTS, initialDump.projects || []);
     setStorage(STORAGE_KEYS.SKILLS, initialDump.skills || []);
     setStorage(STORAGE_KEYS.EXPERIENCE, initialDump.experiences || []);
@@ -69,6 +93,9 @@ export function initLocalData() {
       robots: "index, follow"
     });
     setStorage(STORAGE_KEYS.VERSION, CURRENT_VERSION);
+    }
+  } finally {
+    isInitializing = false;
   }
 }
 
