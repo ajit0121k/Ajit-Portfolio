@@ -16,16 +16,22 @@ export default function TopBar({ onOpenCommandPalette }) {
     const path = pathname.replace('/admin/', '').split('/')[0];
     const titles = {
       dashboard: 'Dashboard Overview',
-      profile: 'Developer Profile & Resume',
+      profile: 'Developer Profile & Bio',
+      resume: 'Resume & CV Document',
       projects: 'Project Portfolio',
       skills: 'Skills & Proficiencies',
       experience: 'Career & Work Experience',
       education: 'Academic Background',
       certifications: 'Licenses & Certifications',
+      blog: 'Technical Blog & Articles',
       testimonials: 'Client Testimonials & Reviews',
       messages: 'Contact Messages & Inquiries',
       media: 'Media & Uploads Library',
-      settings: 'Site & Section Settings',
+      analytics: 'Visitor & Traffic Analytics',
+      activity: 'Security & Activity Audit',
+      settings: 'Site Settings & SEO',
+      seo: 'Search Engine Optimization (SEO)',
+      preview: 'Live Portfolio Sandbox',
     };
     return titles[path] || 'Admin CMS';
   };

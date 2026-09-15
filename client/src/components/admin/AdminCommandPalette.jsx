@@ -9,7 +9,6 @@ import {
   Briefcase,
   GraduationCap,
   Award,
-  MessageSquareQuote,
   Mail,
   Image,
   Settings,
@@ -18,6 +17,12 @@ import {
   Moon,
   Sun,
   X,
+  FileText,
+  BookOpen,
+  BarChart3,
+  Globe,
+  Activity,
+  Eye,
 } from 'lucide-react';
 import useThemeStore from '../../store/themeStore.js';
 
@@ -26,21 +31,33 @@ export default function AdminCommandPalette({ isOpen, onClose }) {
   const navigate = useNavigate();
   const { theme, setTheme } = useThemeStore();
 
+  const getPublicSiteUrl = () => {
+    return typeof window !== 'undefined' && window.location.hostname.includes('github.io')
+      ? 'https://ajit0121k.github.io/Ajit-Portfolio/'
+      : '/';
+  };
+
   const commands = [
-    { title: 'Dashboard', category: 'Navigation', icon: LayoutDashboard, action: () => navigate('/admin/dashboard') },
-    { title: 'Profile Settings (Bio, Resume, Links)', category: 'Portfolio Edit', icon: User, action: () => navigate('/admin/profile') },
-    { title: 'Projects (Manage Case Studies)', category: 'Portfolio Edit', icon: FolderGit2, action: () => navigate('/admin/projects') },
+    { title: 'Dashboard Overview', category: 'Navigation', icon: LayoutDashboard, action: () => navigate('/admin/dashboard') },
+    { title: 'Profile & Developer Bio', category: 'Portfolio Edit', icon: User, action: () => navigate('/admin/profile') },
+    { title: 'Resume & CV (Upload PDF)', category: 'Portfolio Edit', icon: FileText, action: () => navigate('/admin/resume') },
+    { title: 'Projects (Manage Portfolio)', category: 'Portfolio Edit', icon: FolderGit2, action: () => navigate('/admin/projects') },
     { title: 'Add New Project', category: 'Quick Action', icon: PlusCircle, action: () => navigate('/admin/projects/new') },
     { title: 'Skills & Proficiencies', category: 'Portfolio Edit', icon: Cpu, action: () => navigate('/admin/skills') },
-    { title: 'Career & Internship Experience', category: 'Portfolio Edit', icon: Briefcase, action: () => navigate('/admin/experience') },
+    { title: 'Career & Experience', category: 'Portfolio Edit', icon: Briefcase, action: () => navigate('/admin/experience') },
     { title: 'Education & Academics', category: 'Portfolio Edit', icon: GraduationCap, action: () => navigate('/admin/education') },
     { title: 'Licenses & Certifications', category: 'Portfolio Edit', icon: Award, action: () => navigate('/admin/certifications') },
-    { title: 'Testimonials & Reviews', category: 'Portfolio Edit', icon: MessageSquareQuote, action: () => navigate('/admin/testimonials') },
-    { title: 'Messages & Inquiries', category: 'Inbox', icon: Mail, action: () => navigate('/admin/messages') },
+    { title: 'Articles & Blog Posts', category: 'Portfolio Edit', icon: BookOpen, action: () => navigate('/admin/blog') },
+    { title: 'Write New Blog Article', category: 'Quick Action', icon: PlusCircle, action: () => navigate('/admin/blog/new') },
+    { title: 'Messages & Inquiries Inbox', category: 'Inbox', icon: Mail, action: () => navigate('/admin/messages') },
     { title: 'Media & Uploads Library', category: 'Assets', icon: Image, action: () => navigate('/admin/media') },
-    { title: 'Site & Section Settings', category: 'Settings', icon: Settings, action: () => navigate('/admin/settings') },
-    { title: 'View Live Public Site', category: 'Quick Action', icon: ExternalLink, action: () => window.open('/', '_blank') },
-    { title: 'Toggle Light / Dark Mode', category: 'Theme', icon: Moon, action: () => setTheme(theme === 'dark' ? 'light' : 'dark') },
+    { title: 'Visitor & Traffic Analytics', category: 'Metrics', icon: BarChart3, action: () => navigate('/admin/analytics') },
+    { title: 'Site Settings & SEO', category: 'Settings', icon: Settings, action: () => navigate('/admin/settings') },
+    { title: 'SEO & Meta Tags Settings', category: 'Settings', icon: Globe, action: () => navigate('/admin/settings?tab=seo') },
+    { title: 'Security & Activity Audit', category: 'System', icon: Activity, action: () => navigate('/admin/activity') },
+    { title: 'Live Responsive Sandbox Preview', category: 'Preview', icon: Eye, action: () => navigate('/admin/preview') },
+    { title: 'View Live Public Site', category: 'Quick Action', icon: ExternalLink, action: () => window.open(getPublicSiteUrl(), '_blank') },
+    { title: 'Toggle Dark / Light Mode', category: 'Theme', icon: Moon, action: () => setTheme(theme === 'dark' ? 'light' : 'dark') },
   ];
 
   const filteredCommands = commands.filter((cmd) =>

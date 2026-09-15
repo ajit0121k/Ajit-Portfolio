@@ -13,13 +13,34 @@ export default function AdminLayout() {
   useEffect(() => {
     const fetchUnread = async () => {
       try {
-        const { data } = await api.get('/messages/unread-count');
-        setUnreadCount(data.data?.count || data.count || 0);
+        let count = 0;
+        try {
+          const { data } = await api.get('/messages/unread-count');
+          count = data.data?.count ?? data.count ?? 0;
+        } catch (e) {}
+
+        const localRaw = localStorage.getItem('portfolio_cms_messages');
+        if (localRaw) {
+          const localList = JSON.parse(localRaw);
+          if (Array.isArray(localList)) {
+            const unreadLocal = localList.filter(m => !m.read && m.status !== 'read').length;
+            count = Math.max(count, unreadLocal);
+          }
+        }
+        setUnreadCount(count);
       } catch (err) {
         // silent fail on unread count poll
       }
     };
     fetchUnread();
+
+    const onUpdate = () => fetchUnread();
+    window.addEventListener('storage', onUpdate);
+    window.addEventListener('portfolio_message_received', onUpdate);
+    return () => {
+      window.removeEventListener('storage', onUpdate);
+      window.removeEventListener('portfolio_message_received', onUpdate);
+    };
   }, []);
 
   // Global Ctrl+K / Cmd+K listener
