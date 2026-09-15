@@ -63,37 +63,40 @@ export default function TopBar({ onOpenCommandPalette }) {
         </button>
 
         {/* Theme Switcher */}
-        <div className="flex items-center p-1 bg-[#edf2ed] dark:bg-[#0c160e] shadow-[inset_0_1px_3px_rgba(0,0,0,0.08)] border border-black/5 dark:border-white/5 rounded-full">
+        <div className="flex items-center p-1 bg-[#edf2ed] dark:bg-[#0c160e] shadow-[inset_0_1px_3px_rgba(0,0,0,0.08)] border border-black/5 dark:border-white/10 rounded-full">
           <button
+            type="button"
             onClick={() => setTheme('light')}
             className={`p-1.5 rounded-full text-xs transition-all cursor-pointer ${
               theme === 'light'
-                ? 'bg-white text-amber-500 shadow-sm'
-                : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
+                ? 'bg-white text-amber-500 shadow-md ring-1 ring-black/5'
+                : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
             }`}
-            title="Light Theme"
+            title="Light Mode"
           >
             <Sun className="w-3.5 h-3.5" />
           </button>
           <button
+            type="button"
             onClick={() => setTheme('dark')}
             className={`p-1.5 rounded-full text-xs transition-all cursor-pointer ${
               theme === 'dark'
-                ? 'bg-[#153f31] text-emerald-300 shadow-sm'
-                : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
+                ? 'bg-emerald-600 text-white shadow-md ring-1 ring-emerald-400/40'
+                : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
             }`}
-            title="Dark Theme"
+            title="Dark Mode"
           >
             <Moon className="w-3.5 h-3.5" />
           </button>
           <button
+            type="button"
             onClick={() => setTheme('system')}
             className={`p-1.5 rounded-full text-xs transition-all cursor-pointer ${
               theme === 'system'
-                ? 'bg-white dark:bg-slate-800 text-emerald-600 shadow-sm'
-                : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
+                ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-300 shadow-md'
+                : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
             }`}
-            title="System Theme"
+            title="System Auto Mode"
           >
             <Laptop className="w-3.5 h-3.5" />
           </button>

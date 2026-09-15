@@ -258,16 +258,16 @@ const MediaPage = () => {
           onClick={() => setPreviewMedia(null)}
         >
           <div 
-            className="relative max-w-4xl max-h-[90vh] w-full flex flex-col bg-[#141a16] border border-white/10 rounded-3xl overflow-hidden shadow-2xl p-6 space-y-4" 
+            className="relative max-w-4xl max-h-[90vh] w-full flex flex-col bg-white dark:bg-[#141a16] border border-slate-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-2xl p-6 space-y-4" 
             onClick={e => e.stopPropagation()}
           >
             {/* Modal Header */}
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-white text-sm truncate max-w-md">
+                <h3 className="font-bold text-slate-900 dark:text-white text-sm truncate max-w-md">
                   {previewMedia.filename || previewMedia.originalName}
                 </h3>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   {formatBytes(previewMedia.size)} • {previewMedia.type?.toUpperCase()}
                 </p>
               </div>
@@ -276,9 +276,9 @@ const MediaPage = () => {
                 <button 
                   type="button"
                   onClick={() => handleCopyUrl(previewMedia.url, previewMedia.id || previewMedia._id)} 
-                  className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 text-slate-700 dark:text-white text-xs font-bold transition flex items-center gap-1.5"
                 >
-                  {copiedId === (previewMedia.id || previewMedia._id) ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
+                  {copiedId === (previewMedia.id || previewMedia._id) ? <Check size={14} className="text-emerald-500 font-bold" /> : <Copy size={14} />}
                   <span>Copy Link</span>
                 </button>
 
@@ -298,7 +298,7 @@ const MediaPage = () => {
                     const idToDelete = previewMedia.id || previewMedia._id;
                     setDeleteId(idToDelete);
                   }} 
-                  className="px-3 py-1.5 rounded-xl bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white text-xs font-bold border border-rose-500/30 transition flex items-center gap-1.5 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-600 text-rose-500 hover:text-white text-xs font-bold border border-rose-500/30 transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <Trash2 size={14} />
                   <span>Delete File</span>
@@ -307,7 +307,7 @@ const MediaPage = () => {
             </div>
 
             {/* Modal Preview Body */}
-            <div className="flex items-center justify-center min-h-[300px] max-h-[65vh] bg-[#0c160e] rounded-2xl p-4 overflow-hidden border border-white/5">
+            <div className="flex items-center justify-center min-h-[300px] max-h-[65vh] bg-slate-100 dark:bg-[#0c160e] rounded-2xl p-4 overflow-hidden border border-slate-200 dark:border-white/5">
               {previewMedia.type === 'image' ? (
                 <img 
                   src={resolveAssetUrl(previewMedia.url)} 
@@ -317,7 +317,7 @@ const MediaPage = () => {
               ) : (
                 <div className="text-center p-8 space-y-3">
                   <FileText size={64} className="text-emerald-500 mx-auto" />
-                  <p className="text-xs text-slate-300 font-medium">Document Preview</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">Document Preview</p>
                   <a 
                     href={resolveAssetUrl(previewMedia.url)} 
                     target="_blank" 
@@ -334,7 +334,7 @@ const MediaPage = () => {
               <button 
                 type="button"
                 onClick={() => setPreviewMedia(null)}
-                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition"
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 text-xs font-bold transition"
               >
                 Close Preview
               </button>

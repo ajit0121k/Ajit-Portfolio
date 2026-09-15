@@ -198,7 +198,7 @@ export default function SkillsPage() {
       {/* Filter and Search Bar */}
       <div className="liquid-glass-card p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
         {/* Category Tabs */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-white/5 border border-white/10">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -206,7 +206,7 @@ export default function SkillsPage() {
               className={`px-3 py-1 rounded-xl text-xs font-bold transition ${
                 activeCategory === cat
                   ? 'bg-amber-500 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {cat}
@@ -222,7 +222,7 @@ export default function SkillsPage() {
             placeholder="Search skills..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 pr-4 py-1.5 w-full rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:ring-1 focus:ring-amber-400 outline-none"
+            className="pl-10 pr-4 py-1.5 w-full rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
           />
         </div>
       </div>
@@ -239,12 +239,12 @@ export default function SkillsPage() {
             <div>
               <div className="flex justify-between items-start mb-2">
                 <div>
-                  <h3 className="text-base font-bold text-white">{skill.name}</h3>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">{skill.name}</h3>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
                       {skill.category}
                     </span>
-                    <span className="text-[10px] font-medium text-slate-400">
+                    <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
                       {skill.level || 'Advanced'}
                     </span>
                   </div>
@@ -256,7 +256,7 @@ export default function SkillsPage() {
                     type="button"
                     onClick={() => handleMove(idx, -1)}
                     disabled={idx === 0}
-                    className="p-1 rounded bg-white/5 text-slate-400 hover:text-white disabled:opacity-20"
+                    className="p-1 rounded bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white disabled:opacity-20"
                     title="Move Up"
                   >
                     <ArrowUp size={12} />
@@ -265,7 +265,7 @@ export default function SkillsPage() {
                     type="button"
                     onClick={() => handleMove(idx, 1)}
                     disabled={idx === filteredSkills.length - 1}
-                    className="p-1 rounded bg-white/5 text-slate-400 hover:text-white disabled:opacity-20"
+                    className="p-1 rounded bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white disabled:opacity-20"
                     title="Move Down"
                   >
                     <ArrowDown size={12} />
@@ -273,7 +273,7 @@ export default function SkillsPage() {
                   <button
                     type="button"
                     onClick={() => toggleVisibility(skill)}
-                    className="p-1 rounded bg-white/5 text-slate-400 hover:text-amber-400"
+                    className="p-1 rounded bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400"
                     title={skill.visible ? 'Hide from public portfolio' : 'Show on public portfolio'}
                   >
                     {skill.visible ? <Eye size={14} /> : <EyeOff size={14} />}
@@ -283,11 +283,11 @@ export default function SkillsPage() {
 
               {/* Progress bar */}
               <div className="mt-3">
-                <div className="flex justify-between text-[11px] text-slate-400 font-bold mb-1">
+                <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-bold mb-1">
                   <span>Proficiency</span>
-                  <span className="text-amber-400 font-mono">{skill.proficiency || 80}%</span>
+                  <span className="text-amber-500 font-mono">{skill.proficiency || 80}%</span>
                 </div>
-                <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+                <div className="w-full bg-slate-200 dark:bg-white/10 rounded-full h-1.5 overflow-hidden">
                   <div
                     className="bg-gradient-to-r from-amber-500 to-orange-500 h-1.5 rounded-full"
                     style={{ width: `${skill.proficiency || 80}%` }}
@@ -296,14 +296,14 @@ export default function SkillsPage() {
               </div>
             </div>
 
-            <div className="pt-3 mt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
+            <div className="pt-3 mt-3 border-t border-slate-200 dark:border-white/10 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
               <span>{skill.years ? `${skill.years}+ Years Experience` : 'Production Ready'}</span>
 
               <div className="flex items-center gap-1.5">
                 <button
                   type="button"
                   onClick={() => openModal(skill)}
-                  className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-amber-400 transition"
+                  className="p-1.5 rounded-lg bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 transition"
                   title="Edit Skill"
                 >
                   <Edit2 size={13} />
@@ -311,7 +311,7 @@ export default function SkillsPage() {
                 <button
                   type="button"
                   onClick={() => setDeleteId(skill._id || skill.id)}
-                  className="p-1.5 rounded-lg bg-white/5 hover:bg-rose-500/20 text-slate-300 hover:text-rose-400 transition"
+                  className="p-1.5 rounded-lg bg-slate-100 dark:bg-white/5 hover:bg-rose-500/20 text-slate-600 dark:text-slate-300 hover:text-rose-500 dark:hover:text-rose-400 transition"
                   title="Delete Skill"
                 >
                   <Trash2 size={13} />
@@ -323,10 +323,10 @@ export default function SkillsPage() {
       </div>
 
       {filteredSkills.length === 0 && (
-        <div className="text-center py-16 liquid-glass-card border-dashed border-white/15">
-          <Cpu className="w-12 h-12 text-slate-500 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-white">No Skills in this Category</h3>
-          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+        <div className="text-center py-16 liquid-glass-card border-dashed border-slate-300 dark:border-white/15">
+          <Cpu className="w-12 h-12 text-slate-400 dark:text-slate-500 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">No Skills in this Category</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
             Click "Add New Skill" to add technologies to your stack.
           </p>
         </div>
@@ -335,14 +335,14 @@ export default function SkillsPage() {
       {/* Add / Edit Skill Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
-          <div className="w-full max-w-md liquid-glass-container rounded-3xl p-6 border border-white/20 shadow-2xl bg-slate-900/95">
-            <h2 className="text-lg font-bold text-white mb-4">
+          <div className="w-full max-w-md rounded-3xl p-6 border border-slate-200 dark:border-white/20 shadow-2xl bg-white dark:bg-slate-900/95">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
               {editId ? 'Edit Technical Skill' : 'Add New Technical Skill'}
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">
                   Skill Name *
                 </label>
                 <input
@@ -351,19 +351,19 @@ export default function SkillsPage() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. React.js, Python, MongoDB"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">
                     Category
                   </label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full rounded-2xl border border-white/10 bg-slate-900 px-3 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                    className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 px-3 py-2.5 text-xs text-slate-800 dark:text-white focus:ring-1 focus:ring-amber-500 outline-none"
                   >
                     {formCategories.map((c) => (
                       <option key={c} value={c}>{c}</option>
@@ -372,13 +372,13 @@ export default function SkillsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">
                     Level
                   </label>
                   <select
                     value={formData.level}
                     onChange={(e) => setFormData({ ...formData, level: e.target.value })}
-                    className="w-full rounded-2xl border border-white/10 bg-slate-900 px-3 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                    className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 px-3 py-2.5 text-xs text-slate-800 dark:text-white focus:ring-1 focus:ring-amber-500 outline-none"
                   >
                     <option value="Beginner">Beginner</option>
                     <option value="Intermediate">Intermediate</option>
@@ -389,9 +389,9 @@ export default function SkillsPage() {
               </div>
 
               <div>
-                <div className="flex justify-between text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+                <div className="flex justify-between text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">
                   <span>Proficiency Percentage</span>
-                  <span className="text-amber-400 font-mono">{formData.proficiency}%</span>
+                  <span className="text-amber-500 font-mono">{formData.proficiency}%</span>
                 </div>
                 <input
                   type="range"
@@ -404,7 +404,7 @@ export default function SkillsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">
                   Years of Experience
                 </label>
                 <input
@@ -412,27 +412,27 @@ export default function SkillsPage() {
                   min="0"
                   value={formData.years}
                   onChange={(e) => setFormData({ ...formData, years: Number(e.target.value) })}
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div className="pt-2">
-                <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-300">
+                <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-700 dark:text-slate-300">
                   <input
                     type="checkbox"
                     checked={formData.visible}
                     onChange={(e) => setFormData({ ...formData, visible: e.target.checked })}
-                    className="rounded border-white/20 text-amber-500 focus:ring-amber-400"
+                    className="rounded border-slate-300 dark:border-white/20 text-amber-500 focus:ring-amber-400"
                   />
                   <span>Visible on Public Portfolio</span>
                 </label>
               </div>
 
-              <div className="pt-4 border-t border-white/10 flex justify-end gap-2.5">
+              <div className="pt-4 border-t border-slate-200 dark:border-white/10 flex justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-slate-300 transition"
+                  className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-xs font-bold text-slate-700 dark:text-slate-300 transition"
                 >
                   Cancel
                 </button>

@@ -200,7 +200,7 @@ export default function ProfilePage() {
             href={resolveAssetUrl('/')}
             target="_blank"
             rel="noreferrer"
-            className="px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
             title="Open live public portfolio in a new tab"
           >
             <ExternalLink size={14} /> View Site
@@ -208,7 +208,7 @@ export default function ProfilePage() {
           <button
             type="button"
             onClick={handleCancel}
-            className="px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
           >
             <RotateCcw size={14} /> Cancel
           </button>
@@ -226,7 +226,7 @@ export default function ProfilePage() {
       {/* Completeness Bar */}
       <div className="liquid-glass-card p-6">
         <div className="flex justify-between items-center mb-2">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
             Profile Completeness
           </h2>
           <span className="text-xs font-black text-amber-500 font-mono">{completeness}%</span>
@@ -242,13 +242,13 @@ export default function ProfilePage() {
       <form onSubmit={handleSave} className="space-y-6">
         {/* Personal Info */}
         <div className="liquid-glass-card p-6 space-y-5">
-          <h2 className="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
+          <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <User size={18} className="text-amber-500" /> Personal Information
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                 Full Name *
               </label>
               <input
@@ -257,12 +257,12 @@ export default function ProfilePage() {
                 required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                 Professional Title
               </label>
               <input
@@ -270,13 +270,13 @@ export default function ProfilePage() {
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 placeholder="Full Stack Developer & AI Engineer"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                 Tagline / Hero Hook
               </label>
               <input
@@ -284,12 +284,12 @@ export default function ProfilePage() {
                 name="tagline"
                 value={formData.tagline}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                 Location
               </label>
               <input
@@ -297,13 +297,13 @@ export default function ProfilePage() {
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 placeholder="Lucknow, India"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                 Years of Experience
               </label>
               <input
@@ -312,12 +312,12 @@ export default function ProfilePage() {
                 min="0"
                 value={formData.yearsOfExperience}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                 Email Address
               </label>
               <input
@@ -325,12 +325,12 @@ export default function ProfilePage() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                 Phone Number
               </label>
               <input
@@ -338,7 +338,7 @@ export default function ProfilePage() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
               />
             </div>
           </div>
@@ -346,7 +346,7 @@ export default function ProfilePage() {
 
         {/* Long Bio */}
         <div className="liquid-glass-card p-6 space-y-4">
-          <h2 className="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
+          <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <FileText size={18} className="text-amber-500" /> Detailed Engineering Bio
           </h2>
           <RichTextEditor
@@ -357,7 +357,7 @@ export default function ProfilePage() {
 
         {/* Media & Docs Upload with MediaPicker */}
         <div className="liquid-glass-card p-6 space-y-5">
-          <h2 className="text-base font-bold text-slate-800 dark:text-white">Profile Assets</h2>
+          <h2 className="text-base font-bold text-slate-900 dark:text-white">Profile Assets</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <ImageUploadZone
               label="Profile Picture / Avatar"
@@ -378,16 +378,16 @@ export default function ProfilePage() {
         {/* Availability & Building */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="liquid-glass-card p-6 space-y-4">
-            <h2 className="text-base font-bold text-slate-800 dark:text-white">Availability Status</h2>
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">Availability Status</h2>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                 Status Flag
               </label>
               <select
                 name="availabilityStatus"
                 value={formData.availabilityStatus}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 px-4 py-2.5 text-xs text-slate-800 dark:text-white focus:ring-1 focus:ring-amber-500 outline-none"
               >
                 <option value="available">Available for Roles & Freelance</option>
                 <option value="limited">Limited Availability</option>
@@ -395,7 +395,7 @@ export default function ProfilePage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                 Status Badge Label
               </label>
               <input
@@ -404,12 +404,12 @@ export default function ProfilePage() {
                 value={formData.availabilityText}
                 onChange={handleChange}
                 placeholder="Available for Full-Time Roles"
-                className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
               />
             </div>
 
-            <div className="pt-3 border-t border-white/10">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+            <div className="pt-3 border-t border-slate-200 dark:border-white/10">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">
                 Currently Building
               </h3>
               <div className="space-y-2">
@@ -419,7 +419,7 @@ export default function ProfilePage() {
                   value={formData.currentlyBuilding?.name || ''}
                   onChange={handleChange}
                   placeholder="Project Name (e.g. AI Startup Trend Analyzer)"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
                 <input
                   type="url"
@@ -427,7 +427,7 @@ export default function ProfilePage() {
                   value={formData.currentlyBuilding?.url || ''}
                   onChange={handleChange}
                   placeholder="https://github.com/..."
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
             </div>
@@ -435,13 +435,13 @@ export default function ProfilePage() {
 
           {/* Social Links */}
           <div className="liquid-glass-card p-6 space-y-3">
-            <h2 className="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <LinkIcon size={18} className="text-amber-500" /> Social & Developer Profiles
             </h2>
 
             {Object.keys(formData.socialLinks || {}).map((platform) => (
               <div key={platform}>
-                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 capitalize">
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1 capitalize">
                   {platform}
                 </label>
                 <input
@@ -450,7 +450,7 @@ export default function ProfilePage() {
                   value={formData.socialLinks[platform]}
                   onChange={handleChange}
                   placeholder={`https://${platform}.com/...`}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-3 py-1.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
             ))}

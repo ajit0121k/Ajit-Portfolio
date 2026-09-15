@@ -210,12 +210,12 @@ export default function ProjectFormPage() {
         <div className="flex items-center gap-3">
           <Link
             to="/admin/projects"
-            className="w-10 h-10 rounded-2xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 transition"
+            className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 transition"
           >
             <ArrowLeft size={18} />
           </Link>
           <div>
-            <h1 className="text-xl font-black text-slate-800 dark:text-white">
+            <h1 className="text-xl font-black text-slate-900 dark:text-white">
               {isEdit ? 'Edit Case Study' : 'Create New Project'}
             </h1>
             <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -230,7 +230,7 @@ export default function ProjectFormPage() {
               href={`/projects/${formData.slug}`}
               target="_blank"
               rel="noreferrer"
-              className="px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition flex items-center gap-1.5"
+              className="px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center gap-1.5"
             >
               <Eye size={14} /> Preview Live
             </a>
@@ -248,7 +248,7 @@ export default function ProjectFormPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex space-x-2 border-b border-white/10 pb-2">
+      <div className="flex space-x-2 border-b border-slate-200 dark:border-white/10 pb-2">
         {[
           { key: 'basic', label: '1. Basic Info' },
           { key: 'case-study', label: '2. Case Study Content' },
@@ -262,7 +262,7 @@ export default function ProjectFormPage() {
             className={`px-4 py-2 rounded-2xl text-xs font-bold transition ${
               activeTab === t.key
                 ? 'bg-amber-500 text-white shadow-md'
-                : 'text-slate-400 hover:text-white bg-white/5'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-white/5'
             }`}
           >
             {t.label}
@@ -274,13 +274,13 @@ export default function ProjectFormPage() {
         {/* Tab 1: Basic Info */}
         {activeTab === 'basic' && (
           <div className="liquid-glass-card p-6 space-y-4">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Overview & Metadata
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                   Project Title *
                 </label>
                 <input
@@ -290,12 +290,12 @@ export default function ProjectFormPage() {
                   value={formData.title}
                   onChange={handleChange}
                   placeholder="e.g. AI Startup Trend Analyzer"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                   Slug (Auto-generated if blank)
                 </label>
                 <input
@@ -304,12 +304,12 @@ export default function ProjectFormPage() {
                   value={formData.slug}
                   onChange={handleChange}
                   placeholder="e.g. startup-trend-analyzer"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                   Category
                 </label>
                 <input
@@ -318,19 +318,19 @@ export default function ProjectFormPage() {
                   value={formData.category}
                   onChange={handleChange}
                   placeholder="e.g. Full-Stack Web App, Cloud / DevOps, GenAI"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                   Publication Status
                 </label>
                 <select
                   name="status"
                   value={formData.status}
                   onChange={handleChange}
-                  className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 px-4 py-2.5 text-xs text-slate-800 dark:text-white focus:ring-1 focus:ring-amber-500 outline-none"
                 >
                   <option value="draft">Draft (Private)</option>
                   <option value="published">Published (Live on portfolio)</option>
@@ -339,7 +339,7 @@ export default function ProjectFormPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                   GitHub Repository URL
                 </label>
                 <input
@@ -348,12 +348,12 @@ export default function ProjectFormPage() {
                   value={formData.githubUrl}
                   onChange={handleChange}
                   placeholder="https://github.com/..."
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                   Live Demo URL
                 </label>
                 <input
@@ -362,12 +362,12 @@ export default function ProjectFormPage() {
                   value={formData.liveUrl}
                   onChange={handleChange}
                   placeholder="https://..."
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                   Start Date
                 </label>
                 <input
@@ -375,12 +375,12 @@ export default function ProjectFormPage() {
                   name="startDate"
                   value={formData.startDate}
                   onChange={handleChange}
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2 text-xs text-slate-800 dark:text-white focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                   End Date / Launch Date
                 </label>
                 <input
@@ -388,13 +388,13 @@ export default function ProjectFormPage() {
                   name="endDate"
                   value={formData.endDate}
                   onChange={handleChange}
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2 text-xs text-slate-800 dark:text-white focus:ring-1 focus:ring-amber-500 outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
                 Short Description (Cards & Previews, max 300 chars)
               </label>
               <textarea
@@ -404,29 +404,29 @@ export default function ProjectFormPage() {
                 value={formData.shortDescription}
                 onChange={handleChange}
                 placeholder="High-level overview of the application and its purpose..."
-                className="w-full rounded-2xl border border-white/10 bg-white/5 p-3 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-3 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
               />
             </div>
 
-            <div className="flex items-center gap-6 pt-3 border-t border-white/10">
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-300">
+            <div className="flex items-center gap-6 pt-3 border-t border-slate-200 dark:border-white/10">
+              <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-700 dark:text-slate-300">
                 <input
                   type="checkbox"
                   name="featured"
                   checked={formData.featured}
                   onChange={handleChange}
-                  className="rounded border-white/20 text-amber-500 focus:ring-amber-400"
+                  className="rounded border-slate-300 dark:border-white/20 text-amber-500 focus:ring-amber-400"
                 />
                 <span>Featured Project (Highlighted on Home Page)</span>
               </label>
 
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-300">
+              <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-700 dark:text-slate-300">
                 <input
                   type="checkbox"
                   name="pinned"
                   checked={formData.pinned}
                   onChange={handleChange}
-                  className="rounded border-white/20 text-sky-500 focus:ring-sky-400"
+                  className="rounded border-slate-300 dark:border-white/20 text-sky-500 focus:ring-sky-400"
                 />
                 <span>Pinned to Top</span>
               </label>
@@ -494,7 +494,7 @@ export default function ProjectFormPage() {
           <div className="space-y-6">
             {/* Tech stack tags */}
             <div className="liquid-glass-card p-6 space-y-4">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Technologies & Tools
               </h2>
 
@@ -510,7 +510,7 @@ export default function ProjectFormPage() {
                       handleAddTech();
                     }
                   }}
-                  className="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
                 <button
                   type="button"
@@ -525,13 +525,13 @@ export default function ProjectFormPage() {
                 {formData.technologies.map((t, idx) => (
                   <span
                     key={idx}
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-bold text-slate-200"
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-xs font-bold text-slate-800 dark:text-slate-200"
                   >
                     <span>{t}</span>
                     <button
                       type="button"
                       onClick={() => handleRemoveTech(t)}
-                      className="hover:text-rose-400"
+                      className="hover:text-rose-500 dark:hover:text-rose-400"
                     >
                       <X size={12} />
                     </button>
@@ -542,7 +542,7 @@ export default function ProjectFormPage() {
 
             {/* Key Features List */}
             <div className="liquid-glass-card p-6 space-y-4">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Key Highlights & Features
               </h2>
 
@@ -558,7 +558,7 @@ export default function ProjectFormPage() {
                       handleAddFeature();
                     }
                   }}
-                  className="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-xs text-white focus:ring-1 focus:ring-amber-400 outline-none"
+                  className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
                 />
                 <button
                   type="button"
@@ -573,13 +573,13 @@ export default function ProjectFormPage() {
                 {formData.features.map((feat, idx) => (
                   <li
                     key={idx}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white/5 border border-white/10 text-xs text-slate-200"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs text-slate-800 dark:text-slate-200"
                   >
                     <span>{feat}</span>
                     <button
                       type="button"
                       onClick={() => handleRemoveFeature(idx)}
-                      className="p-1 rounded hover:bg-white/10 text-slate-400 hover:text-rose-400"
+                      className="p-1 rounded hover:bg-slate-200 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400 hover:text-rose-500 dark:hover:text-rose-400"
                     >
                       <X size={14} />
                     </button>
@@ -595,7 +595,7 @@ export default function ProjectFormPage() {
           <div className="space-y-6">
             {/* Cover Image with MediaPicker */}
             <div className="liquid-glass-card p-6 space-y-4">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Cover Image (Primary Card Thumbnail)
               </h2>
               <ImageUploadZone
@@ -608,7 +608,7 @@ export default function ProjectFormPage() {
 
             {/* Gallery Images with MediaPicker */}
             <div className="liquid-glass-card p-6 space-y-4">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Project Gallery & Screenshots
               </h2>
 
@@ -624,7 +624,7 @@ export default function ProjectFormPage() {
                   {formData.gallery.map((imgUrl, idx) => (
                     <div
                       key={idx}
-                      className="relative rounded-2xl overflow-hidden border border-white/10 group h-32 bg-slate-950"
+                      className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 group h-32 bg-slate-950"
                     >
                       <img src={imgUrl} alt={`Gallery ${idx}`} className="w-full h-full object-cover" />
                       <button
@@ -646,7 +646,7 @@ export default function ProjectFormPage() {
         <div className="sticky bottom-4 z-20 liquid-glass-card p-4 flex items-center justify-between shadow-2xl">
           <Link
             to="/admin/projects"
-            className="text-xs font-bold text-slate-400 hover:text-white transition"
+            className="text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition"
           >
             &larr; Cancel and return to projects
           </Link>

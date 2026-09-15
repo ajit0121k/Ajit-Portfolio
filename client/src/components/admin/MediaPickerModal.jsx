@@ -67,30 +67,30 @@ export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-3xl max-h-[85vh] liquid-glass-container flex flex-col rounded-3xl border border-white/20 shadow-2xl overflow-hidden bg-slate-900/95">
+      <div className="w-full max-w-3xl max-h-[85vh] flex flex-col rounded-3xl border border-slate-200 dark:border-white/20 shadow-2xl overflow-hidden bg-white dark:bg-slate-900/95">
         {/* Header */}
-        <div className="p-5 border-b border-white/10 flex items-center justify-between">
+        <div className="p-5 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
+            <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center border border-amber-500/30">
               <ImageIcon className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-white">Media Library Picker</h2>
-              <p className="text-xs text-slate-400">Click any item to select it directly for this field</p>
+              <h2 className="text-base font-bold text-slate-900 dark:text-white">Media Library Picker</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Click any item to select it directly for this field</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition"
+            className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white flex items-center justify-center transition"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Controls Bar */}
-        <div className="p-4 border-b border-white/10 flex flex-wrap items-center justify-between gap-3 bg-white/[0.02]">
+        <div className="p-4 border-b border-slate-200 dark:border-white/10 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50 dark:bg-white/[0.02]">
           {/* Filter Pills */}
-          <div className="flex items-center gap-1.5 p-1 rounded-full bg-white/5 border border-white/10">
+          <div className="flex items-center gap-1.5 p-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
             {['all', 'image', 'document'].map((t) => (
               <button
                 key={t}
@@ -98,7 +98,7 @@ export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType
                 className={`px-3 py-1 rounded-full text-xs font-bold capitalize transition ${
                   activeType === t
                     ? 'bg-amber-500 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 {t}
@@ -115,7 +115,7 @@ export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType
                 placeholder="Search assets..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-400"
+                className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-amber-500"
               />
             </div>
 
@@ -137,11 +137,11 @@ export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType
         <div className="p-5 overflow-y-auto flex-1 max-h-[50vh]">
           {loading ? (
             <div className="flex flex-col items-center justify-center h-48 gap-2">
-              <div className="w-6 h-6 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
-              <span className="text-xs text-slate-400">Loading library...</span>
+              <div className="w-6 h-6 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+              <span className="text-xs text-slate-500 dark:text-slate-400">Loading library...</span>
             </div>
           ) : filteredMedia.length === 0 ? (
-            <div className="text-center py-12 text-slate-400 text-xs border border-dashed border-white/10 rounded-2xl">
+            <div className="text-center py-12 text-slate-500 dark:text-slate-400 text-xs border border-dashed border-slate-300 dark:border-white/10 rounded-2xl">
               No media found. Upload an image or document above.
             </div>
           ) : (
@@ -155,7 +155,7 @@ export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType
                       if (onSelect) onSelect(m.url, m);
                       onClose();
                     }}
-                    className="group relative rounded-2xl border border-white/10 hover:border-amber-400/60 bg-white/5 hover:bg-white/10 overflow-hidden cursor-pointer transition-all hover:scale-[1.02] shadow-sm flex flex-col"
+                    className="group relative rounded-2xl border border-slate-200 dark:border-white/10 hover:border-amber-500 bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-white/10 overflow-hidden cursor-pointer transition-all hover:scale-[1.02] shadow-sm flex flex-col"
                   >
                     <div className="h-28 w-full bg-slate-950 flex items-center justify-center overflow-hidden relative">
                       {isDoc ? (
@@ -179,10 +179,10 @@ export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType
                     </div>
 
                     <div className="p-2 truncate">
-                      <p className="text-[11px] font-semibold text-slate-200 truncate" title={m.originalName || m.filename}>
+                      <p className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 truncate" title={m.originalName || m.filename}>
                         {m.originalName || m.filename}
                       </p>
-                      <p className="text-[9px] text-slate-400">
+                      <p className="text-[9px] text-slate-500 dark:text-slate-400">
                         {m.size ? `${(m.size / 1024).toFixed(0)} KB` : 'Asset'}
                       </p>
                     </div>
@@ -194,11 +194,11 @@ export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType
         </div>
 
         {/* Footer */}
-        <div className="p-3 border-t border-white/10 bg-white/[0.02] text-right">
+        <div className="p-3 border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] text-right">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-slate-300 transition"
+            className="px-4 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 text-xs font-bold text-slate-700 dark:text-slate-300 transition"
           >
             Cancel
           </button>

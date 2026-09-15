@@ -144,7 +144,7 @@ export default function ProjectsPage() {
 
       {/* Filter and Search Bar */}
       <div className="liquid-glass-card p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div className="flex space-x-1.5 p-1 rounded-full bg-white/5 border border-white/10">
+        <div className="flex space-x-1.5 p-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
           {['all', 'published', 'draft', 'archived'].map((f) => (
             <button
               key={f}
@@ -152,7 +152,7 @@ export default function ProjectsPage() {
               className={`px-4 py-1.5 rounded-full text-xs font-bold capitalize transition ${
                 filter === f
                   ? 'bg-amber-500 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {f}
@@ -167,7 +167,7 @@ export default function ProjectsPage() {
             placeholder="Search projects by title..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 pr-4 py-2 w-full rounded-2xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:ring-1 focus:ring-amber-400 outline-none"
+            className="pl-10 pr-4 py-2 w-full rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
           />
         </div>
       </div>
@@ -251,21 +251,21 @@ export default function ProjectsPage() {
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex justify-between items-start gap-2 mb-2">
-                    <h3 className="font-bold text-base text-white line-clamp-1">
+                    <h3 className="font-bold text-base text-slate-900 dark:text-white line-clamp-1">
                       {project.title}
                     </h3>
                     <span
                       className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
                         project.status === 'published'
-                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                          : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                          ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
+                          : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
                       }`}
                     >
                       {project.status}
                     </span>
                   </div>
 
-                  <p className="text-xs text-slate-400 line-clamp-2 mb-4 leading-relaxed">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">
                     {project.shortDescription || 'No short description provided.'}
                   </p>
 
@@ -275,13 +275,13 @@ export default function ProjectsPage() {
                       {techList.slice(0, 4).map((tech, i) => (
                         <span
                           key={i}
-                          className="text-[10px] font-semibold px-2 py-0.5 rounded-lg bg-white/5 border border-white/10 text-slate-300"
+                          className="text-[10px] font-semibold px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300"
                         >
                           {tech}
                         </span>
                       ))}
                       {techList.length > 4 && (
-                        <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-lg bg-white/5 text-slate-500">
+                        <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-500">
                           +{techList.length - 4}
                         </span>
                       )}
@@ -290,11 +290,11 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* Card Action Footer */}
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                <div className="pt-4 border-t border-slate-200 dark:border-white/10 flex items-center justify-between">
                   <button
                     type="button"
                     onClick={() => toggleStatus(project._id || project.id, project.status)}
-                    className="text-xs font-bold text-slate-400 hover:text-amber-400 transition"
+                    className="text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 transition"
                   >
                     {project.status === 'published' ? 'Unpublish' : 'Publish'}
                   </button>
@@ -303,14 +303,14 @@ export default function ProjectsPage() {
                     <button
                       type="button"
                       onClick={() => handleDuplicate(project._id || project.id)}
-                      className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition"
+                      className="p-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition"
                       title="Duplicate Project"
                     >
                       <Copy size={14} />
                     </button>
                     <Link
                       to={`/admin/projects/${project._id || project.id}/edit`}
-                      className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-amber-400 transition"
+                      className="p-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 transition"
                       title="Edit Case Study"
                     >
                       <Edit size={14} />
@@ -318,7 +318,7 @@ export default function ProjectsPage() {
                     <button
                       type="button"
                       onClick={() => setDeleteId(project._id || project.id)}
-                      className="p-2 rounded-xl bg-white/5 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition"
+                      className="p-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-rose-500/20 text-slate-600 dark:text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 transition"
                       title="Delete Project"
                     >
                       <Trash2 size={14} />
@@ -332,10 +332,10 @@ export default function ProjectsPage() {
       </div>
 
       {filteredProjects.length === 0 && (
-        <div className="text-center py-16 liquid-glass-card border-dashed border-white/15">
-          <FolderGit2 className="w-12 h-12 text-slate-500 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-white">No Projects Found</h3>
-          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+        <div className="text-center py-16 liquid-glass-card border-dashed border-slate-300 dark:border-white/15">
+          <FolderGit2 className="w-12 h-12 text-slate-400 dark:text-slate-500 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">No Projects Found</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
             {search ? 'No projects match your search query.' : 'Click "New Project" to add your first case study.'}
           </p>
         </div>
