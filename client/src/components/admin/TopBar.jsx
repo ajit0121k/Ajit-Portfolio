@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import {
   Sun,
   Moon,
-  Laptop,
   Search,
 } from 'lucide-react';
 import useThemeStore from '../../store/themeStore.js';
@@ -62,54 +61,34 @@ export default function TopBar({ onOpenCommandPalette }) {
           </kbd>
         </button>
 
-        {/* Theme Switcher — Prominent Animated Pill */}
-        <div className="flex items-center p-1.5 bg-gradient-to-r from-[#e8efe9] to-[#dce5dd] dark:from-[#0a150c] dark:to-[#0f1d12] shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] border border-black/[0.06] dark:border-white/10 rounded-2xl gap-0.5 transition-all duration-500">
-          <button
-            type="button"
-            onClick={() => setTheme('light')}
-            className={`relative p-2.5 rounded-xl text-xs transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] cursor-pointer ${
-              theme === 'light'
-                ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-[0_4px_20px_rgba(245,158,11,0.5)] scale-110 ring-2 ring-amber-300/50'
-                : 'text-slate-400 hover:text-amber-500 hover:bg-white/60 dark:hover:bg-white/5 hover:scale-105'
-            }`}
-            title="Light Mode"
-          >
-            <Sun className={`w-[18px] h-[18px] transition-transform duration-500 ${theme === 'light' ? 'rotate-180 drop-shadow-[0_0_6px_rgba(255,255,255,0.8)]' : 'rotate-0'}`} />
-            {theme === 'light' && (
-              <span className="absolute inset-0 rounded-xl animate-ping bg-amber-400/20 pointer-events-none" style={{ animationDuration: '2s' }} />
-            )}
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('dark')}
-            className={`relative p-2.5 rounded-xl text-xs transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] cursor-pointer ${
-              theme === 'dark'
-                ? 'bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-[0_4px_20px_rgba(99,102,241,0.5)] scale-110 ring-2 ring-indigo-400/50'
-                : 'text-slate-400 hover:text-indigo-400 hover:bg-white/60 dark:hover:bg-white/5 hover:scale-105'
-            }`}
-            title="Dark Mode"
-          >
-            <Moon className={`w-[18px] h-[18px] transition-transform duration-500 ${theme === 'dark' ? '-rotate-[20deg] drop-shadow-[0_0_6px_rgba(199,210,254,0.8)]' : 'rotate-0'}`} />
-            {theme === 'dark' && (
-              <span className="absolute inset-0 rounded-xl animate-ping bg-indigo-500/20 pointer-events-none" style={{ animationDuration: '2.5s' }} />
-            )}
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('system')}
-            className={`relative p-2.5 rounded-xl text-xs transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] cursor-pointer ${
-              theme === 'system'
-                ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-[0_4px_20px_rgba(16,185,129,0.5)] scale-110 ring-2 ring-emerald-400/50'
-                : 'text-slate-400 hover:text-emerald-500 hover:bg-white/60 dark:hover:bg-white/5 hover:scale-105'
-            }`}
-            title="System Auto Mode"
-          >
-            <Laptop className={`w-[18px] h-[18px] transition-transform duration-500 ${theme === 'system' ? 'scale-110 drop-shadow-[0_0_6px_rgba(167,243,208,0.8)]' : 'scale-100'}`} />
-            {theme === 'system' && (
-              <span className="absolute inset-0 rounded-xl animate-ping bg-emerald-400/20 pointer-events-none" style={{ animationDuration: '2.5s' }} />
-            )}
-          </button>
-        </div>
+        {/* Theme Toggle — Single Key */}
+        <button
+          type="button"
+          onClick={() => {
+            const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            setTheme(isDark ? 'light' : 'dark');
+          }}
+          className="relative w-10 h-10 rounded-2xl flex items-center justify-center bg-[#edf2ed] dark:bg-[#0c160e] hover:bg-amber-50 dark:hover:bg-indigo-950/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.08)] border border-black/[0.06] dark:border-white/10 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] cursor-pointer active:scale-90 hover:scale-110 overflow-hidden group"
+          title={theme === 'dark' || (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          aria-label="Toggle theme"
+        >
+          <div className="relative w-5 h-5 flex items-center justify-center">
+            <Sun
+              className={`w-5 h-5 text-amber-500 absolute inset-0 transition-all duration-500 ${
+                theme === 'dark'
+                  ? 'rotate-90 scale-0 opacity-0'
+                  : 'rotate-0 scale-100 opacity-100 group-hover:rotate-45 drop-shadow-[0_0_6px_rgba(245,158,11,0.6)]'
+              }`}
+            />
+            <Moon
+              className={`w-5 h-5 text-indigo-300 absolute inset-0 transition-all duration-500 ${
+                theme === 'dark'
+                  ? 'rotate-0 scale-100 opacity-100 group-hover:-rotate-12 drop-shadow-[0_0_6px_rgba(165,180,252,0.6)]'
+                  : '-rotate-90 scale-0 opacity-0'
+              }`}
+            />
+          </div>
+        </button>
       </div>
     </header>
   );
