@@ -17,28 +17,34 @@ export default function ThemeToggle({ className = '' }) {
   return (
     <button
       onClick={toggle}
-      className={`relative w-8 h-8 rounded-full flex items-center justify-center bg-white/80 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border border-slate-300/80 dark:border-white/15 shadow-sm text-slate-700 dark:text-amber-400 transition-all duration-300 active:scale-90 overflow-hidden group ${className}`}
+      className={`relative w-10 h-10 rounded-2xl flex items-center justify-center bg-white/90 dark:bg-white/[0.06] hover:bg-amber-50 dark:hover:bg-white/10 border border-slate-300/70 dark:border-white/15 shadow-[0_2px_10px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] text-slate-700 dark:text-amber-400 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] active:scale-90 hover:scale-110 overflow-hidden group ${className}`}
       title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
       aria-label="Toggle theme"
     >
-      <div className="relative w-4 h-4 flex items-center justify-center">
+      <div className="relative w-5 h-5 flex items-center justify-center">
         {/* Sun Icon (shown in light mode) */}
         <Sun
-          className={`w-4 h-4 text-amber-500 transition-all duration-500 absolute inset-0 ${
+          className={`w-5 h-5 text-amber-500 transition-all duration-500 absolute inset-0 ${
             isDark
               ? 'rotate-90 scale-0 opacity-0'
-              : 'rotate-0 scale-100 opacity-100 group-hover:rotate-45'
+              : 'rotate-0 scale-100 opacity-100 group-hover:rotate-45 drop-shadow-[0_0_4px_rgba(245,158,11,0.6)]'
           }`}
         />
         {/* Moon Icon (shown in dark mode) */}
         <Moon
-          className={`w-4 h-4 text-amber-300 transition-all duration-500 absolute inset-0 ${
+          className={`w-5 h-5 text-amber-300 transition-all duration-500 absolute inset-0 ${
             isDark
-              ? 'rotate-0 scale-100 opacity-100 group-hover:-rotate-12'
+              ? 'rotate-0 scale-100 opacity-100 group-hover:-rotate-12 drop-shadow-[0_0_4px_rgba(252,211,77,0.6)]'
               : '-rotate-90 scale-0 opacity-0'
           }`}
         />
       </div>
+      {/* Subtle pulse glow behind active icon */}
+      <span className={`absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-700 ${
+        isDark
+          ? 'bg-indigo-500/10 opacity-100 animate-pulse'
+          : 'bg-amber-400/10 opacity-100 animate-pulse'
+      }`} style={{ animationDuration: '3s' }} />
     </button>
   );
 }
