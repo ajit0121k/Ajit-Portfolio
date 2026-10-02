@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Mail, Send, Sparkles, MapPin, Phone, CheckCircle2, MessageSquare } from 'lucide-react';
 import api from '../../services/api.js';
 import toast from 'react-hot-toast';
-import { handleLocalRequest } from '../../services/localDataService.js';
 
 export default function ContactSection({ profile, settings }) {
   const [formData, setFormData] = useState({
@@ -41,38 +40,35 @@ export default function ContactSection({ profile, settings }) {
     };
 
     try {
-      // 1. Instantly write directly to localStorage first, so it is 100% guaranteed saved
-      try {
-        const localRaw = localStorage.getItem('portfolio_cms_messages');
-        let localMsgs = localRaw ? JSON.parse(localRaw) : [];
-        if (!Array.isArray(localMsgs)) localMsgs = [];
-        const newLocalMsg = {
-          _id: 'msg_' + Date.now(),
-          id: 'msg_' + Date.now(),
-          ...payload,
-          status: 'unread',
-          read: false,
-          createdAt: new Date().toISOString(),
-        };
-        localMsgs.unshift(newLocalMsg);
-        localStorage.setItem('portfolio_cms_messages', JSON.stringify(localMsgs));
-      } catch (localStoreErr) {
-        console.warn('LocalStorage save error:', localStoreErr);
-      }
-
-      // 2. Transmit to localDataService to sync internal state
-      try {
-        handleLocalRequest('POST', '/messages', payload);
-      } catch (localErr) {}
-
-      // 3. Transmit to backend API (on localhost, saves directly to MongoDB)
+      // Send message via API (on localhost: saves to MongoDB; on GitHub Pages: saves to localStorage via interceptor)
       try {
         await api.post('/messages', payload);
       } catch (apiErr) {
-        console.warn('API message endpoint:', apiErr?.message);
+        // If API call completely failed (offline / no backend), save directly to localStorage as fallback
+        if (!apiErr.response) {
+          try {
+            const localRaw = localStorage.getItem('portfolio_cms_messages');
+            let localMsgs = localRaw ? JSON.parse(localRaw) : [];
+            if (!Array.isArray(localMsgs)) localMsgs = [];
+            const newLocalMsg = {
+              _id: 'msg_' + Date.now(),
+              id: 'msg_' + Date.now(),
+              ...payload,
+              status: 'unread',
+              read: false,
+              createdAt: new Date().toISOString(),
+            };
+            localMsgs.unshift(newLocalMsg);
+            localStorage.setItem('portfolio_cms_messages', JSON.stringify(localMsgs));
+          } catch (localStoreErr) {
+            console.warn('LocalStorage save error:', localStoreErr);
+          }
+        } else {
+          console.warn('API message endpoint:', apiErr?.message);
+        }
       }
 
-      // 4. Transmit to FormSubmit AJAX service so Ajit receives the message directly in Gmail
+      // Send email notification via FormSubmit (non-blocking, fire-and-forget)
       try {
         fetch('https://formsubmit.co/ajax/ajitkumar2956654@gmail.com', {
           method: 'POST',
@@ -93,10 +89,9 @@ export default function ContactSection({ profile, settings }) {
         // non-blocking
       }
 
-      // 5. Notify admin panel across tabs and windows instantly
+      // Notify admin panel across tabs and windows instantly
       try {
         window.dispatchEvent(new Event('portfolio_message_received'));
-        window.dispatchEvent(new StorageEvent('storage', { key: 'portfolio_cms_messages' }));
       } catch (evtErr) {}
 
       setIsSuccess(true);
