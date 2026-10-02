@@ -35,33 +35,31 @@ const MessagesPage = () => {
       setLoading(true);
       const query = filter !== 'all' ? `?status=${filter}` : '';
       let list = [];
+      let gotFromApi = false;
       try {
         const res = await api.get(`/messages${query}`);
         list = res.data?.data?.messages || res.data?.messages || (Array.isArray(res.data) ? res.data : []);
+        gotFromApi = true;
       } catch (apiErr) {
         console.warn('API fetch failed, falling back to local store:', apiErr);
       }
 
-      // Also merge any messages from local storage to guarantee 100% visibility
-      try {
-        const localRaw = localStorage.getItem('portfolio_cms_messages');
-        if (localRaw) {
-          const localList = JSON.parse(localRaw);
-          if (Array.isArray(localList)) {
-            const existingKeys = new Set(list.map(m => `${m.email}_${m.message}`));
-            localList.forEach(lm => {
-              if (!existingKeys.has(`${lm.email}_${lm.message}`)) {
-                list.push(lm);
-                existingKeys.add(`${lm.email}_${lm.message}`);
-              }
-            });
+      // Only read from raw localStorage if the API call completely failed (offline fallback)
+      if (!gotFromApi) {
+        try {
+          const localRaw = localStorage.getItem('portfolio_cms_messages');
+          if (localRaw) {
+            const localList = JSON.parse(localRaw);
+            if (Array.isArray(localList)) {
+              list = localList;
+            }
           }
-        }
-      } catch (e) {}
+        } catch (e) {}
 
-      // Apply status filter if filtered
-      if (filter !== 'all') {
-        list = list.filter(m => m.status === filter || (!m.status && filter === 'unread'));
+        // Apply status filter
+        if (filter !== 'all') {
+          list = list.filter(m => m.status === filter || (!m.status && filter === 'unread'));
+        }
       }
 
       // Sort newest first
@@ -110,20 +108,31 @@ const MessagesPage = () => {
   const handleDelete = async () => {
     try {
       const id = deleteId;
+
+      // 1. Delete via API (on GitHub Pages this also clears localDataService/localStorage)
       try {
         await api.delete(`/messages/${id}`);
       } catch (e) {}
 
-      // Sync local storage
+      // 2. Also explicitly clean localStorage to handle edge cases
       try {
         const localRaw = localStorage.getItem('portfolio_cms_messages');
         if (localRaw) {
           let localList = JSON.parse(localRaw);
-          localList = localList.filter(m => m._id !== id && m.id !== id);
-          localStorage.setItem('portfolio_cms_messages', JSON.stringify(localList));
+          if (Array.isArray(localList)) {
+            const before = localList.length;
+            localList = localList.filter(m => {
+              const mid = m._id || m.id;
+              return mid !== id;
+            });
+            if (localList.length !== before) {
+              localStorage.setItem('portfolio_cms_messages', JSON.stringify(localList));
+            }
+          }
         }
       } catch (e) {}
 
+      // 3. Update UI state immediately
       setMessages(prev => prev.filter(m => (m._id !== id && m.id !== id)));
       if (selectedMsg && (selectedMsg._id === id || selectedMsg.id === id)) {
         setSelectedMsg(null);
