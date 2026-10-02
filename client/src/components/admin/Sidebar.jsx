@@ -19,11 +19,12 @@ import {
   FileText,
   BookOpen,
   BarChart3,
+  X,
 } from 'lucide-react';
 import useAuthStore from '../../store/authStore.js';
 import { ADMIN_ROUTES } from '../../constants/routes.js';
 
-export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
+export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobileOpen, unreadCount = 0 }) {
   const navigate = useNavigate();
   const { admin, logout } = useAuthStore();
 
@@ -34,6 +35,10 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const closeMobile = () => {
+    if (setMobileOpen) setMobileOpen(false);
   };
 
   const navGroups = [
@@ -77,12 +82,8 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
     },
   ];
 
-  return (
-    <aside
-      className={`fixed top-3 left-3 z-40 h-[calc(100vh-1.5rem)] transition-all duration-300 ease-in-out rounded-[28px] bg-white/95 dark:bg-[#101b13]/95 backdrop-blur-2xl border border-white/80 dark:border-white/10 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.04),inset_0_1px_2px_rgba(255,255,255,0.8)] flex flex-col justify-between overflow-hidden ${
-        collapsed ? 'w-20' : 'w-64'
-      }`}
-    >
+  const sidebarContent = (
+    <>
       {/* Brand Header */}
       <div className="flex-1 flex flex-col min-h-0">
         <div className="flex items-center justify-between h-16 px-4 border-b border-black/[0.04] dark:border-white/[0.06] flex-shrink-0">
@@ -90,7 +91,7 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#1b4d3e] via-[#123e2f] to-[#0a261c] flex items-center justify-center text-white shadow-md shadow-[#123e2f]/25 border border-emerald-400/20 flex-shrink-0">
               <Sparkles className="w-5 h-5 text-emerald-300" />
             </div>
-            {!collapsed && (
+            {(!collapsed || mobileOpen) && (
               <div className="truncate">
                 <span className="font-black text-sm tracking-tight text-[#153f31] dark:text-emerald-400 block truncate">
                   Portfolio CMS
@@ -101,12 +102,25 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
               </div>
             )}
           </div>
+          {/* Close button on mobile, collapse toggle on desktop */}
           <button
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => {
+              if (mobileOpen) {
+                closeMobile();
+              } else {
+                setCollapsed(!collapsed);
+              }
+            }}
             className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer"
-            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            title={mobileOpen ? 'Close menu' : collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            {mobileOpen ? (
+              <X className="w-5 h-5" />
+            ) : collapsed ? (
+              <ChevronRight className="w-4 h-4" />
+            ) : (
+              <ChevronLeft className="w-4 h-4" />
+            )}
           </button>
         </div>
 
@@ -121,12 +135,12 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
             target="_blank"
             rel="noreferrer"
             className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#153f31] dark:text-emerald-300 bg-[#e7efe8] dark:bg-emerald-950/40 hover:bg-[#dce8dd] dark:hover:bg-emerald-900/40 shadow-xs transition-all ${
-              collapsed ? 'justify-center' : ''
+              collapsed && !mobileOpen ? 'justify-center' : ''
             }`}
             title="View Live Portfolio"
           >
             <ExternalLink className="w-4 h-4 flex-shrink-0" />
-            {!collapsed && <span>View Live Site</span>}
+            {(!collapsed || mobileOpen) && <span>View Live Site</span>}
           </a>
         </div>
 
@@ -134,12 +148,12 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
         <nav className="flex-1 px-3 py-2 space-y-3.5 overflow-y-auto scrollbar-none">
           {navGroups.map((group, gIdx) => (
             <div key={gIdx} className="space-y-1">
-              {!collapsed && (
+              {(!collapsed || mobileOpen) && (
                 <div className="px-3 pt-1 pb-0.5 text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-400 select-none">
                   {group.group}
                 </div>
               )}
-              {collapsed && gIdx > 0 && (
+              {collapsed && !mobileOpen && gIdx > 0 && (
                 <div className="my-1.5 border-t border-black/[0.04] dark:border-white/[0.06] mx-2" />
               )}
               {group.items.map((item) => {
@@ -148,20 +162,21 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
                   <NavLink
                     key={item.path}
                     to={item.path}
+                    onClick={closeMobile}
                     className={({ isActive }) =>
-                      `flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-bold transition-all group ${
+                      `flex items-center justify-between px-3 py-2.5 md:py-2 rounded-2xl text-sm md:text-xs font-bold transition-all group ${
                         isActive
                           ? 'bg-[#153f31] text-white shadow-[0_8px_20px_-4px_rgba(21,63,49,0.45)]'
                           : 'text-slate-600 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#153f31] dark:hover:text-white'
-                      } ${collapsed ? 'justify-center' : ''}`
+                      } ${collapsed && !mobileOpen ? 'justify-center' : ''}`
                     }
-                    title={collapsed ? item.label : undefined}
+                    title={collapsed && !mobileOpen ? item.label : undefined}
                   >
                     <div className="flex items-center gap-2.5 truncate">
-                      <Icon className="w-4 h-4 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                      {!collapsed && <span className="truncate">{item.label}</span>}
+                      <Icon className="w-5 h-5 md:w-4 md:h-4 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                      {(!collapsed || mobileOpen) && <span className="truncate">{item.label}</span>}
                     </div>
-                    {!collapsed && item.badge && (
+                    {(!collapsed || mobileOpen) && item.badge && (
                       <span className="px-2 py-0.5 text-[10px] font-black rounded-full bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white shadow-xs">
                         {item.badge}
                       </span>
@@ -176,7 +191,7 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
 
       {/* User Info & Logout Footer */}
       <div className="p-3 border-t border-black/[0.04] dark:border-white/[0.06] bg-[#f7f9f7] dark:bg-[#0c160e] flex-shrink-0">
-        {!collapsed ? (
+        {(!collapsed || mobileOpen) ? (
           <div className="flex items-center justify-between gap-2">
             <div className="truncate">
               <span className="block text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
@@ -206,6 +221,36 @@ export default function Sidebar({ collapsed, setCollapsed, unreadCount = 0 }) {
           </div>
         )}
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop Sidebar — hidden on mobile */}
+      <aside
+        className={`hidden md:flex fixed top-3 left-3 z-40 h-[calc(100vh-1.5rem)] transition-all duration-300 ease-in-out rounded-[28px] bg-white/95 dark:bg-[#101b13]/95 backdrop-blur-2xl border border-white/80 dark:border-white/10 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.04),inset_0_1px_2px_rgba(255,255,255,0.8)] flex-col justify-between overflow-hidden ${
+          collapsed ? 'w-20' : 'w-64'
+        }`}
+      >
+        {sidebarContent}
+      </aside>
+
+      {/* Mobile Backdrop Overlay */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity"
+          onClick={closeMobile}
+        />
+      )}
+
+      {/* Mobile Sidebar Drawer */}
+      <aside
+        className={`md:hidden fixed top-0 left-0 z-50 h-full w-72 transition-transform duration-300 ease-in-out bg-white/98 dark:bg-[#101b13]/98 backdrop-blur-2xl border-r border-white/80 dark:border-white/10 shadow-[20px_0_45px_-10px_rgba(0,0,0,0.15)] flex flex-col justify-between overflow-hidden ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {sidebarContent}
+      </aside>
+    </>
   );
 }

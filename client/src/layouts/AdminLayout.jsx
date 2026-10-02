@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../components/admin/Sidebar.jsx';
 import TopBar from '../components/admin/TopBar.jsx';
 import AdminCommandPalette from '../components/admin/AdminCommandPalette.jsx';
@@ -7,8 +7,25 @@ import api from '../services/api.js';
 
 export default function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const location = useLocation();
+
+  // Close mobile sidebar on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile sidebar is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
 
   useEffect(() => {
     const fetchUnread = async () => {
@@ -70,18 +87,23 @@ export default function AdminLayout() {
         <Sidebar
           collapsed={collapsed}
           setCollapsed={setCollapsed}
+          mobileOpen={mobileOpen}
+          setMobileOpen={setMobileOpen}
           unreadCount={unreadCount}
         />
 
         {/* Main Content Area */}
         <div
-          className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out ${
-            collapsed ? 'pl-24' : 'pl-72'
+          className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out pl-0 ${
+            collapsed ? 'md:pl-24' : 'md:pl-72'
           }`}
         >
-          <TopBar onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
+          <TopBar
+            onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+            onToggleMobileMenu={() => setMobileOpen((prev) => !prev)}
+          />
 
-          <main className="flex-1 p-5 md:p-8 max-w-7xl w-full mx-auto animate-fade-in">
+          <main className="flex-1 p-3 md:p-5 lg:p-8 max-w-7xl w-full mx-auto animate-fade-in">
             <Outlet />
           </main>
         </div>
