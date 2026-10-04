@@ -1,6 +1,12 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import api from '../services/api.js';
+
+// Clean up any legacy persistent localStorage auth tokens so the user is always asked for login
+try {
+  localStorage.removeItem('auth-storage');
+  localStorage.removeItem('portfolio_admin_auth');
+} catch (e) {}
 
 const useAuthStore = create(
   persist(
@@ -70,18 +76,32 @@ const useAuthStore = create(
       logout: async () => {
         try {
           await api.post('/auth/logout');
+        } catch (e) {
+          // ignore logout network errors
         } finally {
           get().clearAuth();
         }
       },
 
       checkAuth: async () => {
+        const currentToken = get().accessToken;
+        // If there's no active session token, immediately clear and abort without auto-authenticating
+        if (!currentToken) {
+          get().clearAuth();
+          throw new Error('Not authenticated');
+        }
+
         set({ isLoading: true });
         try {
           const res = await api.get('/auth/me');
           const payload = res.data?.data || res.data;
+          const adminObj = payload?.admin || payload?.data?.admin;
+          if (!adminObj) {
+            get().clearAuth();
+            throw new Error('Session invalid');
+          }
           set({ 
-            admin: payload.admin,
+            admin: adminObj,
             isAuthenticated: true,
             isLoading: false
           });
@@ -92,16 +112,31 @@ const useAuthStore = create(
         }
       },
 
-      clearAuth: () => set({ 
-        admin: null, 
-        accessToken: null, 
-        isAuthenticated: false,
-        isLoading: false
-      })
+      clearAuth: () => {
+        try {
+          sessionStorage.removeItem('auth-storage');
+          sessionStorage.removeItem('portfolio_admin_token');
+          sessionStorage.removeItem('portfolio_admin_user');
+          localStorage.removeItem('auth-storage');
+          localStorage.removeItem('portfolio_admin_auth');
+        } catch (e) {}
+        set({ 
+          admin: null, 
+          accessToken: null, 
+          isAuthenticated: false,
+          isLoading: false
+        });
+      }
     }),
     {
       name: 'auth-storage',
-      partialize: (state) => ({ isAuthenticated: state.isAuthenticated }),
+      // Use sessionStorage so the session is never persisted permanently across browser restarts or new windows
+      storage: createJSONStorage(() => sessionStorage),
+      partialize: (state) => ({ 
+        isAuthenticated: state.isAuthenticated,
+        accessToken: state.accessToken,
+        admin: state.admin
+      }),
     }
   )
 );

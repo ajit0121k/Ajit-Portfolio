@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { User, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import useAuthStore from '../../store/authStore.js';
 import toast from 'react-hot-toast';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, isLoading } = useAuthStore();
 
   // Input states - empty by default (no dummy data)
@@ -25,7 +26,8 @@ export default function LoginPage() {
     try {
       await login(cleanEmail, password);
       toast.success('Welcome back, Admin!');
-      navigate('/admin/dashboard');
+      const destination = location.state?.from?.pathname || '/admin/dashboard';
+      navigate(destination, { replace: true });
     } catch (err) {
       toast.error(err.response?.data?.message || 'Invalid Email ID or Password. Please try again.');
     }

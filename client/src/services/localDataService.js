@@ -132,6 +132,7 @@ export function handleLocalRequest(method, url, data) {
         pass === "Ajit@1234";
 
       if (isAuth) {
+        const token = "local_auth_jwt_" + Date.now();
         const adminData = {
           id: "admin_master_primary",
           username: "ajitkumar",
@@ -140,12 +141,17 @@ export function handleLocalRequest(method, url, data) {
           role: "superadmin",
           isActive: true
         };
+        try {
+          sessionStorage.setItem("portfolio_admin_token", token);
+          sessionStorage.setItem("portfolio_admin_user", JSON.stringify(adminData));
+        } catch (e) {}
+
         return {
           success: true,
           message: "Login successful",
           data: {
             admin: adminData,
-            accessToken: "local_auth_jwt_" + Date.now()
+            accessToken: token
           }
         };
       }
@@ -153,22 +159,34 @@ export function handleLocalRequest(method, url, data) {
     }
 
     if (subOrId === "me" && upperMethod === "GET") {
-      return {
-        success: true,
-        data: {
-          admin: {
-            id: "admin_master_primary",
-            username: "ajitkumar",
-            email: "ajitkumar2956654@gmail.com",
-            mobile: "7379247197",
-            role: "superadmin",
-            isActive: true
+      let sessionToken = null;
+      let sessionUser = null;
+      try {
+        sessionToken = sessionStorage.getItem("portfolio_admin_token");
+        const rawUser = sessionStorage.getItem("portfolio_admin_user");
+        if (rawUser) sessionUser = JSON.parse(rawUser);
+      } catch (e) {}
+
+      // ONLY authenticate if user has actively signed in during this session
+      if (sessionToken && sessionUser) {
+        return {
+          success: true,
+          data: {
+            admin: sessionUser
           }
-        }
-      };
+        };
+      }
+      // Not authenticated - require ID and password
+      return null;
     }
 
     if (subOrId === "logout") {
+      try {
+        sessionStorage.removeItem("portfolio_admin_token");
+        sessionStorage.removeItem("portfolio_admin_user");
+        sessionStorage.removeItem("auth-storage");
+        localStorage.removeItem("auth-storage");
+      } catch (e) {}
       return { success: true, message: "Logout successful" };
     }
   }
