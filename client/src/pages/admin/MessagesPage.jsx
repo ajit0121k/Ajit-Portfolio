@@ -11,6 +11,7 @@ const MessagesPage = () => {
   const [search, setSearch] = useState('');
   const [selectedMsg, setSelectedMsg] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
+  const [deleteAll, setDeleteAll] = useState(false);
   const [replyText, setReplyText] = useState('');
   const [sendingReply, setSendingReply] = useState(false);
 
@@ -144,6 +145,26 @@ const MessagesPage = () => {
     }
   };
 
+  const handleDeleteAll = async () => {
+    try {
+      // Delete each message via API
+      for (const msg of messages) {
+        const id = msg._id || msg.id;
+        try { await api.delete(`/messages/${id}`); } catch (e) {}
+      }
+      // Clear localStorage completely
+      try {
+        localStorage.setItem('portfolio_cms_messages', JSON.stringify([]));
+      } catch (e) {}
+      setMessages([]);
+      setSelectedMsg(null);
+      setDeleteAll(false);
+      toast.success('All messages deleted');
+    } catch (err) {
+      toast.error('Failed to delete all messages');
+    }
+  };
+
   const handleReply = async (e) => {
     e.preventDefault();
     if (!replyText.trim()) return;
@@ -202,6 +223,16 @@ const MessagesPage = () => {
           >
             <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
           </button>
+          {messages.length > 0 && (
+            <button
+              onClick={() => setDeleteAll(true)}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-950/50 text-xs font-semibold transition"
+              title="Delete all messages"
+            >
+              <Trash2 size={14} />
+              <span className="hidden sm:inline">Delete All</span>
+            </button>
+          )}
           <div className="flex space-x-1 bg-white/70 dark:bg-slate-800/70 p-1 rounded-lg backdrop-blur-md border border-slate-200 dark:border-white/10">
             {['all', 'unread', 'read', 'archived'].map(f => (
               <button
@@ -424,6 +455,14 @@ const MessagesPage = () => {
         message="Are you sure you want to delete this message? This action cannot be undone."
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
+      />
+      <ConfirmDialog
+        isOpen={deleteAll}
+        title="Delete All Messages"
+        message={`Are you sure you want to permanently delete all ${messages.length} message(s)? This cannot be undone.`}
+        confirmText="Delete All"
+        onConfirm={handleDeleteAll}
+        onCancel={() => setDeleteAll(false)}
       />
     </div>
   );
