@@ -5,8 +5,10 @@ import {
   Moon,
   Search,
   Menu,
+  ExternalLink,
 } from 'lucide-react';
 import useThemeStore from '../../store/themeStore.js';
+import { resolveAssetUrl } from '../../utils/assetUrl.js';
 
 export default function TopBar({ onOpenCommandPalette, onToggleMobileMenu }) {
   const location = useLocation();
@@ -81,6 +83,18 @@ export default function TopBar({ onOpenCommandPalette, onToggleMobileMenu }) {
         >
           <Search className="w-4.5 h-4.5" />
         </button>
+
+        {/* View Live Portfolio Site */}
+        <a
+          href={resolveAssetUrl('/')}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-[#c66a3d] hover:bg-[#b2572b] rounded-full transition-all shadow-sm cursor-pointer"
+          title="Open live public portfolio in a new tab"
+        >
+          <ExternalLink className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">View Site</span>
+        </a>
 
         {/* Theme Toggle — Single Key */}
         <button

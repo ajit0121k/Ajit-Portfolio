@@ -50,6 +50,12 @@ export default function PublicLayout() {
     } catch (e) {}
   }, []);
 
+  useEffect(() => {
+    if (settings?.siteName) {
+      document.title = settings.siteName;
+    }
+  }, [settings]);
+
   // Scroll to top on page load / route change (unless navigating to a hash anchor)
   useEffect(() => {
     if (location.hash) {

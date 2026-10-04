@@ -6,6 +6,7 @@ import {
   Linkedin,
   Mail,
   Code2,
+  Sparkles,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -16,11 +17,11 @@ export default function Hero({ profile, settings }) {
   const years = profile?.yearsOfExperience || 2;
   const photoUrl = resolveAssetUrl(profile?.profileImage?.url || '/profile.jpg?v=20261004');
 
-  // Typewriter effect phrases
+  // Typewriter effect phrases prioritizing live profile availability text
   const phrases = [
-    'Available for Full-Time Roles',
-    'Available for Internships',
-    'Available for Part-Time Roles',
+    profile?.availabilityText || 'Available for Full-Time Roles',
+    'Full Stack MERN Architecture',
+    'Generative AI & LLM Systems',
     'Available for Freelance & Contracts',
   ];
 
@@ -90,6 +91,23 @@ export default function Hero({ profile, settings }) {
               <span className="inline-block w-[2px] h-[13px] bg-[#c66a3d] ml-1 animate-pulse align-middle" />
             </div>
           </div>
+
+          {/* Currently Building Badge (Live-synced from Admin Profile) */}
+          {settings?.sectionVisibility?.currentlyBuilding !== false && profile?.currentlyBuilding && (
+            <div className="pt-1">
+              <a
+                href={profile?.currentlyBuildingUrl || '#projects'}
+                target={profile?.currentlyBuildingUrl ? '_blank' : '_self'}
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#c66a3d]/10 hover:bg-[#c66a3d]/20 border border-[#c66a3d]/25 text-[#c66a3d] dark:text-[#e48358] text-[11px] font-bold transition-all group"
+              >
+                <Sparkles className="w-3.5 h-3.5 animate-spin" />
+                <span className="uppercase tracking-wider text-[10px] text-slate-500 dark:text-slate-400">Currently Building:</span>
+                <span className="underline underline-offset-2">{profile.currentlyBuilding}</span>
+                <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+              </a>
+            </div>
+          )}
 
           {/* Main Headline */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-serif font-black tracking-tight text-[#222723] dark:text-[#f3eee5] leading-[1.12]">
