@@ -36,7 +36,7 @@ const KEY_TO_ENTITY = {
   [STORAGE_KEYS.ACTIVITY]: "activity",
 };
 
-const CURRENT_VERSION = "2026_09_13_v7";
+const CURRENT_VERSION = "2026_10_04_v9";
 let isInitializing = false;
 
 function getStorage(key, defaultVal) {
@@ -194,12 +194,17 @@ export function handleLocalRequest(method, url, data) {
     }
     if (upperMethod === "PUT" || upperMethod === "PATCH") {
       if (subOrId === "photo") {
-        let photoUrl = "/profile.jpg";
+        let photoUrl = "/profile.jpg?v=20261004";
         if (typeof FormData !== "undefined" && body instanceof FormData) {
           const fileObj = body.get("file");
-          if (fileObj) {
+          const dataUrl = body.get("dataUrl");
+          if (dataUrl) {
+            photoUrl = dataUrl;
+          } else if (fileObj) {
             try { photoUrl = URL.createObjectURL(fileObj); } catch (e) {}
           }
+        } else if (body?.dataUrl) {
+          photoUrl = body.dataUrl;
         } else if (body?.url) {
           photoUrl = body.url;
         }
@@ -215,10 +220,19 @@ export function handleLocalRequest(method, url, data) {
         let resumeName = "Ajit_Kumar_Resume.pdf";
         if (typeof FormData !== "undefined" && body instanceof FormData) {
           const fileObj = body.get("file");
+          const dataUrl = body.get("dataUrl");
+          if (dataUrl) {
+            resumeUrl = dataUrl;
+          }
           if (fileObj) {
             resumeName = fileObj.name || resumeName;
-            try { resumeUrl = URL.createObjectURL(fileObj); } catch (e) {}
+            if (!dataUrl) {
+              try { resumeUrl = URL.createObjectURL(fileObj); } catch (e) {}
+            }
           }
+        } else if (body?.dataUrl) {
+          resumeUrl = body.dataUrl;
+          resumeName = body.originalName || resumeName;
         } else if (body?.url) {
           resumeUrl = body.url;
           resumeName = body.originalName || resumeName;
@@ -648,24 +662,30 @@ export function handleLocalRequest(method, url, data) {
     if (upperMethod === "POST") {
       let fileName = "upload_" + Date.now() + ".jpg";
       let fileSize = 150000;
-      let fileUrl = "/profile.jpg";
+      let fileUrl = "/profile.jpg?v=20261004";
       let fileType = "image/jpeg";
 
       if (typeof FormData !== "undefined" && body instanceof FormData) {
         const fileObj = body.get("file");
+        const dataUrl = body.get("dataUrl");
+        if (dataUrl) {
+          fileUrl = dataUrl;
+        }
         if (fileObj) {
           fileName = fileObj.name || fileName;
           fileSize = fileObj.size || fileSize;
           fileType = fileObj.type || fileType;
-          try {
-            fileUrl = URL.createObjectURL(fileObj);
-          } catch (e) {}
+          if (!dataUrl) {
+            try {
+              fileUrl = URL.createObjectURL(fileObj);
+            } catch (e) {}
+          }
         }
       } else if (body && typeof body === "object") {
         fileName = body.filename || body.originalName || fileName;
         fileSize = body.size || fileSize;
         fileType = body.type || body.fileType || fileType;
-        fileUrl = body.url || fileUrl;
+        fileUrl = body.dataUrl || body.url || fileUrl;
       }
 
       const isDoc = fileType.includes("pdf") || fileName.toLowerCase().endsWith(".pdf");
@@ -723,17 +743,23 @@ export function handleLocalRequest(method, url, data) {
 
       if (typeof FormData !== "undefined" && body instanceof FormData) {
         const fileObj = body.get("file");
+        const dataUrl = body.get("dataUrl");
+        if (dataUrl) {
+          fileUrl = dataUrl;
+        }
         if (fileObj) {
           fileName = fileObj.name || fileName;
           fileSize = fileObj.size || fileSize;
-          try {
-            fileUrl = URL.createObjectURL(fileObj);
-          } catch (e) {}
+          if (!dataUrl) {
+            try {
+              fileUrl = URL.createObjectURL(fileObj);
+            } catch (e) {}
+          }
         }
       } else if (body && typeof body === "object") {
         fileName = body.filename || body.originalName || fileName;
         fileSize = body.size || fileSize;
-        fileUrl = body.url || fileUrl;
+        fileUrl = body.dataUrl || body.url || fileUrl;
       }
 
       const newResume = {

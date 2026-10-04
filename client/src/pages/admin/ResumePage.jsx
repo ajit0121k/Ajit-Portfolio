@@ -7,6 +7,7 @@ import api from '../../services/api.js';
 import toast from 'react-hot-toast';
 import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx';
 import { resolveAssetUrl } from '../../utils/assetUrl.js';
+import { fileToDataUrl } from '../../utils/imageCompressor.js';
 
 export default function ResumePage() {
   const [resumes, setResumes] = useState([]);
@@ -83,11 +84,15 @@ export default function ResumePage() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', file);
-
     setUploading(true);
     try {
+      const dataUrl = await fileToDataUrl(file);
+      const formData = new FormData();
+      formData.append('file', file);
+      if (dataUrl) {
+        formData.append('dataUrl', dataUrl);
+      }
+
       await api.post('/resume', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });

@@ -3,6 +3,7 @@ import { X, Search, Image as ImageIcon, FileText, UploadCloud, Check } from 'luc
 import api from '../../services/api.js';
 import toast from 'react-hot-toast';
 import { resolveAssetUrl } from '../../utils/assetUrl.js';
+import { fileToDataUrl } from '../../utils/imageCompressor.js';
 
 export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType = 'all' }) {
   const [mediaList, setMediaList] = useState([]);
@@ -35,15 +36,40 @@ export default function MediaPickerModal({ isOpen, onClose, onSelect, filterType
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
-
     setUploading(true);
     try {
-      const res = await api.post('/media/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      const newMedia = res.data?.data || res.data;
+      const dataUrl = await fileToDataUrl(file);
+
+      const formData = new FormData();
+      formData.append('file', file);
+      if (dataUrl) {
+        formData.append('dataUrl', dataUrl);
+      }
+
+      let newMedia = null;
+      try {
+        const res = await api.post('/media/upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        newMedia = res.data?.data || res.data;
+      } catch (err) {
+        console.warn('API upload failed, using local media object:', err);
+      }
+
+      if (!newMedia || newMedia.url?.startsWith('blob:')) {
+        newMedia = {
+          _id: 'med_' + Date.now(),
+          id: 'med_' + Date.now(),
+          filename: file.name,
+          originalName: file.name,
+          url: dataUrl,
+          type: file.type?.includes('pdf') ? 'document' : 'image',
+          mimeType: file.type || 'image/jpeg',
+          size: file.size,
+          createdAt: new Date().toISOString(),
+        };
+      }
+
       toast.success('Asset uploaded successfully');
       setMediaList((prev) => [newMedia, ...prev]);
       if (onSelect) {

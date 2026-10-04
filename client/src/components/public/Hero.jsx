@@ -14,7 +14,7 @@ export default function Hero({ profile, settings }) {
   const title = profile?.title || 'Full Stack Developer & AI Engineer';
   const tagline = profile?.tagline || 'Skilled in MERN Stack, Generative AI, JWT authentication, and Scalable Cloud Systems.';
   const years = profile?.yearsOfExperience || 2;
-  const photoUrl = resolveAssetUrl(profile?.profileImage?.url || '/profile.jpg');
+  const photoUrl = resolveAssetUrl(profile?.profileImage?.url || '/profile.jpg?v=20261004');
 
   // Typewriter effect phrases
   const phrases = [

@@ -4,6 +4,7 @@ import api from '../../services/api.js';
 import toast from 'react-hot-toast';
 import MediaPickerModal from './MediaPickerModal.jsx';
 import { resolveAssetUrl } from '../../utils/assetUrl.js';
+import { fileToDataUrl } from '../../utils/imageCompressor.js';
 
 export default function ImageUploadZone({
   value = '',
@@ -35,19 +36,37 @@ export default function ImageUploadZone({
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', file);
-
     setIsUploading(true);
     try {
-      const { data } = await api.post('/media/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      // 1. Generate lightweight, persistent Base64 Data URL
+      const dataUrl = await fileToDataUrl(file);
 
-      const uploadedUrl = data.data?.url || data.url;
-      const mediaObject = data.data || data;
+      const formData = new FormData();
+      formData.append('file', file);
+      if (dataUrl) {
+        formData.append('dataUrl', dataUrl);
+      }
+
+      let uploadedUrl = dataUrl;
+      let mediaObject = null;
+
+      try {
+        const { data } = await api.post('/media/upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        uploadedUrl = data.data?.url || data.url || dataUrl;
+        mediaObject = data.data || data;
+      } catch (apiErr) {
+        console.warn('Backend upload skipped or failed, using persistent data URL:', apiErr);
+      }
+
+      // If backend gave an ephemeral blob URL or failed, ensure we use the persistent dataUrl
+      if (!uploadedUrl || uploadedUrl.startsWith('blob:')) {
+        uploadedUrl = dataUrl;
+      }
+
       setPreviewUrl(uploadedUrl);
-      if (onChange) onChange(uploadedUrl, mediaObject);
+      if (onChange) onChange(uploadedUrl, mediaObject || { url: uploadedUrl, filename: file.name });
       toast.success('Asset uploaded successfully');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to upload asset');

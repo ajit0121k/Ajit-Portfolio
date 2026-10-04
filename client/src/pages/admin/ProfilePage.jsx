@@ -362,13 +362,40 @@ export default function ProfilePage() {
             <ImageUploadZone
               label="Profile Picture / Avatar"
               value={formData.avatar}
-              onChange={(url) => setFormData((prev) => ({ ...prev, avatar: url }))}
+              onChange={async (url) => {
+                setFormData((prev) => ({ ...prev, avatar: url }));
+                if (url) {
+                  try {
+                    await api.put('/profile', {
+                      profileImage: { url, publicId: 'profile_avatar' },
+                      avatar: url,
+                    });
+                    toast.success('Profile photo updated & live on public portfolio!');
+                  } catch (e) {
+                    console.warn('Auto-save photo error:', e);
+                  }
+                }
+              }}
               hint="Select from library or upload new PNG/JPG"
             />
             <ImageUploadZone
               label="Resume PDF"
               value={formData.resumeUrl}
-              onChange={(url) => setFormData((prev) => ({ ...prev, resumeUrl: url }))}
+              onChange={async (url, mediaObj) => {
+                const rName = mediaObj?.filename || mediaObj?.originalName || 'Ajit_Kumar_Resume.pdf';
+                setFormData((prev) => ({ ...prev, resumeUrl: url }));
+                if (url) {
+                  try {
+                    await api.put('/profile', {
+                      resume: { url, originalName: rName, uploadedAt: new Date().toISOString() },
+                      resumeUrl: url,
+                    });
+                    toast.success('Resume updated & live on public portfolio!');
+                  } catch (e) {
+                    console.warn('Auto-save resume error:', e);
+                  }
+                }
+              }}
               accept="application/pdf"
               hint="Official PDF resume for visitor downloads"
             />
