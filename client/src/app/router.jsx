@@ -167,8 +167,8 @@ const router = createBrowserRouter([
   // Public Website routes or Standalone Admin Redirect
   ...(isAdminOnly
     ? [
-        { path: '/', element: <Navigate to="/admin/dashboard" replace /> },
-        { path: '*', element: <Navigate to="/admin/dashboard" replace /> }
+        { path: '/', element: <Navigate to={ADMIN_ROUTES.LOGIN} replace /> },
+        { path: '*', element: <Navigate to={ADMIN_ROUTES.LOGIN} replace /> }
       ]
     : [
         {

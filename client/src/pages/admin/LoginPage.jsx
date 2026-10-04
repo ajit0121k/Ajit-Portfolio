@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { User, Lock, Eye, EyeOff, ArrowLeft, ShieldCheck } from 'lucide-react';
 import useAuthStore from '../../store/authStore.js';
 import toast from 'react-hot-toast';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isLoading } = useAuthStore();
+  const { login, isLoading, clearAuth } = useAuthStore();
+
+  // Reset any lingering auth state so login credentials are required every time
+  useEffect(() => {
+    clearAuth();
+  }, [clearAuth]);
 
   // Input states - empty by default (no dummy data)
   const [email, setEmail] = useState('');
@@ -121,18 +126,14 @@ export default function LoginPage() {
               </button>
             </div>
 
-            {/* Remember me & Forgot Password */}
+            {/* Security Indicator */}
             <div className="flex items-center justify-between text-[11px] text-white/80 font-medium pt-1 px-0.5">
-              <label className="flex items-center gap-1.5 cursor-pointer hover:text-white transition-colors">
-                <input
-                  type="checkbox"
-                  defaultChecked
-                  className="w-3.5 h-3.5 rounded accent-[#1c2e1d] cursor-pointer"
-                />
-                <span>Remember me</span>
-              </label>
-              <span className="text-white/70 hover:text-white cursor-pointer transition-colors italic">
-                Forgot Password?
+              <span className="flex items-center gap-1.5 text-emerald-400 font-semibold text-[11px]">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                Protected Admin Area
+              </span>
+              <span className="text-white/60 italic text-[10px]">
+                Credentials Required
               </span>
             </div>
 

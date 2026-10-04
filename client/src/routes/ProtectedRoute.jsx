@@ -5,14 +5,15 @@ import { ADMIN_ROUTES } from '../constants/routes.js';
 import { useEffect } from 'react';
 
 export default function ProtectedRoute({ children }) {
-  const { isAuthenticated, isLoading, checkAuth } = useAuthStore();
+  const { isAuthenticated, accessToken, isLoading, checkAuth } = useAuthStore();
   const location = useLocation();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    // Only verify with server if an active in-memory session token exists
+    if (!isAuthenticated && accessToken) {
       checkAuth().catch(() => {});
     }
-  }, [isAuthenticated, checkAuth]);
+  }, [isAuthenticated, accessToken, checkAuth]);
 
   if (isLoading) {
     return <LoadingScreen message="Checking authentication..." />;

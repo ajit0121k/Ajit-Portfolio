@@ -20,7 +20,7 @@ export default function Footer({ profile, settings }) {
 
         <div className="flex items-center gap-2">
           <Link
-            to="/admin"
+            to="/admin/login"
             className="p-2.5 rounded-full border border-[#dfd6c7] dark:border-white/20 hover:bg-[#2d3a2e] hover:text-[#f5f0e8] dark:hover:bg-[#f3eee5] dark:hover:text-[#1a241d] transition-all opacity-50 hover:opacity-100"
             title="Admin CMS Panel"
           >

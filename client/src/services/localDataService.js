@@ -155,7 +155,10 @@ export function handleLocalRequest(method, url, data) {
           }
         };
       }
-      return null;
+      return {
+        __errorStatus: 401,
+        message: "Invalid Email ID or Password. Please try again."
+      };
     }
 
     if (subOrId === "me" && upperMethod === "GET") {
@@ -177,7 +180,10 @@ export function handleLocalRequest(method, url, data) {
         };
       }
       // Not authenticated - require ID and password
-      return null;
+      return {
+        __errorStatus: 401,
+        message: "Not authenticated. Please enter ID and Password."
+      };
     }
 
     if (subOrId === "logout") {
@@ -186,6 +192,7 @@ export function handleLocalRequest(method, url, data) {
         sessionStorage.removeItem("portfolio_admin_user");
         sessionStorage.removeItem("auth-storage");
         localStorage.removeItem("auth-storage");
+        localStorage.removeItem("portfolio_admin_auth");
       } catch (e) {}
       return { success: true, message: "Logout successful" };
     }

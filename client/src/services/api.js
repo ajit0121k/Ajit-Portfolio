@@ -24,16 +24,35 @@ api.interceptors.request.use(
 
     // On GitHub Pages without a configured external backend, fulfill mock routes directly
     if (isStaticHosted && !import.meta.env.VITE_API_URL) {
-      const localRes = handleLocalRequest(config.method, config.url, config.data);
-      if (localRes) {
-        config.adapter = () =>
-          Promise.resolve({
-            data: localRes,
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config,
-          });
+      try {
+        const localRes = handleLocalRequest(config.method, config.url, config.data);
+        if (localRes) {
+          if (localRes.__errorStatus) {
+            config.adapter = () =>
+              Promise.reject({
+                response: {
+                  status: localRes.__errorStatus,
+                  statusText: 'Unauthorized',
+                  data: { success: false, message: localRes.message || 'Unauthorized' },
+                  headers: {},
+                  config,
+                },
+                message: localRes.message || 'Unauthorized',
+                config,
+              });
+          } else {
+            config.adapter = () =>
+              Promise.resolve({
+                data: localRes,
+                status: 200,
+                statusText: 'OK',
+                headers: {},
+                config,
+              });
+          }
+        }
+      } catch (err) {
+        config.adapter = () => Promise.reject(err);
       }
     }
 
@@ -63,6 +82,19 @@ api.interceptors.response.use(
       try {
         const localRes = handleLocalRequest(originalRequest.method, originalRequest.url, originalRequest.data);
         if (localRes) {
+          if (localRes.__errorStatus) {
+            return Promise.reject({
+              response: {
+                status: localRes.__errorStatus,
+                statusText: 'Unauthorized',
+                data: { success: false, message: localRes.message || 'Unauthorized' },
+                headers: {},
+                config: originalRequest,
+              },
+              message: localRes.message || 'Unauthorized',
+              config: originalRequest,
+            });
+          }
           return {
             status: 200,
             statusText: 'OK',
