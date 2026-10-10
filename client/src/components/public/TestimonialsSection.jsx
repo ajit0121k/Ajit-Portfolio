@@ -18,7 +18,7 @@ export default function TestimonialsSection() {
     }
   };
 
-  usePortfolioSync(['testimonials'], fetchTestimonials);
+  usePortfolioSync(['testimonials', 'all'], fetchTestimonials);
 
   useEffect(() => {
     fetchTestimonials();

@@ -110,7 +110,7 @@ export default function Hero({ profile, settings }) {
           )}
 
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-serif font-black tracking-tight text-[#222723] dark:text-[#f3eee5] leading-[1.12]">
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-serif font-black tracking-tight text-[#222723] dark:text-[#f3eee5] leading-[1.15]">
             NOT JUST BUILDING APPS — <br />
             ARCHITECTING EXPERIENCES. <br />
             <span className="font-serif font-normal text-[#c66a3d] dark:text-[#e48358] text-[0.62em] sm:text-[0.68em] inline-block mt-2 tracking-normal">
@@ -118,41 +118,41 @@ export default function Hero({ profile, settings }) {
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-[#5c5950] dark:text-[#b8b3a8] max-w-lg leading-relaxed font-sans">
+          <p className="text-xs sm:text-sm md:text-base text-[#5c5950] dark:text-[#b8b3a8] max-w-lg leading-relaxed font-sans">
             {tagline}
           </p>
 
           {/* Quick Feature Pillars (Matching Template: Serene Rooms / Gourmet Dining etc) */}
-          <div className="grid grid-cols-2 gap-3 py-1 text-xs text-[#4a473f] dark:text-[#c4beb3]">
+          <div className="grid grid-cols-1 xs:grid-cols-2 gap-2.5 sm:gap-3 py-1 text-xs text-[#4a473f] dark:text-[#c4beb3]">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#c66a3d]" />
+              <span className="w-2 h-2 rounded-full bg-[#c66a3d] flex-shrink-0" />
               <span className="font-semibold">Production MERN Architecture</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#49654d]" />
+              <span className="w-2 h-2 rounded-full bg-[#49654d] flex-shrink-0" />
               <span className="font-semibold">Generative AI Pipelines</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#3d4b3e]" />
+              <span className="w-2 h-2 rounded-full bg-[#3d4b3e] flex-shrink-0" />
               <span className="font-semibold">Zero-Trust JWT Security</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#c66a3d]" />
+              <span className="w-2 h-2 rounded-full bg-[#c66a3d] flex-shrink-0" />
               <span className="font-semibold">Clean High-Speed Cloud APIs</span>
             </div>
           </div>
 
           {/* Action CTAs + Social Icons */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-3 sm:gap-4 pt-2">
             <a
               href="#projects"
-              className="liquid-glass-amber-btn inline-flex items-center gap-2 px-8 py-3.5 text-xs tracking-wider uppercase group"
+              className="liquid-glass-amber-btn inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 text-xs tracking-wider uppercase group text-center"
             >
               <span>EXPLORE CASE STUDIES</span>
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </a>
 
-            <div className="flex items-center gap-1.5 p-1 liquid-glass-pill">
+            <div className="flex items-center justify-center gap-1.5 p-1 liquid-glass-pill self-start xs:self-auto">
               <a href={profile?.socialLinks?.github || 'https://github.com/ajit0121k'} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full flex items-center justify-center text-[#4a473f] dark:text-[#d3ded4] hover:bg-[#2d3a2e] hover:text-white dark:hover:bg-[#f5f0e8] dark:hover:text-[#1a241d] transition-all" title="GitHub">
                 <Github className="w-4 h-4" />
               </a>
@@ -169,9 +169,9 @@ export default function Hero({ profile, settings }) {
           </div>
 
           {/* Career Stats */}
-          <div className="grid grid-cols-2 gap-6 pt-5 border-t border-[#dfd6c7] dark:border-white/10 max-w-sm">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-5 border-t border-[#dfd6c7] dark:border-white/10 max-w-sm">
             <div>
-              <p className="text-3xl sm:text-4xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
+              <p className="text-2xl sm:text-4xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
                 {years}+
               </p>
               <p className="text-[11px] text-[#6b675d] dark:text-[#a8a397] font-medium mt-0.5">
@@ -179,7 +179,7 @@ export default function Hero({ profile, settings }) {
               </p>
             </div>
             <div>
-              <p className="text-3xl sm:text-4xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
+              <p className="text-2xl sm:text-4xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
                 4+
               </p>
               <p className="text-[11px] text-[#6b675d] dark:text-[#a8a397] font-medium mt-0.5">
@@ -194,15 +194,15 @@ export default function Hero({ profile, settings }) {
           initial={{ opacity: 0, scale: 0.92, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-6 relative flex items-center justify-center"
+          className="lg:col-span-6 relative flex items-center justify-center pt-4 lg:pt-0"
         >
           {/* Inner Relative Frame Container with Gentle Ambient Float */}
-          <div className="relative animate-float">
+          <div className="relative animate-float max-w-full">
             {/* Ambient Background Aura */}
             <div className="absolute -inset-4 bg-gradient-to-tr from-[#c66a3d]/20 via-[#49654d]/20 to-transparent rounded-full blur-2xl -z-10 pointer-events-none" />
 
             {/* Arched Architectural Photo Frame (Seamlessly Masked Arch Window) */}
-            <div className="relative w-[310px] sm:w-[375px] md:w-[400px] h-[450px] sm:h-[510px] rounded-t-[14rem] rounded-b-[2.5rem] bg-[#1a221c] border-4 border-[#faf7f2]/90 dark:border-white/15 shadow-2xl overflow-hidden group">
+            <div className="relative w-[270px] xs:w-[300px] sm:w-[360px] md:w-[400px] h-[390px] xs:h-[440px] sm:h-[490px] md:h-[510px] rounded-t-[11rem] xs:rounded-t-[13rem] sm:rounded-t-[14rem] rounded-b-[2rem] sm:rounded-b-[2.5rem] bg-[#1a221c] border-4 border-[#faf7f2]/90 dark:border-white/15 shadow-2xl overflow-hidden group">
               {/* Profile Photo - Conforms completely to the arch shape */}
               <img
                 src={photoUrl}
@@ -214,10 +214,10 @@ export default function Hero({ profile, settings }) {
             </div>
 
             {/* Circular Stamp Badge (Gracefully anchored to upper outer corner) */}
-            <div className="absolute -top-4 -right-4 sm:-top-6 sm:-right-7 z-20 animate-[spin_25s_linear_infinite] hover:[animation-play-state:paused]">
+            <div className="absolute -top-3 -right-2 xs:-top-4 xs:-right-4 sm:-top-6 sm:-right-7 z-20 animate-[spin_25s_linear_infinite] hover:[animation-play-state:paused]">
               <a
                 href="#contact"
-                className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#2d3a2e] text-[#f5f0e8] flex items-center justify-center shadow-xl border-2 border-[#f5f0e8] dark:border-white/20 group hover:scale-105 transition-transform"
+                className="relative w-14 h-14 xs:w-16 xs:h-16 sm:w-20 sm:h-20 rounded-full bg-[#2d3a2e] text-[#f5f0e8] flex items-center justify-center shadow-xl border-2 border-[#f5f0e8] dark:border-white/20 group hover:scale-105 transition-transform"
                 title="Get in touch"
               >
                 <svg className="w-full h-full p-0.5" viewBox="0 0 100 100">
@@ -227,8 +227,8 @@ export default function Hero({ profile, settings }) {
                   </text>
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#c66a3d] text-white flex items-center justify-center shadow-inner">
-                    <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 -rotate-45" />
+                  <div className="w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 rounded-full bg-[#c66a3d] text-white flex items-center justify-center shadow-inner">
+                    <ArrowRight className="w-2.5 h-2.5 xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 -rotate-45" />
                   </div>
                 </div>
               </a>

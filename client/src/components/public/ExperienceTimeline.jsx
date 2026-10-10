@@ -18,7 +18,7 @@ export default function ExperienceTimeline() {
     }
   };
 
-  usePortfolioSync(['experience'], fetchExperience);
+  usePortfolioSync(['experience', 'all'], fetchExperience);
 
   useEffect(() => {
     fetchExperience();

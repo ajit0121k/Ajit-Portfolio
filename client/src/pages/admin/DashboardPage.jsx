@@ -9,6 +9,8 @@ import {
 } from 'lucide-react';
 import api from '../../services/api.js';
 import toast from 'react-hot-toast';
+import { getPublicSiteUrl } from '../../utils/assetUrl.js';
+import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function DashboardPage() {
   const [data, setData] = useState({
@@ -52,6 +54,8 @@ export default function DashboardPage() {
       window.removeEventListener('portfolio_message_received', onIncoming);
     };
   }, []);
+
+  usePortfolioSync(['all'], fetchSummary);
 
   const fetchSummary = async () => {
     try {
@@ -194,7 +198,7 @@ export default function DashboardPage() {
           whileHover={{ y: -8, scale: 1.008 }}
           whileTap={{ scale: 0.99 }}
           transition={{ duration: 0.25 }}
-          className="lg:col-span-5 rounded-[32px] super-glossy-card glossy-glare-edge p-7 sm:p-9 flex flex-col justify-between relative overflow-hidden group"
+          className="lg:col-span-5 rounded-[24px] sm:rounded-[32px] super-glossy-card glossy-glare-edge p-5 sm:p-7 md:p-9 flex flex-col justify-between relative overflow-hidden group"
         >
           {/* Subtle Decorative Backdrop Cutout */}
           <div className="absolute top-0 right-0 w-36 h-36 bg-[#edf4ed] dark:bg-white/[0.02] rounded-bl-[40px] pointer-events-none -z-0" />
@@ -269,7 +273,7 @@ export default function DashboardPage() {
           whileHover={{ y: -8, scale: 1.008 }}
           whileTap={{ scale: 0.99 }}
           transition={{ duration: 0.25 }}
-          className="lg:col-span-4 rounded-[32px] bg-gradient-to-br from-[#144434] via-[#0d2e23] to-[#081f17] text-white p-7 sm:p-8 shadow-[0_25px_50px_-12px_rgba(11,41,31,0.45),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-emerald-400/25 relative overflow-hidden flex flex-col justify-between"
+          className="lg:col-span-4 rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-[#144434] via-[#0d2e23] to-[#081f17] text-white p-5 sm:p-7 md:p-8 shadow-[0_25px_50px_-12px_rgba(11,41,31,0.45),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-emerald-400/25 relative overflow-hidden flex flex-col justify-between"
         >
           {/* Diagonal Glass Sheen Reflection */}
           <div className="absolute -top-16 -right-16 w-64 h-64 bg-gradient-to-br from-white/20 via-white/5 to-transparent rotate-45 pointer-events-none rounded-3xl" />
@@ -345,7 +349,7 @@ export default function DashboardPage() {
           whileHover={{ y: -8, scale: 1.008 }}
           whileTap={{ scale: 0.99 }}
           transition={{ duration: 0.25 }}
-          className="lg:col-span-3 rounded-[32px] bg-gradient-to-br from-[#f98d54] via-[#f77d3e] to-[#ea6223] text-white p-6 sm:p-7 shadow-[0_24px_48px_-12px_rgba(244,115,51,0.4),inset_0_1px_2px_rgba(255,255,255,0.4)] border border-white/20 flex flex-col justify-between relative overflow-hidden"
+          className="lg:col-span-3 rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-[#f98d54] via-[#f77d3e] to-[#ea6223] text-white p-5 sm:p-6 md:p-7 shadow-[0_24px_48px_-12px_rgba(244,115,51,0.4),inset_0_1px_2px_rgba(255,255,255,0.4)] border border-white/20 flex flex-col justify-between relative overflow-hidden"
         >
           {/* Subtle 3D Surface Glow */}
           <div className="absolute -bottom-10 -left-10 w-44 h-44 bg-white/15 rounded-full filter blur-[40px] pointer-events-none" />
@@ -382,7 +386,7 @@ export default function DashboardPage() {
 
               {/* Glossy Ceramic White Capsule - Public Site */}
               <a
-                href={typeof window !== 'undefined' && window.location.hostname.includes('github.io') ? 'https://ajit0121k.github.io/Ajit-Portfolio/' : '/'}
+                href={getPublicSiteUrl()}
                 target="_blank"
                 rel="noreferrer"
                 className="w-full rounded-2xl bg-gradient-to-b from-white via-[#fbfdfb] to-[#e4eae4] text-[#123e2f] shadow-[0_8px_16px_rgba(0,0,0,0.1),inset_0_2px_2px_rgba(255,255,255,1),inset_0_-2px_4px_rgba(0,0,0,0.06)] border border-white p-3 flex items-center justify-between group active:scale-[0.98] transition-all cursor-pointer"

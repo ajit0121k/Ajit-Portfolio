@@ -19,3 +19,24 @@ export function resolveAssetUrl(url) {
   const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
   return `${BASE}${cleanUrl}`;
 }
+
+/**
+ * Returns the exact public portfolio site URL across both localhost and GitHub Pages.
+ */
+export function getPublicSiteUrl() {
+  if (typeof window !== 'undefined' && window.location.hostname.includes('github.io')) {
+    return 'https://ajit0121k.github.io/Ajit-Portfolio/';
+  }
+  return '/';
+}
+
+/**
+ * Returns the exact admin CMS panel URL across both localhost and GitHub Pages.
+ */
+export function getAdminSiteUrl() {
+  if (typeof window !== 'undefined' && window.location.hostname.includes('github.io')) {
+    return 'https://ajit0121k.github.io/Ajit-Portfolio-Admin/';
+  }
+  return '/admin/dashboard';
+}
+

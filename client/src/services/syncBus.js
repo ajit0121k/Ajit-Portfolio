@@ -65,7 +65,7 @@ export function notifyDataChange(entity = 'all', meta = {}) {
 
   // 2. Storage event (cross-tab fallback supported by 100% of browsers)
   try {
-    localStorage.setItem(STORAGE_PING_KEY, JSON.stringify(payload));
+    localStorage.setItem(STORAGE_PING_KEY, JSON.stringify({ ...payload, _rnd: Math.random() }));
   } catch (e) {
     // quota or private mode
   }
@@ -127,13 +127,22 @@ export function subscribeToSync(callback, entities = []) {
 
   // 2. Local storage cross-tab event listener
   const handleStorage = (event) => {
+    if (!event.key) {
+      trigger('all', 'storage_clear');
+      return;
+    }
     if (event.key === STORAGE_PING_KEY && event.newValue) {
       try {
         const data = JSON.parse(event.newValue);
         if (data?.entity) {
-          trigger(data.entity, 'storage');
+          trigger(data.entity, 'storage_ping');
         }
-      } catch (e) {}
+      } catch (e) {
+        trigger('all', 'storage_ping_fallback');
+      }
+    } else if (event.key.startsWith('portfolio_cms_') || event.key.startsWith('portfolio_')) {
+      const entity = extractEntityFromUrl(event.key.replace(/^portfolio_cms_/, ''));
+      trigger(entity, 'direct_storage_change');
     }
   };
   window.addEventListener('storage', handleStorage);
@@ -154,11 +163,12 @@ export function subscribeToSync(callback, entities = []) {
   };
   document.addEventListener('visibilitychange', handleVisibility);
 
-  // 5. Window focus event
+  // 5. Window focus & pageshow events (critical for mobile browser tab switching)
   const handleFocus = () => {
     trigger('all', 'window_focus');
   };
   window.addEventListener('focus', handleFocus);
+  window.addEventListener('pageshow', handleFocus);
 
   // Cleanup function
   return () => {
@@ -170,6 +180,7 @@ export function subscribeToSync(callback, entities = []) {
     window.removeEventListener('portfolio_data_changed', handleCustomEvent);
     document.removeEventListener('visibilitychange', handleVisibility);
     window.removeEventListener('focus', handleFocus);
+    window.removeEventListener('pageshow', handleFocus);
   };
 }
 

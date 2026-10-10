@@ -30,7 +30,7 @@ export default function PublicLayout() {
   };
 
   // Keep profile and settings synchronized with Admin Panel changes in real time
-  usePortfolioSync(['profile', 'settings'], fetchMeta);
+  usePortfolioSync(['profile', 'settings', 'all'], fetchMeta);
 
   useEffect(() => {
     // Disable browser's automatic scroll restoration on refresh
@@ -40,6 +40,14 @@ export default function PublicLayout() {
 
     fetchMeta();
 
+    // Re-check on tab visibility and storage event for cross-tab updates
+    const onVisibilityOrStorage = () => {
+      fetchMeta();
+    };
+    window.addEventListener('storage', onVisibilityOrStorage);
+    window.addEventListener('focus', onVisibilityOrStorage);
+    document.addEventListener('visibilitychange', onVisibilityOrStorage);
+
     // Track initial page view event (privacy-conscious, no PII)
     try {
       api.post('/analytics/track', {
@@ -48,6 +56,12 @@ export default function PublicLayout() {
         referrer: document.referrer || '',
       });
     } catch (e) {}
+
+    return () => {
+      window.removeEventListener('storage', onVisibilityOrStorage);
+      window.removeEventListener('focus', onVisibilityOrStorage);
+      document.removeEventListener('visibilitychange', onVisibilityOrStorage);
+    };
   }, []);
 
   useEffect(() => {

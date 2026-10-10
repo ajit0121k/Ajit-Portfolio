@@ -26,7 +26,7 @@ export default function ProjectsSection() {
     }
   };
 
-  usePortfolioSync(['projects'], fetchProjects);
+  usePortfolioSync(['projects', 'all'], fetchProjects);
 
   useEffect(() => {
     fetchProjects();

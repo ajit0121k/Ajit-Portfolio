@@ -23,7 +23,7 @@ export default function EducationSection() {
     }
   };
 
-  usePortfolioSync(['education', 'certifications'], fetchEduAndCerts);
+  usePortfolioSync(['education', 'certifications', 'all'], fetchEduAndCerts);
 
   useEffect(() => {
     fetchEduAndCerts();

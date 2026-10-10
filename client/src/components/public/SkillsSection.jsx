@@ -33,7 +33,7 @@ export default function SkillsSection() {
     }
   };
 
-  usePortfolioSync(['skills'], fetchSkills);
+  usePortfolioSync(['skills', 'all'], fetchSkills);
 
   useEffect(() => {
     fetchSkills();
