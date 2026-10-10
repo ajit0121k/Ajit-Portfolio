@@ -103,7 +103,7 @@ const MediaPage = () => {
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 p-1 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10">
+        <div className="w-full sm:w-auto overflow-x-auto scrollbar-none flex items-center gap-1.5 p-1 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10">
           {[
             { key: 'all', label: 'All Files' },
             { key: 'image', label: 'Images' },
@@ -113,7 +113,7 @@ const MediaPage = () => {
               key={f.key} 
               type="button"
               onClick={() => setFilter(f.key)} 
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                 filter === f.key 
                   ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20' 
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'

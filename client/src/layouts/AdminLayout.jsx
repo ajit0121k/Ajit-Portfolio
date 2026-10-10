@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, Link } from 'react-router-dom';
 import Sidebar from '../components/admin/Sidebar.jsx';
 import TopBar from '../components/admin/TopBar.jsx';
 import AdminCommandPalette from '../components/admin/AdminCommandPalette.jsx';
@@ -103,11 +103,87 @@ export default function AdminLayout() {
             onToggleMobileMenu={() => setMobileOpen((prev) => !prev)}
           />
 
-          <main className="flex-1 p-3 md:p-5 lg:p-8 max-w-7xl w-full mx-auto animate-fade-in">
+          <main className="flex-1 p-3 sm:p-5 lg:p-8 max-w-7xl w-full mx-auto pb-24 md:pb-8 animate-fade-in">
             <Outlet />
           </main>
         </div>
       </div>
+
+      {/* Modern Frosted Mobile Bottom Navigation Bar */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/90 dark:bg-[#101b13]/90 backdrop-blur-xl border-t border-black/5 dark:border-white/10 px-3 py-2 flex items-center justify-around shadow-[0_-8px_20px_rgba(0,0,0,0.06)]">
+        <Link
+          to="/admin/dashboard"
+          className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${
+            location.pathname.includes('/dashboard')
+              ? 'text-emerald-700 dark:text-emerald-400 font-bold'
+              : 'text-slate-500 dark:text-slate-400'
+          }`}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" strokeWidth="2" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" strokeWidth="2" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" strokeWidth="2" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" strokeWidth="2" />
+          </svg>
+          <span className="text-[10px] font-medium">Dashboard</span>
+        </Link>
+
+        <Link
+          to="/admin/projects"
+          className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${
+            location.pathname.includes('/projects')
+              ? 'text-emerald-700 dark:text-emerald-400 font-bold'
+              : 'text-slate-500 dark:text-slate-400'
+          }`}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+          </svg>
+          <span className="text-[10px] font-medium">Projects</span>
+        </Link>
+
+        <Link
+          to="/admin/messages"
+          className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all relative ${
+            location.pathname.includes('/messages')
+              ? 'text-emerald-700 dark:text-emerald-400 font-bold'
+              : 'text-slate-500 dark:text-slate-400'
+          }`}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          {unreadCount > 0 && (
+            <span className="absolute top-0 right-1 w-2 h-2 rounded-full bg-orange-500" />
+          )}
+          <span className="text-[10px] font-medium">Messages</span>
+        </Link>
+
+        <Link
+          to="/admin/profile"
+          className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${
+            location.pathname.includes('/profile')
+              ? 'text-emerald-700 dark:text-emerald-400 font-bold'
+              : 'text-slate-500 dark:text-slate-400'
+          }`}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          <span className="text-[10px] font-medium">Profile</span>
+        </Link>
+
+        <button
+          type="button"
+          onClick={() => setMobileOpen(true)}
+          className="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-slate-500 dark:text-slate-400 cursor-pointer active:scale-95"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span className="text-[10px] font-medium">More</span>
+        </button>
+      </nav>
 
       {/* Command Palette Modal */}
       <AdminCommandPalette

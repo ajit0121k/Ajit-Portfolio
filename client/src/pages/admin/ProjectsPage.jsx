@@ -144,12 +144,12 @@ export default function ProjectsPage() {
 
       {/* Filter and Search Bar */}
       <div className="liquid-glass-card p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div className="flex space-x-1.5 p-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
+        <div className="w-full sm:w-auto overflow-x-auto scrollbar-none flex space-x-1.5 p-1 rounded-2xl sm:rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
           {['all', 'published', 'draft', 'archived'].map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold capitalize transition ${
+              className={`px-3.5 sm:px-4 py-1.5 rounded-xl sm:rounded-full text-xs font-bold capitalize whitespace-nowrap transition cursor-pointer ${
                 filter === f
                   ? 'bg-amber-500 text-white shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'

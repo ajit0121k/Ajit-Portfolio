@@ -241,23 +241,23 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="relative z-10 pt-6 flex items-center gap-3">
+          <div className="relative z-10 pt-6 flex flex-wrap items-center gap-2.5 sm:gap-3">
             <Link
               to="/admin/projects/new"
-              className="px-5 py-3 rounded-full bg-gradient-to-r from-[#f97316] via-[#fb923c] to-[#ea580c] hover:opacity-95 text-white text-xs font-extrabold uppercase tracking-wider shadow-[0_10px_22px_-4px_rgba(249,115,22,0.45),inset_0_1px_1px_rgba(255,255,255,0.5)] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
+              className="flex-1 sm:flex-none justify-center px-5 py-3 rounded-full bg-gradient-to-r from-[#f97316] via-[#fb923c] to-[#ea580c] hover:opacity-95 text-white text-xs font-extrabold uppercase tracking-wider shadow-[0_10px_22px_-4px_rgba(249,115,22,0.45),inset_0_1px_1px_rgba(255,255,255,0.5)] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Add Project</span>
             </Link>
             <Link
               to="/admin/profile"
-              className="px-4 py-3 rounded-full bg-[#edf2ed] dark:bg-white/5 hover:bg-[#e2eae2] dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all"
+              className="px-4 py-3 rounded-full bg-[#edf2ed] dark:bg-white/5 hover:bg-[#e2eae2] dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all text-center"
             >
               Edit Profile
             </Link>
             <Link
               to="/admin/resume"
-              className="px-4 py-3 rounded-full bg-[#edf2ed] dark:bg-white/5 hover:bg-[#e2eae2] dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all"
+              className="px-4 py-3 rounded-full bg-[#edf2ed] dark:bg-white/5 hover:bg-[#e2eae2] dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all text-center"
             >
               Resume
             </Link>
