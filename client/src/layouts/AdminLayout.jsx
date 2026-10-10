@@ -109,8 +109,8 @@ export default function AdminLayout() {
         </div>
       </div>
 
-      {/* Modern Frosted Mobile Bottom Navigation Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/90 dark:bg-[#101b13]/90 backdrop-blur-xl border-t border-black/5 dark:border-white/10 px-3 py-2 flex items-center justify-around shadow-[0_-8px_20px_rgba(0,0,0,0.06)]">
+      {/* Modern Super Glossy Frosted Mobile Bottom Navigation Bar */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 super-glossy-glass glossy-glare-edge border-t border-white/80 dark:border-white/10 px-3 py-2 flex items-center justify-around shadow-[0_-12px_32px_rgba(0,0,0,0.08)]">
         <Link
           to="/admin/dashboard"
           className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${

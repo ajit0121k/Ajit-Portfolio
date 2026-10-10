@@ -194,7 +194,7 @@ export default function DashboardPage() {
           whileHover={{ y: -8, scale: 1.008 }}
           whileTap={{ scale: 0.99 }}
           transition={{ duration: 0.25 }}
-          className="lg:col-span-5 rounded-[32px] bg-white dark:bg-[#111c13] p-7 sm:p-9 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.06),0_2px_6px_rgba(0,0,0,0.02),inset_0_1px_2px_rgba(255,255,255,0.9)] border border-white/80 dark:border-white/5 flex flex-col justify-between relative overflow-hidden group"
+          className="lg:col-span-5 rounded-[32px] super-glossy-card glossy-glare-edge p-7 sm:p-9 flex flex-col justify-between relative overflow-hidden group"
         >
           {/* Subtle Decorative Backdrop Cutout */}
           <div className="absolute top-0 right-0 w-36 h-36 bg-[#edf4ed] dark:bg-white/[0.02] rounded-bl-[40px] pointer-events-none -z-0" />
@@ -446,7 +446,7 @@ export default function DashboardPage() {
               >
                 <Link
                   to={card.link}
-                  className="rounded-[24px] bg-white dark:bg-[#111c13] p-5 shadow-[0_15px_30px_-8px_rgba(0,0,0,0.05),0_1px_3px_rgba(0,0,0,0.02),inset_0_1px_2px_rgba(255,255,255,0.8)] border border-white/80 dark:border-white/5 transition-all relative overflow-hidden flex flex-col justify-between group cursor-pointer h-full"
+                  className="rounded-[24px] super-glossy-card glossy-glare-edge p-5 transition-all relative overflow-hidden flex flex-col justify-between group cursor-pointer h-full"
                 >
                   <div className="flex justify-between items-start mb-3">
                     {/* Tactile Inset Icon Well */}
@@ -495,7 +495,7 @@ export default function DashboardPage() {
       >
         
         {/* Recent Projects Clay Card */}
-        <div className="rounded-[30px] bg-white dark:bg-[#111c13] p-6 sm:p-7 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.02),inset_0_1px_2px_rgba(255,255,255,0.8)] border border-white/80 dark:border-white/5 flex flex-col justify-between">
+        <div className="rounded-[30px] super-glossy-card glossy-glare-edge p-6 sm:p-7 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-center mb-5">
               <h2 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
@@ -567,7 +567,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Live Security & Activity Audit Log Card */}
-        <div className="rounded-[30px] bg-white dark:bg-[#111c13] p-6 sm:p-7 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.02),inset_0_1px_2px_rgba(255,255,255,0.8)] border border-white/80 dark:border-white/5 flex flex-col justify-between">
+        <div className="rounded-[30px] super-glossy-card glossy-glare-edge p-6 sm:p-7 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-center mb-5">
               <h2 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">

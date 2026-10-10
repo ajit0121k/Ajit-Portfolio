@@ -135,7 +135,7 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
             }
             target="_blank"
             rel="noreferrer"
-            className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#153f31] dark:text-emerald-300 bg-[#e7efe8] dark:bg-emerald-950/40 hover:bg-[#dce8dd] dark:hover:bg-emerald-900/40 shadow-xs transition-all ${
+            className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#153f31] dark:text-emerald-300 super-glossy-btn shadow-xs transition-all ${
               collapsed && !mobileOpen ? 'justify-center' : ''
             }`}
             title="View Live Portfolio"
@@ -167,7 +167,7 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
                     className={({ isActive }) =>
                       `flex items-center justify-between px-3.5 py-2.5 md:py-2 rounded-2xl text-sm md:text-xs font-bold transition-all group ${
                         isActive
-                          ? 'bg-[#153f31] text-white shadow-[0_8px_20px_-4px_rgba(21,63,49,0.5)]'
+                          ? 'bg-gradient-to-r from-[#153f31] to-[#1c5442] text-white shadow-[0_8px_20px_-4px_rgba(21,63,49,0.5),inset_0_1px_1.5px_rgba(255,255,255,0.35)] border border-emerald-400/30'
                           : 'text-slate-700 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 hover:text-[#153f31] dark:hover:text-emerald-300'
                       } ${collapsed && !mobileOpen ? 'justify-center' : ''}`
                     }
@@ -191,7 +191,7 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
       </div>
 
       {/* User Info & Logout Footer */}
-      <div className="p-3 border-t border-black/[0.04] dark:border-white/[0.06] bg-[#f7f9f7] dark:bg-[#0c160e] flex-shrink-0">
+      <div className="p-3 border-t border-black/[0.04] dark:border-white/[0.06] bg-black/[0.02] dark:bg-black/20 flex-shrink-0">
         {(!collapsed || mobileOpen) ? (
           <div className="flex items-center justify-between gap-2">
             <div className="truncate">
@@ -229,7 +229,7 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
     <>
       {/* Desktop Sidebar — hidden on mobile */}
       <aside
-        className={`hidden md:flex fixed top-3 left-3 z-40 h-[calc(100vh-1.5rem)] transition-all duration-300 ease-in-out rounded-[28px] bg-white/95 dark:bg-[#101b13]/95 backdrop-blur-2xl border border-white/80 dark:border-white/10 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.04),inset_0_1px_2px_rgba(255,255,255,0.8)] flex-col justify-between overflow-hidden ${
+        className={`hidden md:flex fixed top-3 left-3 z-40 h-[calc(100vh-1.5rem)] transition-all duration-300 ease-in-out rounded-[28px] super-glossy-glass glossy-glare-edge flex-col justify-between overflow-hidden ${
           collapsed ? 'w-20' : 'w-64'
         }`}
       >
@@ -246,7 +246,7 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
 
       {/* Mobile Sidebar Drawer */}
       <aside
-        className={`md:hidden fixed top-0 left-0 z-50 h-full w-72 transition-transform duration-300 ease-in-out bg-white/98 dark:bg-[#101b13]/98 backdrop-blur-2xl border-r border-white/80 dark:border-white/10 shadow-[20px_0_45px_-10px_rgba(0,0,0,0.15)] flex flex-col justify-between overflow-hidden ${
+        className={`md:hidden fixed top-0 left-0 z-50 h-full w-72 transition-transform duration-300 ease-in-out super-glossy-glass border-r border-white/80 dark:border-white/10 shadow-[20px_0_45px_-10px_rgba(0,0,0,0.15)] flex flex-col justify-between overflow-hidden ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
