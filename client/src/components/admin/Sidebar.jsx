@@ -52,6 +52,7 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
       group: 'Portfolio Content',
       items: [
         { label: 'Profile & Bio', path: '/admin/profile', icon: User },
+        { label: 'Currently Building', path: '/admin/profile#building', icon: Sparkles },
         { label: 'Resume / CV', path: '/admin/resume', icon: FileText },
         { label: 'Projects', path: '/admin/projects', icon: FolderGit2 },
         { label: 'Skills', path: '/admin/skills', icon: Cpu },
