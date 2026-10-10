@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Save, User, Link as LinkIcon, FileText, RotateCcw, ExternalLink, Sparkles, ArrowRight } from 'lucide-react';
+import { Save, User, Link as LinkIcon, FileText, RotateCcw, ExternalLink, Sparkles, ArrowRight, Loader2, Check } from 'lucide-react';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
 import RichTextEditor from '../../components/admin/RichTextEditor';
@@ -163,6 +163,28 @@ export default function ProfilePage() {
       toast.error(err.response?.data?.message || 'Failed to update profile');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const [savingBuilding, setSavingBuilding] = useState(false);
+  const handleSaveCurrentlyBuilding = async (e) => {
+    if (e) e.preventDefault();
+    setSavingBuilding(true);
+    try {
+      const payload = {
+        currentlyBuilding: formData.currentlyBuilding?.name || '',
+        currentlyBuildingUrl: formData.currentlyBuilding?.url || '',
+      };
+      await api.put('/profile', payload);
+      toast.success('Currently Building updated & live on public portfolio!');
+      setInitialData((prev) => ({
+        ...prev,
+        currentlyBuilding: formData.currentlyBuilding,
+      }));
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to update Currently Building');
+    } finally {
+      setSavingBuilding(false);
     }
   };
 
@@ -437,7 +459,7 @@ export default function ProfilePage() {
 
             {/* Currently Building Dedicated Section */}
             <div id="building" className="pt-4 border-t border-slate-200 dark:border-white/10 space-y-3 scroll-mt-24">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <div className="p-1.5 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400">
                     <Sparkles className="w-4 h-4" />
@@ -449,6 +471,27 @@ export default function ProfilePage() {
                     <p className="text-[10px] text-slate-400">Controls the hero badge on the public portfolio header</p>
                   </div>
                 </div>
+
+                {/* Direct Action Button */}
+                <button
+                  type="button"
+                  onClick={handleSaveCurrentlyBuilding}
+                  disabled={savingBuilding}
+                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#ea580c] to-[#f97316] hover:opacity-95 text-white text-xs font-bold shadow-md shadow-orange-500/25 flex items-center gap-1.5 cursor-pointer active:scale-95 disabled:opacity-50 transition-all"
+                  title="Update Currently Building badge live"
+                >
+                  {savingBuilding ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Save className="w-3.5 h-3.5" />
+                      <span>Update Pill</span>
+                    </>
+                  )}
+                </button>
               </div>
 
               {/* Live Preview of the Badge */}
