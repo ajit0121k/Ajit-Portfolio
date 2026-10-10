@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart3, Eye, TrendingUp, Users, Smartphone, Globe } from 'lucide-react';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, BarChart, Bar } from 'recharts';
+import { BarChart3, Eye, TrendingUp, Users, FolderGit2 } from 'lucide-react';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
 import api from '../../services/api.js';
+import toast from 'react-hot-toast';
 
 export default function AnalyticsPage() {
   const [stats, setStats] = useState({
@@ -22,6 +23,7 @@ export default function AnalyticsPage() {
         setStats(dashRes.data.data || dashRes.data || {});
         setPopularProjects(projRes.data.data || projRes.data || []);
       } catch (e) {
+        toast.error('Failed to load analytics data');
       } finally {
         setIsLoading(false);
       }
@@ -115,6 +117,38 @@ export default function AnalyticsPage() {
             </AreaChart>
           </ResponsiveContainer>
         </div>
+      </div>
+
+      {/* Popular Projects Section */}
+      <div className="liquid-glass-card p-6 space-y-4">
+        <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <FolderGit2 className="w-4 h-4 text-emerald-500" />
+          <span>Most Viewed Projects</span>
+        </h2>
+
+        {popularProjects.length > 0 ? (
+          <div className="divide-y divide-slate-200/60 dark:divide-white/10">
+            {popularProjects.map((p, idx) => (
+              <div key={p.slug || idx} className="py-3 flex items-center justify-between gap-4 text-xs">
+                <div className="flex items-center gap-3">
+                  <span className="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold flex items-center justify-center text-[11px]">
+                    #{idx + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-semibold text-slate-800 dark:text-slate-200">{p.title || 'Untitled Project'}</h3>
+                    <p className="text-[10px] text-slate-400">/{p.slug || 'project'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-medium">
+                  <Eye className="w-3.5 h-3.5 text-slate-400" />
+                  <span>{p.views || 0} views</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-xs text-slate-400 py-4 text-center">No project view data available yet.</p>
+        )}
       </div>
     </div>
   );

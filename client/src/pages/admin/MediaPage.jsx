@@ -7,10 +7,8 @@ import {
   Check, 
   UploadCloud, 
   Search, 
-  Sparkles, 
   ExternalLink,
-  Eye,
-  Filter
+  Eye
 } from 'lucide-react';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
@@ -76,6 +74,7 @@ const MediaPage = () => {
   };
 
   const filteredMedia = media.filter(m => {
+    if (filter !== 'all' && m.type !== filter) return false;
     if (!search) return true;
     const name = (m.filename || m.originalName || '').toLowerCase();
     return name.includes(search.toLowerCase());

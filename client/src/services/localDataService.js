@@ -54,7 +54,11 @@ function setStorage(key, val) {
     if (!isInitializing && KEY_TO_ENTITY[key]) {
       notifyDataChange(KEY_TO_ENTITY[key]);
     }
-  } catch (e) {}
+  } catch (e) {
+    if (e?.name === 'QuotaExceededError' || e?.code === 22) {
+      console.warn(`[localDataService] LocalStorage quota exceeded for key "${key}". Consider reducing media/image sizes.`);
+    }
+  }
 }
 
 export function initLocalData() {
@@ -341,11 +345,17 @@ export function handleLocalRequest(method, url, data) {
           const related = projects.filter(p => p.slug !== action && (p.status === "published" || p.status === undefined)).slice(0, 3);
           return { success: true, data: related };
         }
-        return { success: true, data: found || projects[0] };
+        if (!found) {
+          return { __errorStatus: 404, message: "Project not found" };
+        }
+        return { success: true, data: found };
       }
       if (subOrId) {
         const found = projects.find(p => p._id === subOrId || p.id === subOrId || p.slug === subOrId);
-        return { success: true, data: found || projects[0] };
+        if (!found) {
+          return { __errorStatus: 404, message: "Project not found" };
+        }
+        return { success: true, data: found };
       }
       return {
         success: true,
@@ -439,6 +449,18 @@ export function handleLocalRequest(method, url, data) {
     }
 
     if (upperMethod === "PUT" || upperMethod === "PATCH") {
+      if (subOrId === "reorder") {
+        if (Array.isArray(body?.items)) {
+          body.items.forEach(item => {
+            const s = skills.find(x => x._id === item.id || x.id === item.id);
+            if (s) s.order = item.order;
+          });
+          skills.sort((a, b) => (a.order || 0) - (b.order || 0));
+          setStorage(STORAGE_KEYS.SKILLS, skills);
+        }
+        return { success: true, message: "Skills reordered successfully" };
+      }
+
       skills = skills.map(s => (s._id === subOrId || s.id === subOrId ? { ...s, ...body } : s));
       setStorage(STORAGE_KEYS.SKILLS, skills);
       return { success: true, message: "Skill updated", data: skills.find(s => s._id === subOrId || s.id === subOrId) };
@@ -476,6 +498,18 @@ export function handleLocalRequest(method, url, data) {
     }
 
     if (upperMethod === "PUT" || upperMethod === "PATCH") {
+      if (subOrId === "reorder") {
+        if (Array.isArray(body?.items)) {
+          body.items.forEach(item => {
+            const e = exp.find(x => x._id === item.id || x.id === item.id);
+            if (e) e.order = item.order;
+          });
+          exp.sort((a, b) => (a.order || 0) - (b.order || 0));
+          setStorage(STORAGE_KEYS.EXPERIENCE, exp);
+        }
+        return { success: true, message: "Experience reordered successfully" };
+      }
+
       exp = exp.map(e => (e._id === subOrId || e.id === subOrId ? { ...e, ...body } : e));
       setStorage(STORAGE_KEYS.EXPERIENCE, exp);
       return { success: true, message: "Experience updated", data: exp.find(e => e._id === subOrId || e.id === subOrId) };
@@ -513,6 +547,18 @@ export function handleLocalRequest(method, url, data) {
     }
 
     if (upperMethod === "PUT" || upperMethod === "PATCH") {
+      if (subOrId === "reorder") {
+        if (Array.isArray(body?.items)) {
+          body.items.forEach(item => {
+            const e = edu.find(x => x._id === item.id || x.id === item.id);
+            if (e) e.order = item.order;
+          });
+          edu.sort((a, b) => (a.order || 0) - (b.order || 0));
+          setStorage(STORAGE_KEYS.EDUCATION, edu);
+        }
+        return { success: true, message: "Education reordered successfully" };
+      }
+
       edu = edu.map(e => (e._id === subOrId || e.id === subOrId ? { ...e, ...body } : e));
       setStorage(STORAGE_KEYS.EDUCATION, edu);
       return { success: true, message: "Education updated", data: edu.find(e => e._id === subOrId || e.id === subOrId) };
@@ -550,6 +596,18 @@ export function handleLocalRequest(method, url, data) {
     }
 
     if (upperMethod === "PUT" || upperMethod === "PATCH") {
+      if (subOrId === "reorder") {
+        if (Array.isArray(body?.items)) {
+          body.items.forEach(item => {
+            const c = certs.find(x => x._id === item.id || x.id === item.id);
+            if (c) c.order = item.order;
+          });
+          certs.sort((a, b) => (a.order || 0) - (b.order || 0));
+          setStorage(STORAGE_KEYS.CERTIFICATIONS, certs);
+        }
+        return { success: true, message: "Certifications reordered successfully" };
+      }
+
       certs = certs.map(c => (c._id === subOrId || c.id === subOrId ? { ...c, ...body } : c));
       setStorage(STORAGE_KEYS.CERTIFICATIONS, certs);
       return { success: true, message: "Certification updated", data: certs.find(c => c._id === subOrId || c.id === subOrId) };
@@ -587,6 +645,18 @@ export function handleLocalRequest(method, url, data) {
     }
 
     if (upperMethod === "PUT" || upperMethod === "PATCH") {
+      if (subOrId === "reorder") {
+        if (Array.isArray(body?.items)) {
+          body.items.forEach(item => {
+            const t = tests.find(x => x._id === item.id || x.id === item.id);
+            if (t) t.order = item.order;
+          });
+          tests.sort((a, b) => (a.order || 0) - (b.order || 0));
+          setStorage(STORAGE_KEYS.TESTIMONIALS, tests);
+        }
+        return { success: true, message: "Testimonials reordered successfully" };
+      }
+
       tests = tests.map(t => (t._id === subOrId || t.id === subOrId ? { ...t, ...body } : t));
       setStorage(STORAGE_KEYS.TESTIMONIALS, tests);
       return { success: true, message: "Testimonial updated", data: tests.find(t => t._id === subOrId || t.id === subOrId) };
@@ -675,11 +745,17 @@ export function handleLocalRequest(method, url, data) {
     let media = getStorage(STORAGE_KEYS.MEDIA, initialDump.media || []);
 
     if (upperMethod === "GET") {
+      let filteredMedia = [...media];
+      const params = new URLSearchParams(queryStr || "");
+      const typeFilter = params.get("type");
+      if (typeFilter && typeFilter !== "all") {
+        filteredMedia = filteredMedia.filter(m => m.type === typeFilter);
+      }
       return {
         success: true,
         data: {
-          media: media,
-          total: media.length
+          media: filteredMedia,
+          total: filteredMedia.length
         }
       };
     }
@@ -993,11 +1069,17 @@ export function handleLocalRequest(method, url, data) {
       }
       if (subOrId === "slug" && action) {
         const found = posts.find(p => p.slug === action);
-        return { success: true, data: found || posts[0] || null };
+        if (!found) {
+          return { __errorStatus: 404, message: "Blog post not found" };
+        }
+        return { success: true, data: found };
       }
       if (subOrId) {
         const found = posts.find(p => p._id === subOrId || p.id === subOrId || p.slug === subOrId);
-        return { success: true, data: found || posts[0] || null };
+        if (!found) {
+          return { __errorStatus: 404, message: "Blog post not found" };
+        }
+        return { success: true, data: found };
       }
       return {
         success: true,
