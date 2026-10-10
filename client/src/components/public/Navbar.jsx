@@ -111,7 +111,7 @@ export default function Navbar({ onOpenCommandPalette }) {
         </NavLink>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-1 bg-[#eae3d5]/70 dark:bg-white/5 p-1 rounded-full border border-[#dcd2c0]/60 dark:border-white/10 backdrop-blur-md">
+        <div className="hidden md:flex items-center gap-1 bg-[#eae3d5]/90 dark:bg-black/30 p-1.5 rounded-full border border-[#dcd2c0] dark:border-white/15 backdrop-blur-md shadow-xs">
           {navLinks
             .filter((link) => link.show)
             .map((link, idx) => {
@@ -124,10 +124,10 @@ export default function Navbar({ onOpenCommandPalette }) {
                 <button
                   key={idx}
                   onClick={() => handleNavClick(link)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
                     isActive
                       ? 'bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f3eee5] dark:text-[#1a241d] shadow-sm'
-                      : 'text-[#5a574f] dark:text-[#c4beb3] hover:text-[#1a241d] dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5'
+                      : 'text-[#2b2924] dark:text-[#f0ece1] hover:text-[#1a241d] dark:hover:text-white hover:bg-white/80 dark:hover:bg-white/10'
                   }`}
                 >
                   {link.label}

@@ -55,8 +55,8 @@ export default function TopBar({ onOpenCommandPalette, onToggleMobileMenu }) {
           <h1 className="text-sm md:text-lg font-extrabold text-[#153f31] dark:text-emerald-300 flex items-center gap-2 tracking-tight truncate">
             {getPageTitle(location.pathname)}
           </h1>
-          <p className="text-[10px] md:text-[11px] text-slate-400 font-semibold tracking-wide truncate">
-            Admin / <span className="capitalize text-slate-500 dark:text-slate-400">{location.pathname.replace('/admin/', '').replace('/', ' > ') || 'Dashboard'}</span>
+          <p className="text-[10px] md:text-[11px] text-slate-600 dark:text-slate-300 font-bold tracking-wide truncate">
+            Admin / <span className="capitalize text-emerald-800 dark:text-emerald-300 font-extrabold">{location.pathname.replace('/admin/', '').replace('/', ' > ') || 'Dashboard'}</span>
           </p>
         </div>
       </div>

@@ -115,8 +115,8 @@ export default function AdminLayout() {
           to="/admin/dashboard"
           className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${
             location.pathname.includes('/dashboard')
-              ? 'text-emerald-700 dark:text-emerald-400 font-bold'
-              : 'text-slate-500 dark:text-slate-400'
+              ? 'text-emerald-700 dark:text-emerald-400 font-extrabold'
+              : 'text-slate-700 dark:text-slate-300 hover:text-emerald-700 font-medium'
           }`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -125,63 +125,63 @@ export default function AdminLayout() {
             <rect x="14" y="14" width="7" height="7" rx="1.5" strokeWidth="2" />
             <rect x="3" y="14" width="7" height="7" rx="1.5" strokeWidth="2" />
           </svg>
-          <span className="text-[10px] font-medium">Dashboard</span>
+          <span className="text-[11px] font-bold">Dashboard</span>
         </Link>
 
         <Link
           to="/admin/projects"
           className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${
             location.pathname.includes('/projects')
-              ? 'text-emerald-700 dark:text-emerald-400 font-bold'
-              : 'text-slate-500 dark:text-slate-400'
+              ? 'text-emerald-700 dark:text-emerald-400 font-extrabold'
+              : 'text-slate-700 dark:text-slate-300 hover:text-emerald-700 font-medium'
           }`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
           </svg>
-          <span className="text-[10px] font-medium">Projects</span>
+          <span className="text-[11px] font-bold">Projects</span>
         </Link>
 
         <Link
           to="/admin/messages"
           className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all relative ${
             location.pathname.includes('/messages')
-              ? 'text-emerald-700 dark:text-emerald-400 font-bold'
-              : 'text-slate-500 dark:text-slate-400'
+              ? 'text-emerald-700 dark:text-emerald-400 font-extrabold'
+              : 'text-slate-700 dark:text-slate-300 hover:text-emerald-700 font-medium'
           }`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
           {unreadCount > 0 && (
-            <span className="absolute top-0 right-1 w-2 h-2 rounded-full bg-orange-500" />
+            <span className="absolute top-0 right-1 w-2.5 h-2.5 rounded-full bg-orange-500 shadow-xs" />
           )}
-          <span className="text-[10px] font-medium">Messages</span>
+          <span className="text-[11px] font-bold">Messages</span>
         </Link>
 
         <Link
           to="/admin/profile"
           className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${
             location.pathname.includes('/profile')
-              ? 'text-emerald-700 dark:text-emerald-400 font-bold'
-              : 'text-slate-500 dark:text-slate-400'
+              ? 'text-emerald-700 dark:text-emerald-400 font-extrabold'
+              : 'text-slate-700 dark:text-slate-300 hover:text-emerald-700 font-medium'
           }`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
-          <span className="text-[10px] font-medium">Profile</span>
+          <span className="text-[11px] font-bold">Profile</span>
         </Link>
 
         <button
           type="button"
           onClick={() => setMobileOpen(true)}
-          className="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-slate-500 dark:text-slate-400 cursor-pointer active:scale-95"
+          className="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-emerald-700 cursor-pointer active:scale-95"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
-          <span className="text-[10px] font-medium">More</span>
+          <span className="text-[11px] font-bold">More</span>
         </button>
       </nav>
 

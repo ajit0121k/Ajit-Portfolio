@@ -150,12 +150,12 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
           {navGroups.map((group, gIdx) => (
             <div key={gIdx} className="space-y-1">
               {(!collapsed || mobileOpen) && (
-                <div className="px-3 pt-1 pb-0.5 text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-400 select-none">
+                <div className="px-3 pt-1.5 pb-0.5 text-[11px] font-black uppercase tracking-wider text-slate-600 dark:text-emerald-400/80 select-none">
                   {group.group}
                 </div>
               )}
               {collapsed && !mobileOpen && gIdx > 0 && (
-                <div className="my-1.5 border-t border-black/[0.04] dark:border-white/[0.06] mx-2" />
+                <div className="my-1.5 border-t border-black/[0.08] dark:border-white/10 mx-2" />
               )}
               {group.items.map((item) => {
                 const Icon = item.icon;
@@ -165,16 +165,16 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
                     to={item.path}
                     onClick={closeMobile}
                     className={({ isActive }) =>
-                      `flex items-center justify-between px-3 py-2.5 md:py-2 rounded-2xl text-sm md:text-xs font-bold transition-all group ${
+                      `flex items-center justify-between px-3.5 py-2.5 md:py-2 rounded-2xl text-sm md:text-xs font-bold transition-all group ${
                         isActive
-                          ? 'bg-[#153f31] text-white shadow-[0_8px_20px_-4px_rgba(21,63,49,0.45)]'
-                          : 'text-slate-600 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#153f31] dark:hover:text-white'
+                          ? 'bg-[#153f31] text-white shadow-[0_8px_20px_-4px_rgba(21,63,49,0.5)]'
+                          : 'text-slate-700 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 hover:text-[#153f31] dark:hover:text-emerald-300'
                       } ${collapsed && !mobileOpen ? 'justify-center' : ''}`
                     }
                     title={collapsed && !mobileOpen ? item.label : undefined}
                   >
                     <div className="flex items-center gap-2.5 truncate">
-                      <Icon className="w-5 h-5 md:w-4 md:h-4 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                      <Icon className="w-5 h-5 md:w-4 md:h-4 flex-shrink-0 text-slate-700 dark:text-slate-300 group-hover:scale-110 group-hover:text-[#153f31] dark:group-hover:text-white transition-all" />
                       {(!collapsed || mobileOpen) && <span className="truncate">{item.label}</span>}
                     </div>
                     {(!collapsed || mobileOpen) && item.badge && (
