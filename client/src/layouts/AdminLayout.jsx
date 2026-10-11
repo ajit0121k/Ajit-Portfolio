@@ -98,14 +98,17 @@ export default function AdminLayout() {
             collapsed ? 'lg:pl-24' : 'lg:pl-72'
           }`}
         >
-          <TopBar
-            onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
-            onToggleMobileMenu={() => setMobileOpen((prev) => !prev)}
-          />
+          {/* Centered Content Container for Unified TopBar & Page Alignment */}
+          <div className="w-full max-w-7xl mx-auto flex flex-col min-h-screen">
+            <TopBar
+              onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+              onToggleMobileMenu={() => setMobileOpen((prev) => !prev)}
+            />
 
-          <main className="flex-1 p-2.5 sm:p-4 md:p-5 lg:p-6 w-full pb-24 lg:pb-8 animate-fade-in min-w-0">
-            <Outlet />
-          </main>
+            <main className="flex-1 p-2.5 sm:p-4 md:p-5 lg:p-6 w-full pb-24 lg:pb-8 animate-fade-in min-w-0">
+              <Outlet />
+            </main>
+          </div>
         </div>
       </div>
 
