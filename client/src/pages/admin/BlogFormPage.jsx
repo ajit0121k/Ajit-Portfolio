@@ -94,7 +94,7 @@ export default function BlogFormPage() {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in max-w-4xl mx-auto pb-12">
+    <div className="space-y-6 animate-fade-in w-full pb-12">
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <Link

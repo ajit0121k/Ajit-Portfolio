@@ -29,7 +29,7 @@ export default function ActivityPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto pb-12 animate-fade-in">
+    <div className="space-y-6 w-full pb-12 animate-fade-in">
       <div>
         <h1 className="text-xl font-bold text-slate-900 dark:text-white">Admin Activity Audit Log</h1>
         <p className="text-xs text-slate-500 dark:text-slate-400">Complete immutable record of all administrative actions</p>

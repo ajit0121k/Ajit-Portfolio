@@ -90,7 +90,7 @@ const MediaPage = () => {
   };
 
   return (
-    <div className="space-y-6 pb-16 max-w-7xl mx-auto animate-fade-in">
+    <div className="space-y-6 pb-16 w-full animate-fade-in">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 liquid-glass-card p-6">
         <div>

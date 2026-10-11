@@ -42,7 +42,7 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto pb-12 animate-fade-in">
+    <div className="space-y-6 w-full pb-12 animate-fade-in">
       <div>
         <h1 className="text-xl font-bold text-slate-900 dark:text-white">Visitor & Traffic Analytics</h1>
         <p className="text-xs text-slate-500 dark:text-slate-400">Privacy-conscious metrics with zero third-party cookie trackers</p>

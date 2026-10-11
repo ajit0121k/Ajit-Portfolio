@@ -204,7 +204,7 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto pb-16 animate-fade-in">
+    <div className="space-y-6 w-full pb-16 animate-fade-in">
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
