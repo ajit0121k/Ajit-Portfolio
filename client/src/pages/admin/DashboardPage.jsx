@@ -174,7 +174,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto pb-16">
+    <div className="space-y-6 sm:space-y-8 w-full pb-16">
       
       {/* ========================================================================= */}
       {/* 3D BENTO HERO COMPOSITION (Matching Reference Image)                     */}

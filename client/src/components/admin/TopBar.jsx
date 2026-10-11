@@ -43,7 +43,7 @@ export default function TopBar({ onOpenCommandPalette, onToggleMobileMenu }) {
     (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   return (
-    <header className="sticky top-2 sm:top-3 z-30 mx-2 sm:mx-4 md:mx-8 mb-2 h-13 sm:h-14 md:h-16 rounded-xl sm:rounded-2xl md:rounded-[24px] super-glossy-glass glossy-glare-edge px-2.5 sm:px-4 md:px-6 flex items-center justify-between transition-all">
+    <header className="sticky top-2 sm:top-3 z-30 mx-2.5 xs:mx-4 sm:mx-5 lg:mx-6 mb-3 sm:mb-4 h-13 sm:h-14 md:h-16 rounded-xl sm:rounded-2xl md:rounded-[24px] super-glossy-glass glossy-glare-edge px-2.5 sm:px-4 md:px-6 flex items-center justify-between transition-all">
       {/* Left: Hamburger + Title */}
       <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
         {/* Mobile Hamburger Menu */}
