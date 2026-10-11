@@ -191,39 +191,39 @@ export default function DashboardPage() {
           whileHover={{ y: -8, scale: 1.008 }}
           whileTap={{ scale: 0.99 }}
           transition={{ duration: 0.25 }}
-          className="lg:col-span-5 rounded-[24px] sm:rounded-[32px] super-glossy-card glossy-glare-edge p-5 sm:p-7 md:p-9 flex flex-col justify-between relative overflow-hidden group"
+          className="lg:col-span-5 rounded-[22px] sm:rounded-[32px] super-glossy-card glossy-glare-edge p-4 xs:p-5 sm:p-7 md:p-9 flex flex-col justify-between relative overflow-hidden group"
         >
           {/* Subtle Decorative Backdrop Cutout */}
           <div className="absolute top-0 right-0 w-36 h-36 bg-[#edf4ed] dark:bg-white/[0.02] rounded-bl-[40px] pointer-events-none -z-0" />
 
           <div className="relative z-10">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#153f31] dark:text-emerald-400">
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider sm:tracking-widest text-[#153f31] dark:text-emerald-400 truncate">
                 Portfolio CMS &bull; {profile?.availability === 'available' ? 'Available for Hire' : 'Online'}
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15] mb-2">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15] mb-1.5 sm:mb-2">
               {profile?.name || 'Ajit Kumar'}
             </h1>
 
-            <p className="text-sm font-extrabold text-[#153f31] dark:text-emerald-300 mb-2">
+            <p className="text-xs sm:text-sm font-extrabold text-[#153f31] dark:text-emerald-300 mb-2">
               {profile?.title || 'Full Stack Developer & AI Engineer'}
             </p>
 
-            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm mb-6">
+            <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm mb-4 sm:mb-6">
               {profile?.tagline || 'Skilled in MERN Stack (MongoDB, Express, React, Node.js), GenAI, and Scalable Cloud Systems'}
             </p>
 
-            {/* Profile Setup Progress Inset Well */}
-            <div className="p-4 rounded-2xl bg-[#f2f6f2] dark:bg-[#0c160e] shadow-[inset_0_2px_4px_rgba(0,0,0,0.04)] border border-black/5 dark:border-white/5 space-y-2">
-              <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                  Profile Completeness
+            {/* Profile Setup Progress Inset Well - Fully responsive on all small screens */}
+            <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#f2f6f2] dark:bg-[#0c160e] shadow-[inset_0_2px_4px_rgba(0,0,0,0.04)] border border-black/5 dark:border-white/5 space-y-2">
+              <div className="flex justify-between items-center text-xs font-bold gap-2">
+                <span className="text-slate-700 dark:text-slate-200 flex items-center gap-1.5 min-w-0">
+                  <User className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                  <span className="truncate">Profile Completeness</span>
                 </span>
-                <span className="text-[#f97316] font-mono font-black">{profileCompleteness}%</span>
+                <span className="text-[#f97316] font-mono font-black flex-shrink-0">{profileCompleteness}%</span>
               </div>
               <div className="w-full bg-slate-200/80 dark:bg-white/10 rounded-full h-2 overflow-hidden">
                 <div 
@@ -231,30 +231,30 @@ export default function DashboardPage() {
                   style={{ width: `${Math.min(profileCompleteness, 100)}%` }}
                 />
               </div>
-              <div className="flex items-center justify-between text-[11px] text-slate-400 font-semibold pt-1">
-                <span>{profile?.location || 'Lucknow, India'}</span>
-                <span className="text-emerald-600 dark:text-emerald-400 font-bold">{profile?.phone || '+91 7379247197'}</span>
+              <div className="flex flex-wrap items-center justify-between gap-1 text-[10px] sm:text-[11px] text-slate-400 font-semibold pt-0.5">
+                <span className="truncate">{profile?.location || 'Lucknow, India'}</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold flex-shrink-0">{profile?.phone || '+91 7379247197'}</span>
               </div>
             </div>
           </div>
 
-          <div className="relative z-10 pt-6 flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <div className="relative z-10 pt-4 sm:pt-6 flex flex-wrap items-center gap-2 sm:gap-3">
             <Link
               to="/admin/projects/new"
-              className="flex-1 sm:flex-none justify-center px-5 py-3 rounded-full bg-gradient-to-r from-[#f97316] via-[#fb923c] to-[#ea580c] hover:opacity-95 text-white text-xs font-extrabold uppercase tracking-wider shadow-[0_10px_22px_-4px_rgba(249,115,22,0.45),inset_0_1px_1px_rgba(255,255,255,0.5)] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
+              className="flex-1 sm:flex-none justify-center px-4 xs:px-5 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#f97316] via-[#fb923c] to-[#ea580c] hover:opacity-95 text-white text-[11px] sm:text-xs font-extrabold uppercase tracking-wider shadow-[0_10px_22px_-4px_rgba(249,115,22,0.45),inset_0_1px_1px_rgba(255,255,255,0.5)] active:scale-[0.98] transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Add Project</span>
             </Link>
             <Link
               to="/admin/profile"
-              className="px-4 py-3 rounded-full bg-[#edf2ed] dark:bg-white/5 hover:bg-[#e2eae2] dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all text-center"
+              className="flex-1 sm:flex-none justify-center px-3.5 xs:px-4 py-2.5 sm:py-3 rounded-full bg-[#edf2ed] dark:bg-white/5 hover:bg-[#e2eae2] dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-[11px] sm:text-xs font-bold transition-all text-center"
             >
               Edit Profile
             </Link>
             <Link
               to="/admin/resume"
-              className="px-4 py-3 rounded-full bg-[#edf2ed] dark:bg-white/5 hover:bg-[#e2eae2] dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all text-center"
+              className="flex-1 sm:flex-none justify-center px-3.5 xs:px-4 py-2.5 sm:py-3 rounded-full bg-[#edf2ed] dark:bg-white/5 hover:bg-[#e2eae2] dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-[11px] sm:text-xs font-bold transition-all text-center"
             >
               Resume
             </Link>
@@ -266,27 +266,27 @@ export default function DashboardPage() {
           whileHover={{ y: -8, scale: 1.008 }}
           whileTap={{ scale: 0.99 }}
           transition={{ duration: 0.25 }}
-          className="lg:col-span-4 rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-[#144434] via-[#0d2e23] to-[#081f17] text-white p-5 sm:p-7 md:p-8 shadow-[0_25px_50px_-12px_rgba(11,41,31,0.45),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-emerald-400/25 relative overflow-hidden flex flex-col justify-between"
+          className="lg:col-span-4 rounded-[22px] sm:rounded-[32px] bg-gradient-to-br from-[#144434] via-[#0d2e23] to-[#081f17] text-white p-4 xs:p-5 sm:p-7 md:p-8 shadow-[0_25px_50px_-12px_rgba(11,41,31,0.45),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-emerald-400/25 relative overflow-hidden flex flex-col justify-between"
         >
           {/* Diagonal Glass Sheen Reflection */}
           <div className="absolute -top-16 -right-16 w-64 h-64 bg-gradient-to-br from-white/20 via-white/5 to-transparent rotate-45 pointer-events-none rounded-3xl" />
 
           {/* Top Label & Vertical Accent Line */}
           <div>
-            <div className="flex items-center justify-between mb-6">
-              <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-300 flex items-center gap-2">
-                <Compass className="w-4 h-4 text-emerald-400" />
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+              <span className="text-xs font-extrabold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-emerald-300 flex items-center gap-2">
+                <Compass className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                 Live Showcase
               </span>
               <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
             </div>
 
-            <div className="my-3">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-200/70">
+            <div className="my-2 sm:my-3">
+              <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-emerald-200/70">
                 Verified Portfolio
               </p>
               <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+                <span className="text-3xl sm:text-5xl font-black text-white tracking-tight">
                   {counts.projects}
                 </span>
                 <span className="text-xs font-semibold text-emerald-200/80">Active Projects</span>
@@ -294,31 +294,31 @@ export default function DashboardPage() {
             </div>
 
             {/* Split counter list */}
-            <div className="mt-6 pt-4 border-t border-emerald-500/20 space-y-2.5 text-xs">
+            <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-emerald-500/20 space-y-2 sm:space-y-2.5 text-xs">
               <div className="flex items-center justify-between text-emerald-100/90 font-medium">
                 <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
                   Published Live
                 </span>
                 <strong className="font-mono font-bold text-white text-sm">{counts.publishedProjects}</strong>
               </div>
               <div className="flex items-center justify-between text-emerald-100/70 font-medium">
                 <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
                   Drafts in Progress
                 </span>
                 <strong className="font-mono font-bold text-white text-sm">{counts.draftProjects}</strong>
               </div>
               <div className="flex items-center justify-between text-emerald-100/80 font-medium">
                 <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-300" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-300 flex-shrink-0" />
                   Technical Stack
                 </span>
                 <strong className="font-mono font-bold text-white text-sm">{counts.skills} Skills</strong>
               </div>
               <div className="flex items-center justify-between text-emerald-100/80 font-medium">
                 <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-300" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-300 flex-shrink-0" />
                   Certifications
                 </span>
                 <strong className="font-mono font-bold text-white text-sm">{counts.certifications} Credentials</strong>
@@ -326,7 +326,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="pt-6">
+          <div className="pt-4 sm:pt-6">
             <Link
               to="/admin/projects"
               className="w-full py-2.5 rounded-2xl bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 text-xs font-bold text-emerald-100 flex items-center justify-center gap-2 transition-all shadow-xs"
@@ -342,7 +342,7 @@ export default function DashboardPage() {
           whileHover={{ y: -8, scale: 1.008 }}
           whileTap={{ scale: 0.99 }}
           transition={{ duration: 0.25 }}
-          className="lg:col-span-3 rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-[#f98d54] via-[#f77d3e] to-[#ea6223] text-white p-5 sm:p-6 md:p-7 shadow-[0_24px_48px_-12px_rgba(244,115,51,0.4),inset_0_1px_2px_rgba(255,255,255,0.4)] border border-white/20 flex flex-col justify-between relative overflow-hidden"
+          className="lg:col-span-3 rounded-[22px] sm:rounded-[32px] bg-gradient-to-br from-[#f98d54] via-[#f77d3e] to-[#ea6223] text-white p-4 xs:p-5 sm:p-6 md:p-7 shadow-[0_24px_48px_-12px_rgba(244,115,51,0.4),inset_0_1px_2px_rgba(255,255,255,0.4)] border border-white/20 flex flex-col justify-between relative overflow-hidden"
         >
           {/* Subtle 3D Surface Glow */}
           <div className="absolute -bottom-10 -left-10 w-44 h-44 bg-white/15 rounded-full filter blur-[40px] pointer-events-none" />
