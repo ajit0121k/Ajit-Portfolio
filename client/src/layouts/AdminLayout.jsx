@@ -82,7 +82,7 @@ export default function AdminLayout() {
         <div className="absolute top-[20%] right-[-10%] w-[700px] h-[700px] rounded-full bg-gradient-to-bl from-emerald-100/50 via-teal-50/30 to-transparent filter blur-[80px] dark:from-emerald-950/30 dark:via-transparent" />
       </div>
 
-      <div className="relative z-10 flex min-h-screen">
+      <div className="relative z-10 flex min-h-screen w-full overflow-x-hidden">
         {/* Sidebar */}
         <Sidebar
           collapsed={collapsed}
@@ -92,10 +92,10 @@ export default function AdminLayout() {
           unreadCount={unreadCount}
         />
 
-        {/* Main Content Area */}
+        {/* Main Content Area — 100% full width on mobile/tablets (<1024px), padded only on lg desktops */}
         <div
-          className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out pl-0 ${
-            collapsed ? 'md:pl-24' : 'md:pl-72'
+          className={`flex-1 flex flex-col min-w-0 w-full transition-all duration-300 ease-in-out pl-0 ${
+            collapsed ? 'lg:pl-24' : 'lg:pl-72'
           }`}
         >
           <TopBar
@@ -103,14 +103,14 @@ export default function AdminLayout() {
             onToggleMobileMenu={() => setMobileOpen((prev) => !prev)}
           />
 
-          <main className="flex-1 p-2.5 xs:p-4 sm:p-5 lg:p-6 w-full pb-24 md:pb-8 animate-fade-in min-w-0">
+          <main className="flex-1 p-2.5 sm:p-4 md:p-5 lg:p-6 w-full pb-24 lg:pb-8 animate-fade-in min-w-0">
             <Outlet />
           </main>
         </div>
       </div>
 
-      {/* Modern Super Glossy Frosted Mobile Bottom Navigation Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 super-glossy-glass glossy-glare-edge border-t border-white/80 dark:border-white/10 px-3 py-2 flex items-center justify-around shadow-[0_-12px_32px_rgba(0,0,0,0.08)]">
+      {/* Modern Super Glossy Frosted Mobile/Tablet Bottom Navigation Bar */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-30 super-glossy-glass glossy-glare-edge border-t border-white/80 dark:border-white/10 px-3 py-2 flex items-center justify-around shadow-[0_-12px_32px_rgba(0,0,0,0.08)]">
         <Link
           to="/admin/dashboard"
           className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${

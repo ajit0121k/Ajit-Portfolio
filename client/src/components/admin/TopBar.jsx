@@ -43,34 +43,34 @@ export default function TopBar({ onOpenCommandPalette, onToggleMobileMenu }) {
     (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   return (
-    <header className="sticky top-2 sm:top-3 z-30 mx-2.5 xs:mx-4 sm:mx-5 lg:mx-6 mb-3 sm:mb-4 h-13 sm:h-14 md:h-16 rounded-xl sm:rounded-2xl md:rounded-[24px] super-glossy-glass glossy-glare-edge px-2.5 sm:px-4 md:px-6 flex items-center justify-between transition-all">
+    <header className="sticky top-2 sm:top-3 z-30 mx-2 sm:mx-4 lg:mx-6 mb-3 sm:mb-4 h-13 sm:h-14 md:h-16 rounded-xl sm:rounded-2xl md:rounded-[24px] super-glossy-glass glossy-glare-edge px-2.5 sm:px-4 md:px-6 flex items-center justify-between transition-all">
       {/* Left: Hamburger + Title */}
       <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-        {/* Mobile Hamburger Menu */}
+        {/* Mobile / Tablet Hamburger Menu */}
         <button
           onClick={onToggleMobileMenu}
-          className="md:hidden p-1.5 sm:p-2 -ml-1 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer active:scale-95 flex-shrink-0"
+          className="lg:hidden p-1.5 sm:p-2 -ml-1 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer active:scale-95 flex-shrink-0"
           aria-label="Open menu"
         >
-          <Menu className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+          <Menu className="w-5 h-5" />
         </button>
 
         <div className="min-w-0 pr-1">
-          <h1 className="text-xs sm:text-base md:text-lg font-extrabold text-[#153f31] dark:text-emerald-300 flex items-center gap-1.5 tracking-tight truncate max-w-[125px] xs:max-w-[200px] sm:max-w-none">
+          <h1 className="text-xs sm:text-base md:text-lg font-extrabold text-[#153f31] dark:text-emerald-300 flex items-center gap-1.5 tracking-tight truncate max-w-[130px] sm:max-w-xs md:max-w-none">
             {getPageTitle(location.pathname)}
           </h1>
-          <p className="hidden xs:block text-[9px] md:text-[11px] text-slate-600 dark:text-slate-300 font-bold tracking-wide truncate">
+          <p className="hidden sm:block text-[9px] md:text-[11px] text-slate-600 dark:text-slate-300 font-bold tracking-wide truncate">
             Admin / <span className="capitalize text-emerald-800 dark:text-emerald-300 font-extrabold">{location.pathname.replace('/admin/', '').replace('/', ' > ') || 'Dashboard'}</span>
           </p>
         </div>
       </div>
 
       {/* Right Controls */}
-      <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 flex-shrink-0">
+      <div className="flex items-center gap-1 sm:gap-2 md:gap-3 flex-shrink-0">
         {/* Command Palette Button — hidden on mobile */}
         <button
           onClick={onOpenCommandPalette}
-          className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 super-glossy-inset rounded-full hover:border-emerald-500/40 transition-all cursor-pointer active:scale-95"
+          className="hidden md:flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 super-glossy-inset rounded-full hover:border-emerald-500/40 transition-all cursor-pointer active:scale-95"
         >
           <Search className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
           <span>Search or jump to...</span>
@@ -82,7 +82,7 @@ export default function TopBar({ onOpenCommandPalette, onToggleMobileMenu }) {
         {/* Mobile Search Icon */}
         <button
           onClick={onOpenCommandPalette}
-          className="sm:hidden p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer active:scale-95"
+          className="md:hidden p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer active:scale-95"
           aria-label="Search"
         >
           <Search className="w-4 h-4" />

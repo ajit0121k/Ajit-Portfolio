@@ -227,27 +227,27 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
 
   return (
     <>
-      {/* Desktop Sidebar — hidden on mobile */}
+      {/* Desktop Sidebar — hidden on mobile & tablets (<1024px) */}
       <aside
-        className={`hidden md:flex fixed top-3 left-3 z-40 h-[calc(100vh-1.5rem)] transition-all duration-300 ease-in-out rounded-[28px] super-glossy-glass glossy-glare-edge flex-col justify-between overflow-hidden ${
+        className={`hidden lg:flex fixed top-3 left-3 z-40 h-[calc(100vh-1.5rem)] transition-all duration-300 ease-in-out rounded-[28px] super-glossy-glass glossy-glare-edge flex-col justify-between overflow-hidden ${
           collapsed ? 'w-20' : 'w-64'
         }`}
       >
         {sidebarContent}
       </aside>
 
-      {/* Mobile Backdrop Overlay */}
+      {/* Mobile/Tablet Backdrop Overlay */}
       {mobileOpen && (
         <div
-          className="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity"
+          className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity"
           onClick={closeMobile}
         />
       )}
 
-      {/* Mobile Sidebar Drawer */}
+      {/* Mobile/Tablet Sidebar Drawer */}
       <aside
-        className={`md:hidden fixed top-0 left-0 z-50 h-full w-72 transition-transform duration-300 ease-in-out super-glossy-glass border-r border-white/80 dark:border-white/10 shadow-[20px_0_45px_-10px_rgba(0,0,0,0.15)] flex flex-col justify-between overflow-hidden ${
-          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`lg:hidden fixed top-0 left-0 z-50 h-full w-72 max-w-[85vw] transition-all duration-300 ease-in-out super-glossy-glass border-r border-white/80 dark:border-white/10 shadow-[20px_0_45px_-10px_rgba(0,0,0,0.25)] flex flex-col justify-between overflow-hidden ${
+          mobileOpen ? 'translate-x-0 opacity-100 visible' : '-translate-x-full opacity-0 invisible pointer-events-none'
         }`}
       >
         {sidebarContent}
