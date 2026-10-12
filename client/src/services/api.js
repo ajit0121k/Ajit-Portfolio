@@ -3,27 +3,53 @@ import useAuthStore from '../store/authStore.js';
 import { handleLocalRequest } from './localDataService.js';
 import { notifyDataChange, extractEntityFromUrl } from './syncBus.js';
 
+export function getEffectiveApiUrl() {
+  if (typeof window !== 'undefined') {
+    const custom = localStorage.getItem('portfolio_custom_api_url');
+    if (custom && custom.trim()) return custom.trim().replace(/\/+$/, '');
+  }
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl && envUrl.trim()) return envUrl.trim().replace(/\/+$/, '');
+  return '/api';
+}
+
+export function isLiveBackendConfigured() {
+  const url = getEffectiveApiUrl();
+  return url !== '/api' && (url.startsWith('http://') || url.startsWith('https://'));
+}
+
+export function setCustomApiUrl(url) {
+  if (typeof window === 'undefined') return;
+  if (!url || !url.trim()) {
+    localStorage.removeItem('portfolio_custom_api_url');
+  } else {
+    localStorage.setItem('portfolio_custom_api_url', url.trim().replace(/\/+$/, ''));
+  }
+  api.defaults.baseURL = getEffectiveApiUrl();
+}
+
 const isStaticHosted = 
   typeof window !== 'undefined' && 
   (window.location.hostname.includes('github.io') || window.location.protocol === 'file:');
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
-
 const api = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: isStaticHosted && !import.meta.env.VITE_API_URL ? 1500 : 10000,
+  baseURL: getEffectiveApiUrl(),
+  timeout: isStaticHosted && !isLiveBackendConfigured() ? 1500 : 15000,
   withCredentials: true,
 });
 
 api.interceptors.request.use(
   async (config) => {
+    // Keep baseURL synchronized with latest setting
+    config.baseURL = getEffectiveApiUrl();
+
     const token = useAuthStore.getState().accessToken;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
     // On GitHub Pages without a configured external backend, fulfill mock routes directly
-    if (isStaticHosted && !import.meta.env.VITE_API_URL) {
+    if (isStaticHosted && !isLiveBackendConfigured()) {
       try {
         const localRes = handleLocalRequest(config.method, config.url, config.data);
         if (localRes) {

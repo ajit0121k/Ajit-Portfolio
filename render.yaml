@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: ajit-portfolio-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node src/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_URL
+        value: https://ajit0121k.github.io,http://localhost:5173
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: ajitkumar2956654@gmail.com
+      - key: ADMIN_PASSWORD
+        value: Ajit@1234
+      - key: ADMIN_STATIC_MOBILE
+        value: "7379247197"
+      - key: ADMIN_STATIC_EMAIL
+        value: ajitkumar2956654@gmail.com

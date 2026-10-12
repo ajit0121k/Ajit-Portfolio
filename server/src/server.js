@@ -3,6 +3,7 @@ import { connectDB } from './config/db.js';
 import config from './config/env.js';
 import logger from './utils/logger.js';
 import mongoose from 'mongoose';
+import { autoSeedIfEmpty } from './seeds/autoSeed.js';
 
 let server;
 
@@ -10,6 +11,9 @@ const startServer = async () => {
   try {
     // Connect to database
     await connectDB();
+
+    // Auto-seed initial admin and portfolio data if database is empty
+    await autoSeedIfEmpty();
 
     // Start Express server
     server = app.listen(config.port, () => {

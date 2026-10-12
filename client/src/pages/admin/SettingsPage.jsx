@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { 
   Settings, Save, Shield, Palette, Eye, Mail, 
-  Globe, FileCode, ExternalLink, Loader2, Check, Sparkles 
+  Globe, FileCode, ExternalLink, Loader2, Check, Sparkles,
+  Database, Download, CheckCircle2, AlertCircle, RefreshCw, Server, Wifi, WifiOff
 } from 'lucide-react';
-import api from '../../services/api.js';
+import api, { getEffectiveApiUrl, setCustomApiUrl, isLiveBackendConfigured } from '../../services/api.js';
 import useThemeStore from '../../store/themeStore.js';
 import ImageUploadZone from '../../components/admin/ImageUploadZone.jsx';
 import toast from 'react-hot-toast';
@@ -18,7 +19,7 @@ export default function SettingsPage() {
 
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab && ['general', 'visibility', 'seo', 'contact', 'maintenance'].includes(tab)) {
+    if (tab && ['general', 'visibility', 'seo', 'contact', 'maintenance', 'database'].includes(tab)) {
       setActiveTab(tab);
     }
   }, [searchParams]);
@@ -76,6 +77,96 @@ export default function SettingsPage() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Cloud & Database Sync state
+  const [customApiInput, setCustomApiInput] = useState(() => {
+    const eff = getEffectiveApiUrl();
+    return eff === '/api' ? '' : eff;
+  });
+  const [isTestingApi, setIsTestingApi] = useState(false);
+  const [apiTestResult, setApiTestResult] = useState(null);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleTestApi = async () => {
+    const targetUrl = customApiInput.trim().replace(/\/+$/, '');
+    if (!targetUrl) {
+      toast.error('Please enter a backend URL (e.g. https://your-app.onrender.com/api)');
+      return;
+    }
+    setIsTestingApi(true);
+    setApiTestResult(null);
+    try {
+      const pingUrl = targetUrl.endsWith('/api') ? `${targetUrl}/health` : `${targetUrl}/api/health`;
+      const res = await fetch(pingUrl, { method: 'GET', headers: { 'Accept': 'application/json' } });
+      const data = await res.json();
+      if (res.ok && data?.success) {
+        setApiTestResult({
+          success: true,
+          message: `Backend is active! Telemetry: ${data.data?.env || 'production'} mode, ${data.data?.uptimeSeconds || 0}s uptime.`,
+        });
+        toast.success('Live API connected successfully!');
+      } else {
+        setApiTestResult({
+          success: false,
+          message: `Server reachable but returned status ${res.status}: ${data?.message || 'Check server logs'}`,
+        });
+      }
+    } catch (err) {
+      setApiTestResult({
+        success: false,
+        message: `Connection failed: ${err.message}. If deploying to Render, the server may take 30-60s to wake up from cold sleep.`,
+      });
+      toast.error('Could not reach backend URL');
+    } finally {
+      setIsTestingApi(false);
+    }
+  };
+
+  const handleSaveApi = () => {
+    const val = customApiInput.trim();
+    setCustomApiUrl(val);
+    toast.success(val ? 'Connected to live cloud backend!' : 'Switched back to local storage mode');
+  };
+
+  const handleExportDump = () => {
+    setIsExporting(true);
+    try {
+      const getStorage = (key, def) => {
+        try {
+          const item = localStorage.getItem(key);
+          return item ? JSON.parse(item) : def;
+        } catch {
+          return def;
+        }
+      };
+      const dump = {
+        profiles: [getStorage('portfolio_cms_profile', {})],
+        sitesettings: [getStorage('portfolio_cms_settings', {})],
+        projects: getStorage('portfolio_cms_projects', []),
+        skills: getStorage('portfolio_cms_skills', []),
+        experiences: getStorage('portfolio_cms_experience', []),
+        educations: getStorage('portfolio_cms_education', []),
+        certifications: getStorage('portfolio_cms_certifications', []),
+        testimonials: getStorage('portfolio_cms_testimonials', []),
+        resumes: getStorage('portfolio_cms_resume', []),
+        blogposts: getStorage('portfolio_cms_blog', []),
+      };
+      const blob = new Blob([JSON.stringify(dump, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'initialDbDump.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success('Downloaded updated initialDbDump.json!');
+    } catch (err) {
+      toast.error('Failed to export database dump: ' + err.message);
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   useEffect(() => {
     const loadAll = async () => {
@@ -201,6 +292,7 @@ export default function SettingsPage() {
     { id: 'seo', label: 'SEO & Meta Tags', icon: Globe },
     { id: 'contact', label: 'Inquiries & Auto-Reply', icon: Mail },
     { id: 'maintenance', label: 'System & Maintenance', icon: Shield },
+    { id: 'database', label: 'Cloud Database & Live Sync', icon: Database },
   ];
 
   return (
@@ -728,6 +820,182 @@ export default function SettingsPage() {
                 />
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* 6. Cloud Database & Live Sync */}
+      {activeTab === 'database' && (
+        <div className="space-y-6">
+          {/* Connection Status Banner */}
+          <div className={`p-5 rounded-2xl border transition-all ${
+            isLiveBackendConfigured()
+              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-200'
+              : 'bg-amber-500/10 border-amber-500/30 text-amber-900 dark:text-amber-200'
+          }`}>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-start sm:items-center gap-3">
+                <div className={`p-2.5 rounded-xl ${
+                  isLiveBackendConfigured()
+                    ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
+                    : 'bg-amber-500/20 text-amber-600 dark:text-amber-400'
+                }`}>
+                  {isLiveBackendConfigured() ? <Wifi className="w-5 h-5" /> : <WifiOff className="w-5 h-5" />}
+                </div>
+                <div>
+                  <h3 className="text-sm font-black flex items-center gap-2">
+                    <span>{isLiveBackendConfigured() ? 'Live Cloud Database Connected' : 'Browser Storage Mode (Offline / Local)'}</span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${
+                      isLiveBackendConfigured()
+                        ? 'bg-emerald-500 text-white'
+                        : 'bg-amber-500 text-white'
+                    }`}>
+                      {isLiveBackendConfigured() ? 'Production API' : 'LocalStorage'}
+                    </span>
+                  </h3>
+                  <p className="text-xs opacity-85 mt-0.5">
+                    {isLiveBackendConfigured()
+                      ? `Connected to: ${getEffectiveApiUrl()} — All changes instantly sync to MongoDB cloud database for all visitors and mobile devices.`
+                      : 'Running on GitHub Pages without an external API. Edits are saved in this browser only. Connect a cloud backend below so edits appear globally on phones and for all visitors.'}
+                  </p>
+                </div>
+              </div>
+
+              {isLiveBackendConfigured() && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCustomApiUrl('');
+                    setCustomApiInput('');
+                    toast.success('Disconnected custom API. Using default mode.');
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/20 text-xs font-bold transition self-start sm:self-center cursor-pointer"
+                >
+                  Disconnect API
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Connect Live Backend API Card */}
+          <div className="p-6 rounded-2xl bg-white/70 dark:bg-[#111c13]/70 backdrop-blur-xl border border-white/80 dark:border-white/5 space-y-4 shadow-xs">
+            <div>
+              <h2 className="text-sm font-black text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                <Server className="w-4 h-4 text-[#153f31] dark:text-emerald-400" />
+                <span>Connect Live Backend API (Render.com / Railway)</span>
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                Enter the hosted URL of your Node.js backend. Once connected, both the Admin CMS and Public Portfolio will use live MongoDB.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
+                Backend API Base URL
+              </label>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="url"
+                  placeholder="https://ajit-portfolio-api.onrender.com/api"
+                  value={customApiInput}
+                  onChange={(e) => setCustomApiInput(e.target.value)}
+                  className="flex-1 px-4 py-2.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 font-mono"
+                />
+                <button
+                  type="button"
+                  onClick={handleTestApi}
+                  disabled={isTestingApi}
+                  className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                >
+                  {isTestingApi ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
+                  <span>Test Connection</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSaveApi}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:opacity-95 text-white text-xs font-bold shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Connect &amp; Save</span>
+                </button>
+              </div>
+
+              {/* Test Connection Telemetry Result */}
+              {apiTestResult && (
+                <div className={`p-3 rounded-xl border text-xs flex items-center gap-2.5 ${
+                  apiTestResult.success
+                    ? 'bg-emerald-50 dark:bg-emerald-950/20 border-emerald-500/30 text-emerald-800 dark:text-emerald-300'
+                    : 'bg-rose-50 dark:bg-rose-950/20 border-rose-500/30 text-rose-800 dark:text-rose-300'
+                }`}>
+                  {apiTestResult.success ? <CheckCircle2 className="w-4 h-4 flex-shrink-0" /> : <AlertCircle className="w-4 h-4 flex-shrink-0" />}
+                  <span>{apiTestResult.message}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* One-Click Database Dump Export */}
+          <div className="p-6 rounded-2xl bg-white/70 dark:bg-[#111c13]/70 backdrop-blur-xl border border-white/80 dark:border-white/5 space-y-4 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 className="text-sm font-black text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                  <Download className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>One-Click Export Updated Database (Static Mode)</span>
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
+                  Download the current state of your Profile, Projects, Skills, Experiences, and Settings as a fresh <code className="text-emerald-600 dark:text-emerald-400 font-mono">initialDbDump.json</code>. You can replace this in your repository to update the default portfolio for all visitors without needing a backend server!
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleExportDump}
+                disabled={isExporting}
+                className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-900 text-white text-xs font-bold shadow-md transition flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer disabled:opacity-50"
+              >
+                {isExporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+                <span>Download initialDbDump.json</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Step-by-Step Render.com & MongoDB Atlas Deployment Guide */}
+          <div className="p-6 rounded-2xl bg-white/70 dark:bg-[#111c13]/70 backdrop-blur-xl border border-white/80 dark:border-white/5 space-y-4 shadow-xs">
+            <div>
+              <h2 className="text-sm font-black text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                <Database className="w-4 h-4 text-[#153f31] dark:text-emerald-400" />
+                <span>3-Minute Guide: Deploy Backend to Render + MongoDB Atlas (100% Free)</span>
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                Follow these 3 simple steps to make your portfolio update in real time across all devices worldwide:
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+              <div className="p-4 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-2">
+                <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-black flex items-center justify-center">1</div>
+                <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">MongoDB Atlas (Free)</h4>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Go to <a href="https://mongodb.com/atlas" target="_blank" rel="noreferrer" className="text-emerald-600 underline font-bold">mongodb.com/atlas</a>, create a free M0 cluster, create a database user, and copy the connection string: <code className="text-[10px] font-mono block mt-1 bg-black/5 dark:bg-white/5 p-1 rounded">mongodb+srv://user:pass@cluster.mongodb.net/portfolio</code>
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-2">
+                <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-black flex items-center justify-center">2</div>
+                <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">Deploy on Render (Free)</h4>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Go to <a href="https://render.com" target="_blank" rel="noreferrer" className="text-emerald-600 underline font-bold">render.com</a> &rarr; <strong>New Web Service</strong> &rarr; Connect repository <code className="text-[10px] font-mono font-bold">Ajit-Portfolio</code>. Set <strong>Root Directory:</strong> <code className="text-[10px] font-mono font-bold">server</code>.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-2">
+                <div className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-black flex items-center justify-center">3</div>
+                <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200">Environment Variables</h4>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Add <code className="text-[10px] font-mono">MONGODB_URI</code>, <code className="text-[10px] font-mono">JWT_ACCESS_SECRET</code>, <code className="text-[10px] font-mono">JWT_REFRESH_SECRET</code>, and <code className="text-[10px] font-mono">CLIENT_URL=https://ajit0121k.github.io</code>. Once deployed, paste your Render URL in the box above!
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}
