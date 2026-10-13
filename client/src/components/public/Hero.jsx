@@ -176,25 +176,26 @@ export default function Hero({ profile, settings }) {
             </div>
           </div>
 
-          {/* Career Stats in Liquid Glass Card */}
-          <div className="liquid-glass-card relative glossy-glare-edge p-4 sm:p-5 max-w-sm shadow-md mt-2 border border-white/70 dark:border-white/10">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
-                  {years}+
-                </p>
-                <p className="text-[11px] text-[#6b675d] dark:text-[#a8a397] font-medium mt-0.5">
-                  Years Full-Stack & AI Engineering
-                </p>
-              </div>
-              <div className="border-l border-[#dfd6c7]/80 dark:border-white/10 pl-4">
-                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
-                  4+
-                </p>
-                <p className="text-[11px] text-[#6b675d] dark:text-[#a8a397] font-medium mt-0.5">
-                  Production MERN & Cloud Apps
-                </p>
-              </div>
+          {/* Career Stats in 2 Separate Liquid Glass Cards */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mt-2">
+            {/* Box 1: Experience */}
+            <div className="liquid-glass-card relative glossy-glare-edge p-3.5 sm:p-4 rounded-2xl shadow-md border border-white/70 dark:border-white/10 transition-all duration-300 hover:scale-[1.02]">
+              <p className="text-2xl sm:text-3xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
+                {years}+
+              </p>
+              <p className="text-[11px] text-[#6b675d] dark:text-[#a8a397] font-medium mt-0.5 leading-snug">
+                Years Full-Stack & AI Engineering
+              </p>
+            </div>
+
+            {/* Box 2: Production Apps */}
+            <div className="liquid-glass-card relative glossy-glare-edge p-3.5 sm:p-4 rounded-2xl shadow-md border border-white/70 dark:border-white/10 transition-all duration-300 hover:scale-[1.02]">
+              <p className="text-2xl sm:text-3xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
+                4+
+              </p>
+              <p className="text-[11px] text-[#6b675d] dark:text-[#a8a397] font-medium mt-0.5 leading-snug">
+                Production MERN & Cloud Apps
+              </p>
             </div>
           </div>
         </motion.div>
