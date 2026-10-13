@@ -55,7 +55,7 @@ const adminSchema = new mongoose.Schema({
   },
   twoFactorEnabled: { 
     type: Boolean, 
-    default: true 
+    default: false 
   },
   twoFactorSecret: { 
     type: String, 

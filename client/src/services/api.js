@@ -3,6 +3,8 @@ import useAuthStore from '../store/authStore.js';
 import { handleLocalRequest } from './localDataService.js';
 import { notifyDataChange, extractEntityFromUrl } from './syncBus.js';
 
+export const DEFAULT_PRODUCTION_API = 'https://ajit-portfolio-api.onrender.com/api';
+
 export function getEffectiveApiUrl() {
   if (typeof window !== 'undefined') {
     const custom = localStorage.getItem('portfolio_custom_api_url');
@@ -10,7 +12,7 @@ export function getEffectiveApiUrl() {
   }
   const envUrl = import.meta.env.VITE_API_URL;
   if (envUrl && envUrl.trim()) return envUrl.trim().replace(/\/+$/, '');
-  return '/api';
+  return DEFAULT_PRODUCTION_API;
 }
 
 export function isLiveBackendConfigured() {

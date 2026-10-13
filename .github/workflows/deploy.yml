@@ -44,7 +44,7 @@ jobs:
         env:
           GITHUB_PAGES: "true"
           VITE_BASE_PATH: "/${{ github.event.repository.name }}/"
-          VITE_API_URL: ${{ secrets.VITE_API_URL || vars.VITE_API_URL || '' }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL || vars.VITE_API_URL || 'https://ajit-portfolio-api.onrender.com/api' }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
