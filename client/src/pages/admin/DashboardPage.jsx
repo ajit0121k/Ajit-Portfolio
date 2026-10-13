@@ -5,7 +5,7 @@ import {
   FolderGit2, Cpu, Briefcase, GraduationCap, Award, 
   MessageSquareQuote, Mail, Image, Sparkles, Plus, 
   ExternalLink, User, ArrowRight, CheckCircle2,
-  FileText, Activity, ShieldCheck, Compass, Eye, Layers
+  FileText, Activity, ShieldCheck, Compass, Eye, Layers, Save
 } from 'lucide-react';
 import api from '../../services/api.js';
 import toast from 'react-hot-toast';
@@ -38,6 +38,29 @@ export default function DashboardPage() {
     }
   });
   const [loading, setLoading] = useState(true);
+  const [buildingText, setBuildingText] = useState('');
+  const [isUpdatingBuilding, setIsUpdatingBuilding] = useState(false);
+
+  const handleUpdateBuilding = async (e) => {
+    if (e) e.preventDefault();
+    if (!buildingText.trim()) {
+      toast.error('Please enter badge text');
+      return;
+    }
+    setIsUpdatingBuilding(true);
+    try {
+      await api.put('/profile', { currentlyBuilding: buildingText.trim() });
+      toast.success('Currently Building badge updated live!');
+      setData((prev) => ({
+        ...prev,
+        profile: { ...(prev.profile || {}), currentlyBuilding: buildingText.trim() }
+      }));
+    } catch (err) {
+      toast.error('Failed to update badge');
+    } finally {
+      setIsUpdatingBuilding(false);
+    }
+  };
 
   const fetchSummary = async () => {
     try {
@@ -68,6 +91,9 @@ export default function DashboardPage() {
       } catch (err) {}
 
       setData(payload);
+      if (payload.profile?.currentlyBuilding) {
+        setBuildingText(payload.profile.currentlyBuilding);
+      }
     } catch (e) {
       console.error('Failed to load dashboard summary:', e);
       toast.error('Failed to refresh dashboard stats');
@@ -413,6 +439,70 @@ export default function DashboardPage() {
             Portfolio CMS Protected Admin
           </div>
         </motion.div>
+      </motion.div>
+
+      {/* ========================================================================= */}
+      {/* QUICK HERO PILL / CURRENTLY BUILDING TEXT-ONLY EDITOR                      */}
+      {/* ========================================================================= */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="rounded-[26px] super-glossy-card glossy-glare-edge p-5 sm:p-6 relative overflow-hidden"
+      >
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1.5 max-w-xl">
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400">
+                <Sparkles className="w-4 h-4 text-orange-500 animate-spin" />
+              </div>
+              <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                <span>Hero Pill Badge (Currently Building)</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 font-bold uppercase tracking-wider">
+                  Text Only Quick Edit
+                </span>
+              </h2>
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Yahan se aap direct portfolio header ke top pill ka text badal sakte hain. Ek click me update ho jayega.
+            </p>
+
+            {/* Live Visual Pill Preview */}
+            <div className="pt-1">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#c66a3d]/15 border border-[#c66a3d]/30 text-[#c66a3d] dark:text-[#e48358] text-[11px] font-bold shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 text-orange-500 animate-spin" />
+                <span className="uppercase tracking-wider text-[10px] text-slate-500 dark:text-slate-400">Currently Building:</span>
+                <span>{buildingText || 'AI Startup Trend Analyzer'}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Input Form */}
+          <form onSubmit={handleUpdateBuilding} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
+            <input
+              type="text"
+              value={buildingText}
+              onChange={(e) => setBuildingText(e.target.value)}
+              placeholder="e.g. AI Startup Trend Analyzer"
+              className="px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900/80 border border-black/10 dark:border-white/10 text-slate-900 dark:text-white text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500/30 min-w-[240px] sm:min-w-[280px]"
+            />
+            <button
+              type="submit"
+              disabled={isUpdatingBuilding}
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#ea580c] to-[#f97316] hover:opacity-95 text-white text-xs font-bold shadow-md shadow-orange-500/25 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 disabled:opacity-50 transition-all"
+            >
+              <Save className="w-3.5 h-3.5" />
+              <span>{isUpdatingBuilding ? 'Saving...' : 'Update Pill'}</span>
+            </button>
+            <Link
+              to="/admin/profile#building"
+              className="px-3.5 py-2.5 rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 text-xs font-semibold transition text-center"
+              title="More settings like adding link URL"
+            >
+              Full Settings
+            </Link>
+          </form>
+        </div>
       </motion.div>
 
       {/* ========================================================================= */}

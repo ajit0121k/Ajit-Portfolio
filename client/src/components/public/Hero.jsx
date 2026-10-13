@@ -95,17 +95,25 @@ export default function Hero({ profile, settings }) {
           {/* Currently Building Badge (Live-synced from Admin Profile) */}
           {settings?.sectionVisibility?.currentlyBuilding !== false && profile?.currentlyBuilding && (
             <div className="pt-1">
-              <a
-                href={profile?.currentlyBuildingUrl || '#projects'}
-                target={profile?.currentlyBuildingUrl ? '_blank' : '_self'}
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#c66a3d]/10 hover:bg-[#c66a3d]/20 border border-[#c66a3d]/25 text-[#c66a3d] dark:text-[#e48358] text-[11px] font-bold transition-all group"
-              >
-                <Sparkles className="w-3.5 h-3.5 animate-spin" />
-                <span className="uppercase tracking-wider text-[10px] text-slate-500 dark:text-slate-400">Currently Building:</span>
-                <span className="underline underline-offset-2">{profile.currentlyBuilding}</span>
-                <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
-              </a>
+              {profile?.currentlyBuildingUrl && profile?.currentlyBuildingUrl !== '#' ? (
+                <a
+                  href={profile.currentlyBuildingUrl}
+                  target={profile.currentlyBuildingUrl.startsWith('http') ? '_blank' : '_self'}
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#c66a3d]/10 hover:bg-[#c66a3d]/20 border border-[#c66a3d]/25 text-[#c66a3d] dark:text-[#e48358] text-[11px] font-bold transition-all group"
+                >
+                  <Sparkles className="w-3.5 h-3.5 animate-spin text-[#c66a3d]" />
+                  <span className="uppercase tracking-wider text-[10px] text-slate-500 dark:text-slate-400">Currently Building:</span>
+                  <span className="underline underline-offset-2">{profile.currentlyBuilding}</span>
+                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 text-[#c66a3d]" />
+                </a>
+              ) : (
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#c66a3d]/10 border border-[#c66a3d]/25 text-[#c66a3d] dark:text-[#e48358] text-[11px] font-bold shadow-xs">
+                  <Sparkles className="w-3.5 h-3.5 text-[#c66a3d]" />
+                  <span className="uppercase tracking-wider text-[10px] text-slate-500 dark:text-slate-400">Currently Building:</span>
+                  <span>{profile.currentlyBuilding}</span>
+                </div>
+              )}
             </div>
           )}
 

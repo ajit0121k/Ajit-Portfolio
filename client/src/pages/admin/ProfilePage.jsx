@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Save, User, Link as LinkIcon, FileText, RotateCcw, ExternalLink, Sparkles, ArrowRight, Loader2, Check } from 'lucide-react';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
@@ -7,6 +8,7 @@ import ImageUploadZone from '../../components/admin/ImageUploadZone';
 import { resolveAssetUrl, getPublicSiteUrl } from '../../utils/assetUrl.js';
 
 export default function ProfilePage() {
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [completeness, setCompleteness] = useState(0);
@@ -44,6 +46,22 @@ export default function ProfilePage() {
   useEffect(() => {
     fetchProfile();
   }, []);
+
+  useEffect(() => {
+    if (location.hash === '#building') {
+      const timer = setTimeout(() => {
+        const el = document.getElementById('building');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('ring-2', 'ring-orange-500', 'ring-offset-4', 'rounded-2xl');
+          setTimeout(() => {
+            el.classList.remove('ring-2', 'ring-orange-500', 'ring-offset-4', 'rounded-2xl');
+          }, 2500);
+        }
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+  }, [location.hash, loading]);
 
   const fetchProfile = async () => {
     try {
@@ -495,43 +513,78 @@ export default function ProfilePage() {
               </div>
 
               {/* Live Preview of the Badge */}
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-dashed border-orange-500/30 flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Live Visual Preview:</span>
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-dashed border-orange-500/30 flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Live Visual Preview on Portfolio Hero:</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400">
+                    {formData.currentlyBuilding?.url ? 'Clickable Link' : 'Text Only (Static Pill)'}
+                  </span>
+                </div>
                 <div className="pt-0.5">
                   <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#c66a3d]/15 border border-[#c66a3d]/30 text-[#c66a3d] dark:text-[#e48358] text-[11px] font-bold shadow-xs">
                     <Sparkles className="w-3.5 h-3.5 text-orange-500 animate-spin" />
                     <span className="uppercase tracking-wider text-[10px] text-slate-500 dark:text-slate-400">Currently Building:</span>
-                    <span className="underline underline-offset-2">{formData.currentlyBuilding?.name || 'AI Startup Trend Analyzer'}</span>
-                    <ArrowRight className="w-3 h-3 text-[#c66a3d]" />
+                    <span className={formData.currentlyBuilding?.url ? 'underline underline-offset-2' : ''}>
+                      {formData.currentlyBuilding?.name || 'AI Startup Trend Analyzer'}
+                    </span>
+                    {formData.currentlyBuilding?.url && (
+                      <ArrowRight className="w-3 h-3 text-[#c66a3d]" />
+                    )}
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3 pt-1">
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">
-                    Project / Product Name
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300">
+                      Pill Text (Only text that shows inside the badge)
+                    </label>
+                    <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Text Only Option</span>
+                  </div>
                   <input
                     type="text"
                     name="building_name"
                     value={formData.currentlyBuilding?.name || ''}
                     onChange={handleChange}
                     placeholder="e.g. AI Startup Trend Analyzer"
-                    className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
+                    className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-orange-500/30 outline-none font-medium"
                   />
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    Yahan jo bhi text likhenge wo direct public portfolio ke top badge me dikhega.
+                  </p>
                 </div>
+
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">
-                    Project Destination Link (URL or #projects anchor)
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400">
+                      Link URL (Optional &mdash; Text-only ke liye ise khali chhod dein)
+                    </label>
+                    {formData.currentlyBuilding?.url ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            currentlyBuilding: { ...prev.currentlyBuilding, url: '' },
+                          }));
+                          toast.success('Removed link URL — now text only!');
+                        }}
+                        className="text-[10px] text-rose-500 hover:underline cursor-pointer font-bold"
+                      >
+                        Remove Link (Make Text Only)
+                      </button>
+                    ) : (
+                      <span className="text-[10px] text-slate-400 italic">No link (Text only)</span>
+                    )}
+                  </div>
                   <input
                     type="url"
                     name="building_url"
                     value={formData.currentlyBuilding?.url || ''}
                     onChange={handleChange}
-                    placeholder="https://github.com/ajit0121k/startup-trend-analyzer or #projects"
-                    className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-1 focus:ring-amber-500 outline-none"
+                    placeholder="Khali chhod dein text-only ke liye (ya URL dalein: https://github.com/...)"
+                    className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-2.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-orange-500/30 outline-none font-mono"
                   />
                 </div>
               </div>
