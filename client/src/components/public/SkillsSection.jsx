@@ -104,18 +104,18 @@ export default function SkillsSection() {
         </p>
       </div>
 
-      {/* Category Filter Tabs */}
-      <div className="flex flex-wrap items-center gap-1.5 mb-8 p-1.5 rounded-full liquid-glass-pill shadow-xs border border-white/60 dark:border-white/10 w-fit">
+      {/* Category Filter Tabs - Each in its own distinct liquid glass box */}
+      <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-8">
         {categories.map((cat) => {
           const isActive = activeCategory === cat;
           return (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
+              className={`px-4 py-2 sm:px-4.5 sm:py-2.2 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer select-none active:scale-95 ${
                 isActive
-                  ? 'bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f3eee5] dark:text-[#1a241d] shadow-md scale-105'
-                  : 'text-[#5c5950] dark:text-[#c4beb3] hover:text-[#1a241d] dark:hover:text-white hover:bg-white/60 dark:hover:bg-white/10'
+                  ? 'bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f3eee5] dark:text-[#1a241d] shadow-md border border-emerald-500/20 dark:border-white/20 scale-105'
+                  : 'liquid-glass-pill text-[#5c5950] dark:text-[#c4beb3] hover:text-[#1a241d] dark:hover:text-white hover:bg-white/80 dark:hover:bg-white/15 border border-white/70 dark:border-white/15 shadow-xs hover:scale-[1.02]'
               }`}
             >
               {cat}
