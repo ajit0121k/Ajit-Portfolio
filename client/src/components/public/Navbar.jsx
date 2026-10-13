@@ -136,12 +136,12 @@ export default function Navbar({ onOpenCommandPalette }) {
             })}
         </div>
 
-        {/* Right Actions: Search Pill & Day/Night Toggle */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
+        {/* Right Actions: Search Pill, Day/Night Toggle & Mobile Menu */}
+        <div className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
           {/* Search Button (Circular Icon Button) */}
           <button
             onClick={onOpenCommandPalette}
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[#5a574f] dark:text-[#c4beb3] liquid-glass-pill hover:bg-white dark:hover:bg-white/15 border border-white/70 dark:border-white/15 shadow-sm transition-all duration-300 active:scale-90 group"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[#5a574f] dark:text-[#c4beb3] liquid-glass-pill hover:bg-white dark:hover:bg-white/15 border border-white/70 dark:border-white/15 shadow-sm transition-all duration-300 active:scale-90 group cursor-pointer flex-shrink-0"
             title="Search projects, skills & pages (Ctrl+K)"
             aria-label="Search"
           >
@@ -154,10 +154,10 @@ export default function Navbar({ onOpenCommandPalette }) {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 sm:p-2 rounded-full text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-white/10 cursor-pointer active:scale-95"
+            className="md:hidden w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-200 liquid-glass-pill hover:bg-white/80 dark:hover:bg-white/15 border border-white/70 dark:border-white/15 shadow-sm transition-all duration-300 active:scale-95 cursor-pointer flex-shrink-0"
             aria-label="Open Navigation Menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
       </nav>

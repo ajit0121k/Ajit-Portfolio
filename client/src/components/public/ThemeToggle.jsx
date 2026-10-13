@@ -18,10 +18,10 @@ export default function ThemeToggle({ className = '' }) {
     <button
       type="button"
       onClick={toggle}
-      className={`relative h-7 sm:h-8 w-13 sm:w-16 px-0.5 sm:px-1 py-0.5 rounded-full flex items-center transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] cursor-pointer group select-none flex-shrink-0 ${
+      className={`relative h-7 sm:h-8 w-[54px] sm:w-[62px] p-0.5 sm:p-0.5 rounded-full flex items-center transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] cursor-pointer group select-none flex-shrink-0 ${
         isDark
-          ? 'bg-gradient-to-r from-[#0a150c] via-[#0f2416] to-[#0a150c] border border-emerald-400/30 shadow-[inset_0_2px_5px_rgba(0,0,0,0.6),0_4px_12px_rgba(0,0,0,0.3)]'
-          : 'bg-gradient-to-r from-amber-100/90 via-[#f5edd9] to-emerald-50/80 border border-amber-300/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06),0_4px_12px_rgba(217,119,6,0.12)]'
+          ? 'bg-gradient-to-r from-[#0a150c] via-[#0f2416] to-[#0a150c] border border-emerald-400/35 shadow-[inset_0_2px_5px_rgba(0,0,0,0.6),0_2px_8px_rgba(0,0,0,0.3)]'
+          : 'bg-gradient-to-r from-amber-100/90 via-[#f5edd9] to-emerald-50/80 border border-amber-300/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06),0_2px_8px_rgba(217,119,6,0.12)]'
       } ${className}`}
       title={isDark ? 'Switch to Day (Light Mode)' : 'Switch to Night (Dark Mode)'}
       aria-label="Toggle theme"
@@ -45,10 +45,10 @@ export default function ThemeToggle({ className = '' }) {
 
       {/* 3D Liquid Glass Gliding Lens / Thumb */}
       <div
-        className={`relative z-10 w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${
+        className={`relative z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-all duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${
           isDark
-            ? 'translate-x-[22px] sm:translate-x-[28px] bg-gradient-to-b from-[#1f3826] to-[#122317] border border-emerald-300/40 shadow-[0_4px_12px_rgba(0,0,0,0.6),0_0_10px_rgba(52,211,153,0.35),inset_0_1.5px_2px_rgba(255,255,255,0.3)]'
-            : 'translate-x-0 bg-gradient-to-b from-white to-[#faf6ef] border border-white shadow-[0_4px_12px_rgba(245,158,11,0.28),0_2px_6px_rgba(0,0,0,0.08),inset_0_1.5px_2px_rgba(255,255,255,1)]'
+            ? 'translate-x-[24px] sm:translate-x-[30px] bg-gradient-to-b from-[#1f3826] to-[#122317] border border-emerald-300/40 shadow-[0_2px_8px_rgba(0,0,0,0.6),0_0_10px_rgba(52,211,153,0.35),inset_0_1.5px_2px_rgba(255,255,255,0.3)]'
+            : 'translate-x-0 bg-gradient-to-b from-white to-[#faf6ef] border border-white shadow-[0_2px_8px_rgba(245,158,11,0.28),0_1px_4px_rgba(0,0,0,0.08),inset_0_1.5px_2px_rgba(255,255,255,1)]'
         }`}
       >
         {isDark ? (
