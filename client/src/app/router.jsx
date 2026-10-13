@@ -96,6 +96,7 @@ const NotFoundPage = lazyWithRetry(() => import('../pages/public/NotFoundPage.js
 const LoginPage = lazyWithRetry(() => import('../pages/admin/LoginPage.jsx'));
 const DashboardPage = lazyWithRetry(() => import('../pages/admin/DashboardPage.jsx'));
 const ProfilePage = lazyWithRetry(() => import('../pages/admin/ProfilePage.jsx'));
+const BuildingPage = lazyWithRetry(() => import('../pages/admin/BuildingPage.jsx'));
 const AdminResumePage = lazyWithRetry(() => import('../pages/admin/ResumePage.jsx'));
 const AdminProjectsPage = lazyWithRetry(() => import('../pages/admin/ProjectsPage.jsx'));
 const ProjectFormPage = lazyWithRetry(() => import('../pages/admin/ProjectFormPage.jsx'));
@@ -141,6 +142,7 @@ const router = createBrowserRouter([
       { index: true, element: <Suspense fallback={<LoadingScreen />}><DashboardPage /></Suspense> },
       { path: 'dashboard', element: <Suspense fallback={<LoadingScreen />}><DashboardPage /></Suspense> },
       { path: 'profile', element: <Suspense fallback={<LoadingScreen />}><ProfilePage /></Suspense> },
+      { path: 'building', element: <Suspense fallback={<LoadingScreen />}><BuildingPage /></Suspense> },
       { path: 'resume', element: <Suspense fallback={<LoadingScreen />}><AdminResumePage /></Suspense> },
       { path: 'projects', element: <Suspense fallback={<LoadingScreen />}><AdminProjectsPage /></Suspense> },
       { path: 'projects/new', element: <Suspense fallback={<LoadingScreen />}><ProjectFormPage /></Suspense> },

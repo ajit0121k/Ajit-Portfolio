@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Send, Sparkles, MapPin, Phone, CheckCircle2, MessageSquare } from 'lucide-react';
+import { Mail, Send, Sparkles, MapPin, Linkedin, CheckCircle2, MessageSquare } from 'lucide-react';
 import api from '../../services/api.js';
 import toast from 'react-hot-toast';
 
@@ -139,6 +139,22 @@ export default function ContactSection({ profile, settings }) {
                 </a>
               )}
 
+              <a
+                href={profile?.socialLinks?.linkedin || 'https://www.linkedin.com/in/ajit-kumar-a3a16b2b0/'}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-3 text-[#3d4b3e] dark:text-[#d3ded4] hover:text-[#0077b5] transition-all p-3.5 rounded-2xl liquid-glass-card hover:scale-[1.02] border border-white/70 dark:border-white/10 shadow-xs"
+                title="Connect on LinkedIn"
+              >
+                <div className="p-2 rounded-xl liquid-glass-pill text-[#0077b5] border border-white/60 dark:border-white/10">
+                  <Linkedin className="w-4 h-4" />
+                </div>
+                <div className="truncate">
+                  <span className="block text-[10px] text-[#8a8579] font-bold uppercase">LinkedIn</span>
+                  <span className="text-xs font-semibold font-sans">Connect on LinkedIn</span>
+                </div>
+              </a>
+
               {profile?.location && (
                 <div className="flex items-center gap-3 text-[#3d4b3e] dark:text-[#d3ded4] p-3.5 rounded-2xl liquid-glass-card border border-white/70 dark:border-white/10 shadow-xs">
                   <div className="p-2 rounded-xl liquid-glass-pill text-[#3d4b3e] dark:text-[#a8bba9] border border-white/60 dark:border-white/10">
@@ -147,18 +163,6 @@ export default function ContactSection({ profile, settings }) {
                   <div>
                     <span className="block text-[10px] text-[#8a8579] font-bold uppercase">Location</span>
                     <span className="text-xs font-semibold font-sans">{profile.location}</span>
-                  </div>
-                </div>
-              )}
-
-              {profile?.phone && (
-                <div className="flex items-center gap-3 text-[#3d4b3e] dark:text-[#d3ded4] p-3.5 rounded-2xl liquid-glass-card border border-white/70 dark:border-white/10 shadow-xs">
-                  <div className="p-2 rounded-xl liquid-glass-pill text-[#c66a3d] dark:text-[#e48358] border border-white/60 dark:border-white/10">
-                    <Phone className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="block text-[10px] text-[#8a8579] font-bold uppercase">Phone</span>
-                    <span className="text-xs font-semibold font-sans">{profile.phone}</span>
                   </div>
                 </div>
               )}

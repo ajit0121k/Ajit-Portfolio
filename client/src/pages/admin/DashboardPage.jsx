@@ -495,7 +495,7 @@ export default function DashboardPage() {
               <span>{isUpdatingBuilding ? 'Saving...' : 'Update Pill'}</span>
             </button>
             <Link
-              to="/admin/profile#building"
+              to="/admin/building"
               className="px-3.5 py-2.5 rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 text-xs font-semibold transition text-center"
               title="More settings like adding link URL"
             >
