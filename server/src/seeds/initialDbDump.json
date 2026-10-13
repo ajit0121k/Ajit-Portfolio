@@ -1,13 +1,38 @@
 {
   "profiles": [
     {
-      "_id": "6a848ad88cc0c72c733f9d3c",
+      "_id": "6ace4c182370714bec060ec7",
       "name": "Ajit Kumar",
       "title": "Full Stack Developer & AI Engineer",
       "tagline": "Skilled in MERN Stack (MongoDB, Express, React, Node.js), GenAI, and Scalable Cloud Systems",
       "bio": "<p>Full Stack Developer skilled in the <strong>MERN stack</strong> (MongoDB, Express.js, React.js, Node.js), JWT authentication, and Role-Based Access Control (RBAC). Experienced in deploying applications to production and integrating Generative AI & NLP models. Passionate about building robust, scalable, and secure web applications.</p>",
+      "profileImage": {
+        "url": "/profile.jpg?v=20261004",
+        "publicId": "profile_avatar"
+      },
+      "location": "Lucknow, India",
+      "yearsOfExperience": 2,
       "availability": "available",
+      "availabilityText": "Available for Full-Time Roles & Internships",
+      "currentlyBuilding": "AI Startup Trend Analyzer",
+      "currentlyBuildingUrl": "https://github.com/ajit0121k",
+      "resume": {
+        "url": "/uploads/1789063937657-Ajit_Kumar_Resume__1_.pdf",
+        "originalName": "Ajit_Kumar_Resume.pdf",
+        "uploadedAt": "2026-10-13T16:08:47.073Z"
+      },
       "email": "ajitkumar2956654@gmail.com",
+      "phone": "+91 7379247197",
+      "socialLinks": {
+        "github": "https://github.com/ajit0121k",
+        "linkedin": "https://www.linkedin.com/in/ajit-kumar-a3a16b2b0/",
+        "twitter": "",
+        "website": "",
+        "youtube": "",
+        "dribbble": "",
+        "medium": "",
+        "devto": ""
+      },
       "seo": {
         "title": "Ajit Kumar | Full Stack MERN Developer & AI Engineer",
         "description": "Portfolio of Ajit Kumar - Full Stack MERN Developer skilled in React, Node.js, Express, MongoDB, and Generative AI.",
@@ -21,127 +46,13 @@
         ]
       },
       "createdAt": "2026-08-18T16:39:52.854Z",
-      "updatedAt": "2026-09-10T18:12:17.679Z",
-      "__v": 0,
-      "profileImage": {
-        "url": "/profile.jpg?v=20261004",
-        "publicId": "local_profile_pic"
-      },
-      "availabilityText": "Available for Full-Time Roles & Internships",
-      "currentlyBuilding": "AI Startup Trend Analyzer",
-      "currentlyBuildingUrl": "https://github.com/ajit0121k",
-      "location": "Lucknow, India",
-      "phone": "+91 7379247197",
-      "socialLinks": {
-        "github": "https://github.com/ajit0121k",
-        "linkedin": "https://www.linkedin.com/in/ajit-kumar-a3a16b2b0/",
-        "twitter": "",
-        "website": "",
-        "youtube": "",
-        "dribbble": "",
-        "medium": "",
-        "devto": ""
-      },
-      "yearsOfExperience": 2,
-      "resume": {
-        "url": "/uploads/1789063937657-Ajit_Kumar_Resume__1_.pdf",
-        "publicId": null,
-        "originalName": "Ajit_Kumar_Resume (1).pdf",
-        "uploadedAt": "2026-09-10T18:12:17.678Z"
-      }
+      "updatedAt": "2026-10-13T16:57:03.380Z",
+      "__v": 0
     }
   ],
   "projects": [
     {
-      "_id": "6a8fecbf8b9f2e27413d41e4",
-      "title": "Startup Trend Analyzer",
-      "slug": "startup-trend-analyzer",
-      "shortDescription": "Full-stack AI-based web application that analyzes real-time data from GitHub, tech news, and online sources to identify emerging trends and startup opportunities.",
-      "problem": "<p>Entrepreneurs and investors struggle to identify emerging technology waves across disparate data sources without automated sentiment analysis and opportunity scoring.</p>",
-      "solution": "<p>Built a full-stack AI web platform integrating Python (FastAPI), React, and PostgreSQL. Utilizes NLP and machine learning techniques for sentiment analysis, trend detection, and automated startup opportunity generation.</p>",
-      "architecture": "<p>FastAPI backend with PostgreSQL data processing layer and responsive React frontend dashboard for real-time visualization.</p>",
-      "features": [
-        "Real-time data ingestion from GitHub and tech news APIs",
-        "NLP and sentiment analysis for trend detection",
-        "Automated startup opportunity generation with scoring",
-        "Interactive React dashboard with PostgreSQL processing"
-      ],
-      "technologies": [
-        "React",
-        "Python",
-        "FastAPI",
-        "PostgreSQL",
-        "NLP",
-        "Machine Learning",
-        "Tailwind CSS"
-      ],
-      "frontendTechnologies": [],
-      "backendTechnologies": [],
-      "databaseTechnologies": [],
-      "tools": [],
-      "githubUrl": "https://github.com/ajit0121k",
-      "liveUrl": "",
-      "featured": true,
-      "pinned": true,
-      "order": 1,
-      "status": "published",
-      "publishedAt": "2025-11-01T00:00:00.000Z",
-      "gallery": [],
-      "versions": [
-        {
-          "data": {
-            "category": "Web Application",
-            "_id": "6a8fecbf8b9f2e27413d41e4",
-            "title": "Startup Trend Analyzer",
-            "slug": "startup-trend-analyzer",
-            "shortDescription": "Full-stack AI-based web application that analyzes real-time data from GitHub, tech news, and online sources to identify emerging trends and startup opportunities.",
-            "problem": "<p>Entrepreneurs and investors struggle to identify emerging technology waves across disparate data sources without automated sentiment analysis and opportunity scoring.</p>",
-            "solution": "<p>Built a full-stack AI web platform integrating Python (FastAPI), React, and PostgreSQL. Utilizes NLP and machine learning techniques for sentiment analysis, trend detection, and automated startup opportunity generation.</p>",
-            "architecture": "<p>FastAPI backend with PostgreSQL data processing layer and responsive React frontend dashboard for real-time visualization.</p>",
-            "features": [
-              "Real-time data ingestion from GitHub and tech news APIs",
-              "NLP and sentiment analysis for trend detection",
-              "Automated startup opportunity generation with scoring",
-              "Interactive React dashboard with PostgreSQL processing"
-            ],
-            "technologies": [
-              "React",
-              "Python",
-              "FastAPI",
-              "PostgreSQL",
-              "NLP",
-              "Machine Learning",
-              "Tailwind CSS"
-            ],
-            "frontendTechnologies": [],
-            "backendTechnologies": [],
-            "databaseTechnologies": [],
-            "tools": [],
-            "githubUrl": "https://github.com/ajit0121k",
-            "liveUrl": "",
-            "featured": true,
-            "pinned": true,
-            "order": 1,
-            "status": "published",
-            "publishedAt": "2025-11-01T00:00:00.000Z",
-            "gallery": [],
-            "versions": [],
-            "createdAt": "2026-08-27T07:52:31.704Z",
-            "updatedAt": "2026-08-27T07:52:31.704Z",
-            "__v": 0
-          },
-          "savedAt": "2026-09-06T13:34:37.200Z",
-          "version": 1,
-          "_id": "6a9d6bed6f1eae3d4aed1a5c"
-        }
-      ],
-      "createdAt": "2026-08-27T07:52:31.704Z",
-      "updatedAt": "2026-09-13T05:56:50.090Z",
-      "__v": 1,
-      "category": "Web Application"
-    },
-    {
-      "_id": "6a8fecbf8b9f2e27413d41e5",
+      "_id": "6ace4c182370714bec060ecf",
       "title": "Network Monitoring Application (Web-Based)",
       "slug": "network-monitoring-application",
       "shortDescription": "Web-based network monitoring dashboard to track real-time bandwidth, latency, and device status with automated anomaly alerts.",
@@ -167,21 +78,22 @@
       "backendTechnologies": [],
       "databaseTechnologies": [],
       "tools": [],
+      "gallery": [],
       "githubUrl": "https://github.com/ajit0121k",
       "liveUrl": "",
       "featured": true,
       "pinned": true,
       "order": 2,
+      "category": "Web Application",
       "status": "published",
       "publishedAt": "2026-05-01T00:00:00.000Z",
-      "gallery": [],
       "versions": [],
       "createdAt": "2026-08-27T07:52:31.704Z",
       "updatedAt": "2026-08-27T07:52:31.704Z",
       "__v": 0
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41e7",
+      "_id": "6ace4c182370714bec060ed0",
       "title": "Full-Stack Developer Portfolio & CMS",
       "slug": "developer-portfolio-cms",
       "shortDescription": "Production-ready MERN developer portfolio with full SaaS Admin CMS, Liquid Glass UI, and real-time MongoDB synchronization.",
@@ -207,21 +119,22 @@
       "backendTechnologies": [],
       "databaseTechnologies": [],
       "tools": [],
+      "gallery": [],
       "githubUrl": "https://github.com/ajit0121k",
       "liveUrl": "http://localhost:5173",
       "featured": true,
       "pinned": false,
       "order": 4,
+      "category": "Web Application",
       "status": "published",
       "publishedAt": "2025-03-01T00:00:00.000Z",
-      "gallery": [],
       "versions": [],
       "createdAt": "2026-08-27T07:52:31.704Z",
       "updatedAt": "2026-08-27T07:52:31.704Z",
       "__v": 0
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41e6",
+      "_id": "6ace4c182370714bec060ed1",
       "title": "Diet Planner – DietGuide",
       "slug": "diet-planner-dietguide",
       "shortDescription": "React-based gym diet planner featuring subscription tiers, per-user data scoping, and Recharts-powered analytics for fitness progress tracking.",
@@ -245,209 +158,313 @@
       "backendTechnologies": [],
       "databaseTechnologies": [],
       "tools": [],
+      "gallery": [],
       "githubUrl": "https://github.com/ajit0121k",
       "liveUrl": "",
       "featured": true,
       "pinned": false,
       "order": 3,
+      "category": "Web Application",
       "status": "published",
       "publishedAt": "2026-06-01T00:00:00.000Z",
-      "gallery": [],
       "versions": [],
       "createdAt": "2026-08-27T07:52:31.704Z",
       "updatedAt": "2026-08-27T07:52:31.704Z",
       "__v": 0
+    },
+    {
+      "_id": "6ace62cf3616d85df2f3763d",
+      "title": "Startup Trend Analyzer",
+      "slug": "startup-trend-analyzer",
+      "shortDescription": "Full-stack AI-based web application that analyzes real-time data from GitHub, tech news, and online sources to identify emerging trends and startup opportunities.",
+      "problem": "<p>Entrepreneurs and investors struggle to identify emerging technology waves across disparate data sources without automated sentiment analysis and opportunity scoring.</p>",
+      "solution": "<p>Built a full-stack AI web platform integrating Python (FastAPI), React, and PostgreSQL. Utilizes NLP and machine learning techniques for sentiment analysis, trend detection, and automated startup opportunity generation.</p>",
+      "architecture": "<p>FastAPI backend with PostgreSQL data processing layer and responsive React frontend dashboard for real-time visualization.</p>",
+      "features": [
+        "Real-time data aggregation from GitHub & tech news feeds",
+        "Sentiment analysis and trend detection pipeline",
+        "Automated opportunity scoring and idea generation",
+        "Interactive React dashboard with search and category filters"
+      ],
+      "challenges": "<p>Efficiently aggregating and deduplicating diverse external API streams while maintaining low query latency on analytical dashboard views.</p>",
+      "lessonsLearned": "<p>Mastered asynchronous API design in FastAPI, efficient relational modeling in PostgreSQL, and responsive dashboard UI patterns in React.</p>",
+      "technologies": [
+        "Python",
+        "FastAPI",
+        "React",
+        "PostgreSQL",
+        "NLP",
+        "Machine Learning"
+      ],
+      "frontendTech": [
+        "React",
+        "Tailwind CSS",
+        "Vite"
+      ],
+      "backendTech": [
+        "Python",
+        "FastAPI"
+      ],
+      "databaseTech": [
+        "PostgreSQL"
+      ],
+      "tools": [
+        "Git",
+        "Docker"
+      ],
+      "githubUrl": "https://github.com/ajit0121k",
+      "liveUrl": "",
+      "featured": true,
+      "pinned": false,
+      "status": "published",
+      "order": 1,
+      "views": 142,
+      "likes": 28,
+      "createdAt": "2026-08-27T07:52:31.673Z",
+      "updatedAt": "2026-08-27T07:52:31.673Z"
     }
   ],
   "skills": [
     {
-      "_id": "6a8fecbf8b9f2e27413d41ee",
+      "_id": "6ace4c182370714bec060ed4",
       "category": "Frontend",
       "name": "Next.js",
       "proficiency": 85,
+      "level": "Advanced",
       "years": 1,
       "order": 2,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41ed",
+      "_id": "6ace4c182370714bec060ed5",
       "category": "Frontend",
       "name": "React.js",
+      "icon": "",
       "proficiency": 64,
+      "level": "Advanced",
       "years": 2,
       "order": 1,
       "visible": true,
+      "updatedAt": "2026-09-10T17:35:33.365Z",
       "__v": 0,
-      "icon": "",
-      "updatedAt": "2026-09-10T17:35:33.365Z"
+      "createdAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41ef",
+      "_id": "6ace4c182370714bec060ed6",
       "category": "Frontend",
       "name": "JavaScript (ES6+)",
       "proficiency": 90,
+      "level": "Advanced",
       "years": 2,
       "order": 3,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41f0",
+      "_id": "6ace4c182370714bec060ed7",
       "category": "Frontend",
       "name": "HTML5 & CSS3",
       "proficiency": 95,
+      "level": "Advanced",
       "years": 2,
       "order": 4,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41f1",
+      "_id": "6ace4c182370714bec060ed8",
       "category": "Frontend",
       "name": "Tailwind CSS",
       "proficiency": 92,
+      "level": "Advanced",
       "years": 2,
       "order": 5,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41f4",
+      "_id": "6ace4c182370714bec060ed9",
       "category": "Backend",
       "name": "Python",
       "proficiency": 82,
+      "level": "Advanced",
       "years": 2,
       "order": 3,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41f5",
+      "_id": "6ace4c182370714bec060eda",
       "category": "Backend",
       "name": "Java",
       "proficiency": 80,
+      "level": "Advanced",
       "years": 2,
       "order": 4,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41f6",
+      "_id": "6ace4c182370714bec060edb",
       "category": "Backend",
       "name": "RESTful APIs",
       "proficiency": 90,
+      "level": "Advanced",
       "years": 2,
       "order": 5,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41f7",
+      "_id": "6ace4c182370714bec060edc",
       "category": "Database",
       "name": "MongoDB",
       "proficiency": 90,
-      "years": 2,
-      "order": 1,
-      "visible": true,
-      "__v": 0
-    },
-    {
-      "_id": "6a8fecbf8b9f2e27413d41f8",
-      "category": "Database",
-      "name": "PostgreSQL",
-      "proficiency": 80,
-      "years": 1,
-      "order": 2,
-      "visible": true,
-      "__v": 0
-    },
-    {
-      "_id": "6a8fecbf8b9f2e27413d41f2",
-      "category": "Backend",
-      "name": "Node.js",
-      "proficiency": 32,
+      "level": "Advanced",
       "years": 2,
       "order": 1,
       "visible": true,
       "__v": 0,
-      "updatedAt": "2026-09-10T17:35:41.162Z",
-      "icon": ""
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41fa",
-      "category": "DevOps",
-      "name": "Git & GitHub",
-      "proficiency": 90,
+      "_id": "6ace4c182370714bec060edd",
+      "category": "Database",
+      "name": "PostgreSQL",
+      "proficiency": 80,
+      "level": "Advanced",
+      "years": 1,
+      "order": 2,
+      "visible": true,
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
+    },
+    {
+      "_id": "6ace4c182370714bec060ede",
+      "category": "Backend",
+      "name": "Node.js",
+      "icon": "",
+      "proficiency": 32,
+      "level": "Advanced",
       "years": 2,
       "order": 1,
       "visible": true,
-      "__v": 0
+      "updatedAt": "2026-09-10T17:35:41.162Z",
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41f3",
+      "_id": "6ace4c182370714bec060edf",
+      "category": "DevOps",
+      "name": "Git & GitHub",
+      "proficiency": 90,
+      "level": "Advanced",
+      "years": 2,
+      "order": 1,
+      "visible": true,
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
+    },
+    {
+      "_id": "6ace4c182370714bec060ee0",
       "category": "Backend",
       "name": "Express.js",
       "proficiency": 90,
+      "level": "Advanced",
       "years": 2,
       "order": 2,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41fc",
+      "_id": "6ace4c182370714bec060ee1",
       "category": "Tools",
       "name": "Data Structures & OOP",
       "proficiency": 88,
+      "level": "Advanced",
       "years": 2,
       "order": 3,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41fd",
+      "_id": "6ace4c182370714bec060ee2",
       "category": "Tools",
       "name": "Power BI",
       "proficiency": 75,
+      "level": "Advanced",
       "years": 1,
       "order": 4,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.528Z",
+      "updatedAt": "2026-10-13T15:19:52.528Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41fe",
+      "_id": "6ace4c182370714bec060ee3",
       "category": "Tools",
       "name": "JWT & RBAC Auth",
       "proficiency": 90,
+      "level": "Advanced",
       "years": 2,
       "order": 5,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.529Z",
+      "updatedAt": "2026-10-13T15:19:52.529Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41f9",
+      "_id": "6ace4c182370714bec060ee4",
       "category": "Database",
       "name": "SQL",
       "proficiency": 85,
+      "level": "Advanced",
       "years": 2,
       "order": 3,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.529Z",
+      "updatedAt": "2026-10-13T15:19:52.529Z"
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41fb",
+      "_id": "6ace4c182370714bec060ee5",
       "category": "Tools",
       "name": "Generative AI & LLMs",
       "proficiency": 85,
+      "level": "Advanced",
       "years": 1,
       "order": 2,
       "visible": true,
-      "__v": 0
+      "__v": 0,
+      "createdAt": "2026-10-13T15:19:52.529Z",
+      "updatedAt": "2026-10-13T15:19:52.529Z"
     }
   ],
   "experiences": [
     {
-      "_id": "6a8fecbf8b9f2e27413d41dd",
+      "_id": "6ace4c182370714bec060ee8",
       "company": "IBM SkillsBuild (in collab with AICTE / Edunet)",
       "role": "Generative AI Intern",
       "employmentType": "Internship",
@@ -455,6 +472,7 @@
       "startDate": "2026-06-01T00:00:00.000Z",
       "current": true,
       "description": "<p>Completed hands-on modules in Artificial Intelligence, Machine Learning, and Large Language Models. Explored prompt engineering, NLP concepts, and AI applications using IBM Watson and Cloud tools.</p>",
+      "responsibilities": [],
       "technologies": [
         "Generative AI",
         "LLMs",
@@ -470,7 +488,7 @@
       "__v": 0
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d41de",
+      "_id": "6ace4c182370714bec060ee9",
       "company": "Unnesa Foundation",
       "role": "Software Development Program",
       "employmentType": "Full-time",
@@ -479,6 +497,7 @@
       "endDate": "2026-07-01T00:00:00.000Z",
       "current": false,
       "description": "<p>Selected for rigorous software development training recognizing academic merit and technical aptitude. Covered software engineering fundamentals, problem-solving, and modern practices.</p>",
+      "responsibilities": [],
       "technologies": [
         "Problem Solving",
         "Data Structures",
@@ -490,11 +509,35 @@
       "createdAt": "2026-08-27T07:52:31.669Z",
       "updatedAt": "2026-08-27T07:52:31.669Z",
       "__v": 0
+    },
+    {
+      "_id": "6ace62cc3616d85df2f3763c",
+      "role": "Software Development Intern",
+      "company": "JP Morgan's",
+      "employmentType": "Internship",
+      "location": "Virtual",
+      "startDate": "2025-10-01T00:00:00.000Z",
+      "endDate": "2026-01-01T00:00:00.000Z",
+      "current": false,
+      "description": "<p>Developed and optimized software solutions using Java and Python. Implemented data structures and performed debugging and testing to enhance application efficiency while contributing to collaborative Git workflows.</p>",
+      "responsibilities": [],
+      "technologies": [
+        "Java",
+        "Python",
+        "Data Structures",
+        "Algorithms",
+        "Git",
+        "Testing"
+      ],
+      "order": 3,
+      "visible": true,
+      "createdAt": "2026-08-27T07:52:31.670Z",
+      "updatedAt": "2026-08-27T07:52:31.670Z"
     }
   ],
   "educations": [
     {
-      "_id": "6a8fecbf8b9f2e27413d4213",
+      "_id": "6ace4c182370714bec060eec",
       "degree": "Secondary Education (Class X)",
       "institution": "St. Theresa High School, UP Board",
       "location": "Lucknow, India",
@@ -509,7 +552,7 @@
       "__v": 0
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d4212",
+      "_id": "6ace4c182370714bec060eed",
       "degree": "B.Tech, Computer Science & Engineering",
       "institution": "APJ Abdul Kalam Technological University",
       "location": "Lucknow, India",
@@ -525,11 +568,14 @@
   ],
   "certifications": [
     {
-      "_id": "6a8fecbf8b9f2e27413d4218",
+      "_id": "6ace4c182370714bec060ef0",
       "name": "Full Stack Web Development",
       "issuingOrganization": "PW Skills",
       "issueDate": "2026-05-01T00:00:00.000Z",
+      "neverExpires": false,
       "credentialUrl": "",
+      "skills": [],
+      "featured": false,
       "order": 2,
       "visible": true,
       "createdAt": "2026-08-27T07:52:31.802Z",
@@ -537,11 +583,14 @@
       "__v": 0
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d4217",
+      "_id": "6ace4c182370714bec060ef1",
       "name": "Full Stack Development With MERN",
       "issuingOrganization": "NASSCOM Foundation",
       "issueDate": "2026-06-01T00:00:00.000Z",
+      "neverExpires": false,
       "credentialUrl": "",
+      "skills": [],
+      "featured": false,
       "order": 1,
       "visible": true,
       "createdAt": "2026-08-27T07:52:31.802Z",
@@ -549,11 +598,14 @@
       "__v": 0
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d4219",
+      "_id": "6ace4c182370714bec060ef2",
       "name": "Generative AI For Developers",
       "issuingOrganization": "PW Skills",
       "issueDate": "2026-06-01T00:00:00.000Z",
+      "neverExpires": false,
       "credentialUrl": "",
+      "skills": [],
+      "featured": false,
       "order": 3,
       "visible": true,
       "createdAt": "2026-08-27T07:52:31.802Z",
@@ -561,11 +613,14 @@
       "__v": 0
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d421e",
+      "_id": "6ace4c182370714bec060ef3",
       "name": "Certificate of Recognition",
       "issuingOrganization": "Amigo India, Lucknow",
       "issueDate": "2024-10-01T00:00:00.000Z",
+      "neverExpires": false,
       "credentialUrl": "",
+      "skills": [],
+      "featured": false,
       "order": 8,
       "visible": true,
       "createdAt": "2026-08-27T07:52:31.802Z",
@@ -573,11 +628,14 @@
       "__v": 0
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d421a",
+      "_id": "6ace4c182370714bec060ef4",
       "name": "Data Analytics With AI",
       "issuingOrganization": "Sololearn",
       "issueDate": "2025-09-01T00:00:00.000Z",
+      "neverExpires": false,
       "credentialUrl": "",
+      "skills": [],
+      "featured": false,
       "order": 4,
       "visible": true,
       "createdAt": "2026-08-27T07:52:31.802Z",
@@ -585,23 +643,14 @@
       "__v": 0
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d421c",
-      "name": "What Is Software Development?",
-      "issuingOrganization": "SIMPLILEARN",
-      "issueDate": "2025-09-01T00:00:00.000Z",
-      "credentialUrl": "",
-      "order": 6,
-      "visible": true,
-      "createdAt": "2026-08-27T07:52:31.802Z",
-      "updatedAt": "2026-08-27T07:52:31.802Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a8fecbf8b9f2e27413d421b",
+      "_id": "6ace4c182370714bec060ef6",
       "name": "Certificate of Participation, Bhartiya Antariksh Hackathon",
       "issuingOrganization": "ISRO",
       "issueDate": "2025-05-01T00:00:00.000Z",
+      "neverExpires": false,
       "credentialUrl": "",
+      "skills": [],
+      "featured": false,
       "order": 5,
       "visible": true,
       "createdAt": "2026-08-27T07:52:31.802Z",
@@ -609,26 +658,71 @@
       "__v": 0
     },
     {
-      "_id": "6a8fecbf8b9f2e27413d421d",
+      "_id": "6ace4c182370714bec060ef7",
       "name": "Visualize Your Data",
       "issuingOrganization": "Sololearn",
       "issueDate": "2025-04-01T00:00:00.000Z",
+      "neverExpires": false,
       "credentialUrl": "",
+      "skills": [],
+      "featured": false,
       "order": 7,
       "visible": true,
       "createdAt": "2026-08-27T07:52:31.802Z",
       "updatedAt": "2026-08-27T07:52:31.802Z",
       "__v": 0
+    },
+    {
+      "_id": "6ace62d73616d85df2f3763e",
+      "name": "What Is Software Development?",
+      "issuingOrganization": "SIMPLILEARN",
+      "issueDate": "2025-09-01T00:00:00.000Z",
+      "neverExpires": true,
+      "credentialUrl": "",
+      "skills": [
+        "Software Engineering",
+        "SDLC"
+      ],
+      "featured": false,
+      "order": 8,
+      "visible": true,
+      "createdAt": "2026-10-13T16:56:55.104Z",
+      "updatedAt": "2026-10-13T16:56:55.104Z"
+    },
+    {
+      "_id": "6ace62dd3616d85df2f3763f",
+      "name": "Introduction To HTML",
+      "issuingOrganization": "Sololearn",
+      "issueDate": "2025-03-01T00:00:00.000Z",
+      "neverExpires": true,
+      "credentialUrl": "",
+      "skills": [
+        "HTML5",
+        "Web Standards"
+      ],
+      "featured": false,
+      "order": 9,
+      "visible": true,
+      "createdAt": "2026-10-13T16:56:55.104Z",
+      "updatedAt": "2026-10-13T16:56:55.104Z"
     }
   ],
   "testimonials": [],
   "sitesettings": [
     {
-      "_id": "6a848ad88cc0c72c733f9d39",
+      "_id": "6ace4c182370714bec060eca",
       "siteName": "Ajit Portfolio",
+      "websiteLogo": "",
+      "websiteDescription": "",
+      "authorName": "Ajit Kumar",
       "defaultTheme": "dark",
       "themePreset": "monochrome",
       "accentColor": "#3b82f6",
+      "appearance": {
+        "primaryColor": "#3b82f6",
+        "font": "Inter",
+        "animationEnabled": true
+      },
       "sectionVisibility": {
         "about": true,
         "skills": true,
@@ -642,11 +736,17 @@
         "github": true,
         "currentlyBuilding": true
       },
+      "portfolio": {
+        "featuredProjectsLimit": 6,
+        "resumeDownloadButton": true,
+        "contactFormEnabled": true
+      },
+      "navigation": [],
       "seo": {
         "title": "Developer Portfolio",
         "description": "Full Stack Developer Portfolio",
-        "robots": "index, follow",
-        "keywords": []
+        "keywords": [],
+        "robots": "index, follow"
       },
       "contactSettings": {
         "enableContactForm": true,
@@ -655,535 +755,89 @@
         "notifyOnMessage": true
       },
       "maintenanceMode": false,
-      "navigation": [],
-      "updatedAt": "2026-09-13T05:04:49.707Z",
-      "__v": 0,
-      "appearance": {
-        "animationEnabled": true,
-        "font": "Inter",
-        "primaryColor": "#3b82f6"
-      },
-      "authorName": "Ajit Kumar",
       "maintenanceMessage": "We are currently upgrading server systems. Back online soon!",
-      "portfolio": {
-        "featuredProjectsLimit": 6,
-        "resumeDownloadButton": true,
-        "contactFormEnabled": true
-      },
-      "websiteDescription": "",
-      "websiteLogo": ""
-    }
-  ],
-  "media": [
-    {
-      "_id": "6aa2f30174a499bdc6d43c86",
-      "filename": "Ajit_Kumar_Resume (1).pdf",
-      "originalName": "Ajit_Kumar_Resume (1).pdf",
-      "url": "/uploads/1789063937657-Ajit_Kumar_Resume__1_.pdf",
-      "publicId": null,
-      "type": "document",
-      "mimeType": "application/pdf",
-      "size": 7737,
-      "width": null,
-      "height": null,
-      "alt": "Resume PDF",
-      "uploadedBy": "6a848ad88cc0c72c733f9d34",
-      "createdAt": "2026-09-10T18:12:17.662Z",
+      "updatedAt": "2026-10-13T15:19:52.236Z",
       "__v": 0
     }
   ],
+  "media": [],
   "activitylogs": [
     {
-      "_id": "6a848fe4c186bf3338acddca",
-      "adminId": "6a848ad88cc0c72c733f9d34",
+      "_id": "6ace53be5c9018b6479a0d95",
+      "adminId": "6ace4c172370714bec060ec1",
       "action": "LOGIN",
       "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-08-18T17:01:24.317Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a8feccb725a7c1961689c12",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-08-27T07:52:43.611Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a8fed9d07618c0bcda56405",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-08-27T07:56:13.696Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a8fee23cc20ad3775adcc80",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-08-27T07:58:27.566Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a8fef40cc20ad3775adccb4",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-08-27T08:03:12.528Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a8fef6acc20ad3775adccc2",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-08-27T08:03:54.836Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a9b05797c9cf2b399f9f2f7",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-09-04T17:52:57.376Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a9b064a7c9cf2b399f9f31a",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-09-04T17:56:26.670Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a9b07ea7c9cf2b399f9f341",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-09-04T18:03:22.921Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a9d65266f78134bbb1db9b2",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-09-06T13:05:42.213Z",
-      "__v": 0
-    },
-    {
-      "_id": "6a9d6a2e6f78134bbb1dba0c",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in",
-      "createdAt": "2026-09-06T13:27:10.274Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2e6f748a9df48abb98216",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
+      "entityId": "6ace4c172370714bec060ec1",
       "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T17:20:55.925Z",
+      "createdAt": "2026-10-13T15:52:30.158Z",
       "__v": 0
     },
     {
-      "_id": "6aa2e79d48a9df48abb9821f",
-      "adminId": "6a848ad88cc0c72c733f9d34",
+      "_id": "6ace5517cf3f51d29b41d052",
+      "adminId": "6ace4c172370714bec060ec1",
       "action": "LOGIN",
       "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
+      "entityId": "6ace4c172370714bec060ec1",
       "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T17:23:41.788Z",
+      "createdAt": "2026-10-13T15:58:15.539Z",
       "__v": 0
     },
     {
-      "_id": "6aa2e7b248a9df48abb98273",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGOUT",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged out",
-      "createdAt": "2026-09-10T17:24:02.259Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2e8bc48a9df48abb982cd",
-      "adminId": "6a848ad88cc0c72c733f9d34",
+      "_id": "6ace5614cf3f51d29b41d0fa",
+      "adminId": "6ace4c172370714bec060ec1",
       "action": "LOGIN",
       "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
+      "entityId": "6ace4c172370714bec060ec1",
       "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T17:28:28.145Z",
+      "createdAt": "2026-10-13T16:02:28.126Z",
       "__v": 0
     },
     {
-      "_id": "6aa2e90a48a9df48abb982f9",
-      "adminId": "6a848ad88cc0c72c733f9d34",
+      "_id": "6ace5b38cf3f51d29b41d222",
+      "adminId": "6ace4c172370714bec060ec1",
       "action": "LOGIN",
       "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
+      "entityId": "6ace4c172370714bec060ec1",
       "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T17:29:46.556Z",
+      "createdAt": "2026-10-13T16:24:24.649Z",
       "__v": 0
     },
     {
-      "_id": "6aa2e96548a9df48abb98325",
-      "adminId": "6a848ad88cc0c72c733f9d34",
+      "_id": "6ace5b4bcf3f51d29b41d228",
+      "adminId": "6ace4c172370714bec060ec1",
       "action": "LOGIN",
       "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
+      "entityId": "6ace4c172370714bec060ec1",
       "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T17:31:17.036Z",
+      "createdAt": "2026-10-13T16:24:43.726Z",
       "__v": 0
     },
     {
-      "_id": "6aa2ef192dd4b9899d60856e",
-      "adminId": "6a848ad88cc0c72c733f9d34",
+      "_id": "6ace5d24cf3f51d29b41d277",
+      "adminId": "6ace4c172370714bec060ec1",
       "action": "LOGIN",
       "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
+      "entityId": "6ace4c172370714bec060ec1",
       "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T17:55:37.588Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2ef282dd4b9899d608574",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T17:55:52.043Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2ef752dd4b9899d608619",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T17:57:09.307Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2efb02dd4b9899d60866e",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T17:58:08.163Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2f0302dd4b9899d6086ae",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T18:00:16.740Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2f0a474a499bdc6d43aa9",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T18:02:12.658Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2f0be74a499bdc6d43ab9",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T18:02:38.045Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2f23574a499bdc6d43c1d",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T18:08:53.351Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2f26d74a499bdc6d43c3f",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T18:09:49.331Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2f35974a499bdc6d43cbf",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T18:13:45.635Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa2f3d274a499bdc6d43cde",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-10T18:15:46.363Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa62d2d2e2266042836dabc",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T04:57:17.899Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa62e772e2266042836db06",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T05:02:47.811Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa63a042e2266042836dc14",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T05:52:04.115Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa644705d2d892c66449e0c",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T06:36:32.593Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa644755d2d892c66449e12",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T06:36:37.912Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa649605d2d892c66449e23",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T06:57:36.764Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6df1d89f0f20ccbcdb15a",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:36:29.736Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e12c89f0f20ccbcdb19e",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:45:16.553Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e13389f0f20ccbcdb1a7",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:45:23.536Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e17789f0f20ccbcdb1bc",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:46:31.210Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e1ce89f0f20ccbcdb1c7",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:47:58.421Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e23e89f0f20ccbcdb1d0",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:49:50.199Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e24989f0f20ccbcdb1ed",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:50:01.276Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e25089f0f20ccbcdb1f9",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:50:08.664Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e25c89f0f20ccbcdb202",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:50:20.054Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e26289f0f20ccbcdb20a",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:50:26.885Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e26989f0f20ccbcdb213",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:50:33.733Z",
-      "__v": 0
-    },
-    {
-      "_id": "6aa6e38e89f0f20ccbcdb22d",
-      "adminId": "6a848ad88cc0c72c733f9d34",
-      "action": "LOGIN",
-      "entity": "Admin",
-      "entityId": "6a848ad88cc0c72c733f9d34",
-      "description": "Admin logged in with Email and Password",
-      "createdAt": "2026-09-13T17:55:26.778Z",
+      "createdAt": "2026-10-13T16:32:36.964Z",
       "__v": 0
     }
   ],
   "resumes": [
     {
-      "_id": "6aa2f30174a499bdc6d43c8a",
-      "originalName": "Ajit_Kumar_Resume (1).pdf",
-      "filename": "Ajit_Kumar_Resume (1).pdf",
+      "_id": "6ace5791cf3f51d29b41d162",
+      "originalName": "Ajit_Kumar_Resume.pdf",
+      "filename": "Ajit_Kumar_Resume.pdf",
       "url": "/uploads/1789063937657-Ajit_Kumar_Resume__1_.pdf",
-      "publicId": null,
       "size": 7737,
       "mimeType": "application/pdf",
       "isActive": true,
-      "version": 5,
-      "uploadedBy": "6a848ad88cc0c72c733f9d34",
-      "createdAt": "2026-09-10T18:12:17.674Z",
-      "updatedAt": "2026-09-10T18:12:17.674Z",
+      "version": 1,
+      "createdAt": "2026-10-13T16:08:49.423Z",
+      "updatedAt": "2026-10-13T16:08:49.423Z",
       "__v": 0
     }
   ],
-  "messages": [
-    {
-      "_id": "6aa6e38e89f0f20ccbcdb227",
-      "name": "Ajit Kumar Test",
-      "email": "ajitkumar2956654@gmail.com",
-      "subject": "Real Test Message",
-      "message": "This is a direct test to check if message saves to MongoDB and appears in Admin.",
-      "status": "unread",
-      "replied": false,
-      "ipHash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3",
-      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.9444",
-      "createdAt": "2026-09-13T17:55:26.480Z",
-      "__v": 0
-    }
-  ]
+  "messages": [],
+  "blogposts": []
 }

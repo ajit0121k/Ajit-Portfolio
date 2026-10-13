@@ -36,7 +36,7 @@ const KEY_TO_ENTITY = {
   [STORAGE_KEYS.ACTIVITY]: "activity",
 };
 
-const CURRENT_VERSION = "2026_10_04_v9";
+const CURRENT_VERSION = "2026_10_13_v10";
 let isInitializing = false;
 
 function getStorage(key, defaultVal) {
@@ -133,7 +133,7 @@ export function handleLocalRequest(method, url, data) {
       const pass = (body?.password || "").trim();
       const isAuth =
         (email === "ajitkumar2956654@gmail.com" || email === "ajitkumar@gmail.com" || email === "7379247197") &&
-        pass === "Ajit@1234";
+        (pass === "Ajit9792625929" || pass === "Ajit@1234");
 
       if (isAuth) {
         const token = "local_auth_jwt_" + Date.now();

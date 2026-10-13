@@ -1,41 +1,50 @@
 import mongoose from 'mongoose';
-import config from '../config/env.js';
 import Admin from '../models/Admin.js';
+import config from '../config/env.js';
+
+const MONGODB_URI = config.mongodbUri || process.env.MONGODB_URI;
 
 async function updateAdmin() {
-  await mongoose.connect(config.mongodbUri);
-  console.log('Connected to MongoDB:', config.mongodbUri);
+  await mongoose.connect(MONGODB_URI);
+  console.log('Connected to MongoDB:', MONGODB_URI.replace(/:[^:]*@/, ':****@'));
 
-  let admin = await Admin.findOne();
-  if (!admin) {
-    admin = new Admin({
-      username: 'admin',
+  let admins = await Admin.find();
+  if (admins.length === 0) {
+    const admin = new Admin({
+      username: 'ajitkumar2956654',
       email: 'ajitkumar2956654@gmail.com',
-      passwordHash: 'Ajit@1234',
+      mobile: '7379247197',
+      passwordHash: 'Ajit9792625929',
       role: 'superadmin',
       isActive: true,
       twoFactorEnabled: false
     });
+    await admin.save();
+    console.log('✅ Created new Admin account');
   } else {
-    admin.email = 'ajitkumar2956654@gmail.com';
-    admin.passwordHash = 'Ajit@1234';
-    admin.twoFactorEnabled = false;
-    admin.isActive = true;
-    admin.failedLoginAttempts = 0;
-    admin.lockedUntil = undefined;
-    admin.otpCodeHash = undefined;
-    admin.otpExpires = undefined;
-    admin.temp2FAToken = undefined;
+    for (const admin of admins) {
+      admin.email = 'ajitkumar2956654@gmail.com';
+      admin.passwordHash = 'Ajit9792625929';
+      admin.mobile = '7379247197';
+      admin.twoFactorEnabled = false;
+      admin.isActive = true;
+      admin.failedLoginAttempts = 0;
+      admin.lockedUntil = undefined;
+      admin.otpCodeHash = undefined;
+      admin.otpExpires = undefined;
+      admin.temp2FAToken = undefined;
+      await admin.save();
+      console.log('✅ Updated admin user:', admin.email);
+    }
   }
 
-  await admin.save();
-  console.log('✅ Admin credentials updated successfully!');
-  console.log('📧 Email:', admin.email);
-  console.log('🔑 Password set to: Ajit@1234');
-  console.log('🛡️ Two-Factor Enabled:', admin.twoFactorEnabled);
+  // Verify comparePassword
+  const verifiedAdmin = await Admin.findOne({ email: 'ajitkumar2956654@gmail.com' }).select('+passwordHash');
+  const isMatch = await verifiedAdmin.comparePassword('Ajit9792625929');
+  console.log('🔑 Password verification test result:', isMatch ? 'PASSED (MATCH)' : 'FAILED');
 
   await mongoose.connection.close();
-  process.exit(0);
+  process.exit(isMatch ? 0 : 1);
 }
 
 updateAdmin().catch((err) => {
