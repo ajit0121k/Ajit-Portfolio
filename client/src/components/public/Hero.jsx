@@ -100,17 +100,17 @@ export default function Hero({ profile, settings }) {
                   href={profile.currentlyBuildingUrl}
                   target={profile.currentlyBuildingUrl.startsWith('http') ? '_blank' : '_self'}
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#c66a3d]/10 hover:bg-[#c66a3d]/20 border border-[#c66a3d]/25 text-[#c66a3d] dark:text-[#e48358] text-[11px] font-bold transition-all group"
+                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-pill border border-[#c66a3d]/35 text-[#c66a3d] dark:text-[#e48358] text-[11px] font-bold transition-all hover:scale-[1.02] shadow-sm group"
                 >
                   <Sparkles className="w-3.5 h-3.5 animate-spin text-[#c66a3d]" />
-                  <span className="uppercase tracking-wider text-[10px] text-slate-500 dark:text-slate-400">Currently Building:</span>
+                  <span className="uppercase tracking-wider text-[10px] text-[#6b675d] dark:text-[#a8a397]">Currently Building:</span>
                   <span className="underline underline-offset-2">{profile.currentlyBuilding}</span>
                   <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 text-[#c66a3d]" />
                 </a>
               ) : (
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#c66a3d]/10 border border-[#c66a3d]/25 text-[#c66a3d] dark:text-[#e48358] text-[11px] font-bold shadow-xs">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-pill border border-[#c66a3d]/35 text-[#c66a3d] dark:text-[#e48358] text-[11px] font-bold shadow-sm">
                   <Sparkles className="w-3.5 h-3.5 text-[#c66a3d]" />
-                  <span className="uppercase tracking-wider text-[10px] text-slate-500 dark:text-slate-400">Currently Building:</span>
+                  <span className="uppercase tracking-wider text-[10px] text-[#6b675d] dark:text-[#a8a397]">Currently Building:</span>
                   <span>{profile.currentlyBuilding}</span>
                 </div>
               )}
@@ -160,7 +160,7 @@ export default function Hero({ profile, settings }) {
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </a>
 
-            <div className="flex items-center justify-center gap-1.5 p-1 liquid-glass-pill self-start xs:self-auto">
+            <div className="flex items-center justify-center gap-1.5 p-1 liquid-glass-pill self-start xs:self-auto border border-white/60 dark:border-white/10 shadow-xs">
               <a href={profile?.socialLinks?.github || 'https://github.com/ajit0121k'} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full flex items-center justify-center text-[#4a473f] dark:text-[#d3ded4] hover:bg-[#2d3a2e] hover:text-white dark:hover:bg-[#f5f0e8] dark:hover:text-[#1a241d] transition-all" title="GitHub">
                 <Github className="w-4 h-4" />
               </a>
@@ -176,23 +176,25 @@ export default function Hero({ profile, settings }) {
             </div>
           </div>
 
-          {/* Career Stats */}
-          <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-5 border-t border-[#dfd6c7] dark:border-white/10 max-w-sm">
-            <div>
-              <p className="text-2xl sm:text-4xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
-                {years}+
-              </p>
-              <p className="text-[11px] text-[#6b675d] dark:text-[#a8a397] font-medium mt-0.5">
-                Years Full-Stack & AI Engineering
-              </p>
-            </div>
-            <div>
-              <p className="text-2xl sm:text-4xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
-                4+
-              </p>
-              <p className="text-[11px] text-[#6b675d] dark:text-[#a8a397] font-medium mt-0.5">
-                Production MERN & Cloud Apps
-              </p>
+          {/* Career Stats in Liquid Glass Card */}
+          <div className="liquid-glass-card relative glossy-glare-edge p-4 sm:p-5 max-w-sm shadow-md mt-2 border border-white/70 dark:border-white/10">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
+                  {years}+
+                </p>
+                <p className="text-[11px] text-[#6b675d] dark:text-[#a8a397] font-medium mt-0.5">
+                  Years Full-Stack & AI Engineering
+                </p>
+              </div>
+              <div className="border-l border-[#dfd6c7]/80 dark:border-white/10 pl-4">
+                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] tracking-tight">
+                  4+
+                </p>
+                <p className="text-[11px] text-[#6b675d] dark:text-[#a8a397] font-medium mt-0.5">
+                  Production MERN & Cloud Apps
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -209,16 +211,19 @@ export default function Hero({ profile, settings }) {
             {/* Ambient Background Aura */}
             <div className="absolute -inset-4 bg-gradient-to-tr from-[#c66a3d]/20 via-[#49654d]/20 to-transparent rounded-full blur-2xl -z-10 pointer-events-none" />
 
-            {/* Arched Architectural Photo Frame (Seamlessly Masked Arch Window) */}
-            <div className="relative w-[270px] xs:w-[300px] sm:w-[360px] md:w-[400px] h-[390px] xs:h-[440px] sm:h-[490px] md:h-[510px] rounded-t-[11rem] xs:rounded-t-[13rem] sm:rounded-t-[14rem] rounded-b-[2rem] sm:rounded-b-[2.5rem] bg-[#1a221c] border-4 border-[#faf7f2]/90 dark:border-white/15 shadow-2xl overflow-hidden group">
-              {/* Profile Photo - Conforms completely to the arch shape */}
-              <img
-                src={photoUrl}
-                alt={name}
-                className="w-full h-full object-cover object-[center_18%] transition-transform duration-700 group-hover:scale-[1.03]"
-              />
-              {/* Subtle bottom vignette to ground the suit */}
-              <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
+            {/* Frosted Liquid Glass Frame Outer Wrapper */}
+            <div className="relative p-1.5 sm:p-2 rounded-t-[11.2rem] xs:rounded-t-[13.2rem] sm:rounded-t-[14.2rem] rounded-b-[2.2rem] sm:rounded-b-[2.7rem] liquid-glass-container shadow-2xl">
+              {/* Arched Architectural Photo Frame (Seamlessly Masked Arch Window) */}
+              <div className="relative w-[265px] xs:w-[295px] sm:w-[355px] md:w-[395px] h-[385px] xs:h-[435px] sm:h-[485px] md:h-[505px] rounded-t-[11rem] xs:rounded-t-[13rem] sm:rounded-t-[14rem] rounded-b-[2rem] sm:rounded-b-[2.5rem] bg-[#1a221c] border-2 border-white/50 dark:border-white/15 overflow-hidden group">
+                {/* Profile Photo - Conforms completely to the arch shape */}
+                <img
+                  src={photoUrl}
+                  alt={name}
+                  className="w-full h-full object-cover object-[center_18%] transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+                {/* Subtle bottom vignette to ground the suit */}
+                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
+              </div>
             </div>
 
             {/* Circular Stamp Badge (Gracefully anchored to upper outer corner) */}

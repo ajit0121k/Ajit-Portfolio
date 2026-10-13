@@ -78,7 +78,7 @@ export default function ProjectsPage() {
             placeholder="Search projects or stack..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-full liquid-glass border border-white/60 dark:border-white/10 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
+            className="w-full pl-10 pr-4 py-2.5 text-xs rounded-full liquid-glass-input text-[#222723] dark:text-[#f3eee5] placeholder-[#a09a8d] focus:outline-none font-sans"
           />
         </div>
 
@@ -88,10 +88,10 @@ export default function ProjectsPage() {
             <button
               key={tech}
               onClick={() => setSelectedTech(tech)}
-              className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+              className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 selectedTech === tech
-                  ? 'bg-primary-500 text-white shadow-md shadow-primary-500/25'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white liquid-glass hover:bg-white/70 dark:hover:bg-white/10'
+                  ? 'bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f3eee5] dark:text-[#1a241d] shadow-sm'
+                  : 'text-[#5c5950] dark:text-[#c4beb3] hover:text-[#1a241d] dark:hover:text-white liquid-glass-pill'
               }`}
             >
               {tech}
@@ -104,7 +104,7 @@ export default function ProjectsPage() {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-72 rounded-3xl bg-slate-200/50 dark:bg-white/5 animate-pulse" />
+            <div key={i} className="h-72 rounded-3xl bg-[#eae3d5]/50 dark:bg-white/5 animate-pulse" />
           ))}
         </div>
       ) : filteredProjects.length > 0 ? (
@@ -112,7 +112,7 @@ export default function ProjectsPage() {
           {filteredProjects.map((project, idx) => (
             <div
               key={project.id || project._id || idx}
-              className="liquid-glass-card overflow-hidden group flex flex-col justify-between hover:scale-[1.01] transition-all"
+              className="liquid-glass-card relative glossy-glare-edge overflow-hidden group flex flex-col justify-between hover:scale-[1.01] transition-all border border-white/70 dark:border-white/10 hover:shadow-[0_20px_45px_-12px_rgba(68,62,51,0.16)] dark:hover:shadow-[0_20px_45px_-12px_rgba(0,0,0,0.7)]"
             >
               <div>
                 <div className="relative h-48 w-full overflow-hidden bg-slate-900/10 dark:bg-black/30">
@@ -123,7 +123,7 @@ export default function ProjectsPage() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-tr from-primary-900/30 to-indigo-900/30 text-primary-400 font-bold text-base">
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-tr from-[#3d4b3e]/20 to-[#c66a3d]/20 text-[#c66a3d] font-bold text-base">
                       {project.title}
                     </div>
                   )}
@@ -134,7 +134,7 @@ export default function ProjectsPage() {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="p-2 rounded-xl bg-black/60 hover:bg-black text-white backdrop-blur-md transition-all shadow-md"
+                        className="p-2 rounded-xl liquid-glass-pill bg-black/60 hover:bg-black text-white backdrop-blur-md transition-all shadow-md"
                         title="GitHub Repo"
                       >
                         <Github className="w-4 h-4" />
@@ -145,7 +145,7 @@ export default function ProjectsPage() {
                         href={project.liveUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="p-2 rounded-xl bg-primary-600 hover:bg-primary-500 text-white backdrop-blur-md transition-all shadow-md"
+                        className="p-2 rounded-xl liquid-glass-amber-btn text-white transition-all shadow-md"
                         title="Live Demo"
                       >
                         <ExternalLink className="w-4 h-4" />
@@ -155,11 +155,11 @@ export default function ProjectsPage() {
                 </div>
 
                 <div className="p-6">
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1.5 group-hover:text-primary-500 transition-colors">
+                  <h3 className="text-lg font-bold text-[#222723] dark:text-[#f3eee5] mb-1.5 group-hover:text-[#c66a3d] transition-colors">
                     <Link to={`/projects/${project.slug}`}>{project.title}</Link>
                   </h3>
 
-                  <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed mb-4">
+                  <p className="text-xs text-[#5c5950] dark:text-[#b8b3a8] line-clamp-2 leading-relaxed mb-4 font-sans">
                     {project.shortDescription || project.problem || 'In-depth engineering breakdown.'}
                   </p>
 
@@ -168,7 +168,7 @@ export default function ProjectsPage() {
                       {project.technologies.map((t, tIdx) => (
                         <span
                           key={tIdx}
-                          className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 border border-slate-200/50 dark:border-white/5"
+                          className="text-[10px] font-semibold px-2.5 py-1 rounded-full liquid-glass-pill text-[#4a473f] dark:text-[#c4beb3] border border-white/60 dark:border-white/10"
                         >
                           {t}
                         </span>

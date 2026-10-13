@@ -42,16 +42,16 @@ export default function ResumePage() {
         </Link>
       </div>
 
-      <div className="liquid-glass-card p-8 sm:p-12 text-center relative overflow-hidden">
-        <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-primary-500 to-indigo-600 flex items-center justify-center text-white mx-auto mb-6 shadow-xl shadow-primary-500/25">
+      <div className="liquid-glass-container relative glossy-glare-edge p-8 sm:p-12 text-center rounded-3xl shadow-2xl border border-white/80 dark:border-white/10 overflow-hidden">
+        <div className="w-16 h-16 rounded-3xl liquid-glass-pill flex items-center justify-center text-[#c66a3d] mx-auto mb-6 shadow-md border border-white/80 dark:border-white/15">
           <FileDown className="w-8 h-8" />
         </div>
 
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-3">
-          Curriculum Vitae & <span className="italic font-light text-primary-500">Resume</span>
+        <h1 className="text-2xl sm:text-4xl font-serif font-black text-[#222723] dark:text-[#f3eee5] tracking-tight mb-3">
+          Curriculum Vitae & <span className="font-serif italic font-normal text-[#c66a3d] dark:text-[#e48358]">Resume</span>
         </h1>
 
-        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto mb-8 leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#5c5950] dark:text-[#b8b3a8] max-w-md mx-auto mb-8 leading-relaxed font-sans">
           Complete verified overview of professional experience, core technologies, software architecture accomplishments, and education.
         </p>
 
@@ -65,9 +65,9 @@ export default function ResumePage() {
                 download={resumeName}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-primary-600 via-indigo-600 to-primary-600 hover:bg-pos-100 text-white font-bold text-xs shadow-xl shadow-primary-600/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="w-full py-3.5 rounded-full liquid-glass-amber-btn text-white font-bold text-xs tracking-wider uppercase shadow-xl flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
-                <FileDown className="w-4 h-4" />
+                <FileDown className="w-4 h-4 text-white" />
                 <span>Download Official Resume (PDF)</span>
               </a>
 
@@ -75,9 +75,9 @@ export default function ResumePage() {
                 href={resumeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3 rounded-2xl liquid-glass-pill text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center justify-center gap-2 hover:scale-[1.02] transition-all cursor-pointer"
+                className="w-full py-3 rounded-full liquid-glass-pill text-xs font-semibold text-[#222723] dark:text-[#f3eee5] flex items-center justify-center gap-2 hover:scale-[1.02] transition-all cursor-pointer border border-white/60 dark:border-white/10 shadow-xs"
               >
-                <ExternalLink className="w-4 h-4 text-primary-500" />
+                <ExternalLink className="w-4 h-4 text-[#c66a3d]" />
                 <span>Open in New Browser Tab</span>
               </a>
             </div>

@@ -50,10 +50,10 @@ export default function AboutSection({ profile }) {
           <div className="flex flex-wrap items-center gap-3 pt-1">
             <button
               onClick={() => setActiveStackMode('fullstack')}
-              className={`px-5 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 border ${
+              className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-2 border ${
                 activeStackMode === 'fullstack'
-                  ? 'bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f3eee5] dark:text-[#1a241d] shadow-md border-transparent'
-                  : 'bg-[#faf7f2]/80 dark:bg-white/5 border-[#dfd6c7] dark:border-white/10 text-[#4a473f] dark:text-[#c4beb3]'
+                  ? 'bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f3eee5] dark:text-[#1a241d] shadow-md border-transparent scale-105'
+                  : 'liquid-glass-pill border-white/60 dark:border-white/10 text-[#4a473f] dark:text-[#c4beb3]'
               }`}
             >
               <Layers className="w-4 h-4" />
@@ -62,10 +62,10 @@ export default function AboutSection({ profile }) {
 
             <button
               onClick={() => setActiveStackMode('cloud')}
-              className={`px-5 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 border ${
+              className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-2 border ${
                 activeStackMode === 'cloud'
-                  ? 'bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f3eee5] dark:text-[#1a241d] shadow-md border-transparent'
-                  : 'bg-[#faf7f2]/80 dark:bg-white/5 border-[#dfd6c7] dark:border-white/10 text-[#4a473f] dark:text-[#c4beb3]'
+                  ? 'bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f3eee5] dark:text-[#1a241d] shadow-md border-transparent scale-105'
+                  : 'liquid-glass-pill border-white/60 dark:border-white/10 text-[#4a473f] dark:text-[#c4beb3]'
               }`}
             >
               <Cpu className="w-4 h-4" />
@@ -80,7 +80,7 @@ export default function AboutSection({ profile }) {
               download={resumeFileName}
               target="_blank"
               rel="noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-xs font-bold tracking-wider text-white uppercase rounded-full bg-[#c66a3d] hover:bg-[#b2572b] shadow-[0_10px_25px_-5px_rgba(198,106,61,0.4)] hover:shadow-[0_15px_35px_-5px_rgba(198,106,61,0.6)] border border-white/20 transition-all duration-300 active:scale-95 group cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-xs font-bold tracking-wider text-white uppercase rounded-full liquid-glass-amber-btn transition-all duration-300 active:scale-95 group cursor-pointer"
               title="Download Official Resume PDF"
             >
               <FileDown className="w-4 h-4 text-white group-hover:translate-y-0.5 transition-transform" />
@@ -101,7 +101,7 @@ export default function AboutSection({ profile }) {
 
         {/* Right Showcase Card */}
         <div className="lg:col-span-6 relative">
-          <div className="liquid-glass-container p-6 sm:p-8 relative min-h-[380px] flex flex-col justify-center overflow-hidden">
+          <div className="liquid-glass-container relative glossy-glare-edge p-6 sm:p-8 min-h-[380px] flex flex-col justify-center overflow-hidden shadow-2xl border border-white/70 dark:border-white/10">
 
             {/* Profile Bio or Technical Overview */}
             <div className="space-y-4 relative z-10">
@@ -123,12 +123,12 @@ export default function AboutSection({ profile }) {
               {/* Meta details */}
               <div className="flex flex-wrap items-center gap-3 pt-3 text-xs text-slate-500">
                 {location && (
-                  <span className="liquid-glass-pill flex items-center gap-1.5 text-[11px]">
+                  <span className="liquid-glass-pill px-3.5 py-1.5 flex items-center gap-1.5 text-[11px] font-semibold border border-white/60 dark:border-white/10">
                     <MapPin className="w-3.5 h-3.5 text-primary-500" />
                     <span>{location}</span>
                   </span>
                 )}
-                <span className="liquid-glass-pill flex items-center gap-1.5 text-[11px]">
+                <span className="liquid-glass-pill px-3.5 py-1.5 flex items-center gap-1.5 text-[11px] font-semibold border border-white/60 dark:border-white/10">
                   <Briefcase className="w-3.5 h-3.5 text-indigo-500" />
                   <span>{years}+ Years Experience</span>
                 </span>

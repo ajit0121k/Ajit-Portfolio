@@ -35,7 +35,7 @@ export default function ExperienceTimeline() {
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#3d4b3e]/10 text-[#3d4b3e] dark:text-[#a8bba9] text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-glass-pill text-[#3d4b3e] dark:text-[#a8bba9] text-xs font-bold uppercase tracking-wider mb-3 border border-white/60 dark:border-white/10 shadow-xs">
             <Briefcase className="w-3.5 h-3.5 text-[#c66a3d]" />
             <span>Career Path</span>
           </div>
@@ -79,7 +79,7 @@ export default function ExperienceTimeline() {
                     viewport={{ once: true, margin: '-40px' }}
                     transition={{ duration: 0.6, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
                     whileHover={{ y: -5, scale: 1.01 }}
-                    className="liquid-glass-card p-6 md:p-8 transition-shadow border-[#dfd6c7]/80 hover:shadow-[0_20px_45px_-12px_rgba(68,62,51,0.14)] dark:hover:shadow-[0_20px_45px_-12px_rgba(0,0,0,0.7)]"
+                    className="liquid-glass-card relative glossy-glare-edge p-6 md:p-8 transition-all border border-white/70 dark:border-white/10 hover:shadow-[0_20px_45px_-12px_rgba(68,62,51,0.16)] dark:hover:shadow-[0_20px_45px_-12px_rgba(0,0,0,0.7)]"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                       <div>
@@ -108,12 +108,12 @@ export default function ExperienceTimeline() {
 
                       {/* Date & Location Pill */}
                       <div className="flex flex-wrap items-center gap-2 text-xs text-[#6b675d] dark:text-[#a8a397] font-medium font-sans">
-                        <div className="flex items-center gap-1.5 liquid-glass-pill px-3 py-1 text-[11px]">
+                        <div className="flex items-center gap-1.5 liquid-glass-pill px-3 py-1 text-[11px] border border-white/60 dark:border-white/10 shadow-xs">
                           <Calendar className="w-3.5 h-3.5 text-[#c66a3d]" />
                           <span>{startDate} &mdash; {endDate}</span>
                         </div>
                         {exp.location && (
-                          <div className="flex items-center gap-1.5 liquid-glass-pill px-3 py-1 text-[11px]">
+                          <div className="flex items-center gap-1.5 liquid-glass-pill px-3 py-1 text-[11px] border border-white/60 dark:border-white/10 shadow-xs">
                             <MapPin className="w-3.5 h-3.5 text-[#3d4b3e] dark:text-[#a8bba9]" />
                             <span>{exp.location}</span>
                           </div>
@@ -135,7 +135,7 @@ export default function ExperienceTimeline() {
                         {exp.technologies.map((t, tIdx) => (
                           <span
                             key={tIdx}
-                            className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 border border-slate-200/50 dark:border-white/5"
+                            className="text-[11px] font-semibold px-2.5 py-1 rounded-full liquid-glass-pill text-[#4a473f] dark:text-[#c4beb3] border border-white/60 dark:border-white/10 shadow-xs"
                           >
                             {t}
                           </span>

@@ -109,7 +109,7 @@ export default function ContactSection({ profile, settings }) {
     <section id="contact" className="scroll-mt-24 py-20 px-4 relative">
       <div className="max-w-5xl mx-auto">
         <div className="mb-12 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#3d4b3e]/10 text-[#3d4b3e] dark:text-[#a8bba9] text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-glass-pill text-[#3d4b3e] dark:text-[#a8bba9] text-xs font-bold uppercase tracking-wider mb-3 border border-white/60 dark:border-white/10 shadow-xs">
             <Mail className="w-3.5 h-3.5 text-[#c66a3d]" />
             <span>Get In Touch</span>
           </div>
@@ -127,9 +127,9 @@ export default function ContactSection({ profile, settings }) {
               {profile?.email && (
                 <a
                   href={`mailto:${profile.email}`}
-                  className="flex items-center gap-3 text-[#3d4b3e] dark:text-[#d3ded4] hover:text-[#c66a3d] transition-colors p-3 rounded-2xl bg-white/70 dark:bg-white/5 border border-[#dfd6c7] dark:border-white/10"
+                  className="flex items-center gap-3 text-[#3d4b3e] dark:text-[#d3ded4] hover:text-[#c66a3d] transition-all p-3.5 rounded-2xl liquid-glass-card hover:scale-[1.02] border border-white/70 dark:border-white/10 shadow-xs"
                 >
-                  <div className="p-2 rounded-xl bg-[#c66a3d]/10 text-[#c66a3d]">
+                  <div className="p-2 rounded-xl liquid-glass-pill text-[#c66a3d] dark:text-[#e48358] border border-white/60 dark:border-white/10">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div className="truncate">
@@ -140,8 +140,8 @@ export default function ContactSection({ profile, settings }) {
               )}
 
               {profile?.location && (
-                <div className="flex items-center gap-3 text-[#3d4b3e] dark:text-[#d3ded4] p-3 rounded-2xl bg-white/70 dark:bg-white/5 border border-[#dfd6c7] dark:border-white/10">
-                  <div className="p-2 rounded-xl bg-[#3d4b3e]/10 text-[#3d4b3e] dark:text-[#a8bba9]">
+                <div className="flex items-center gap-3 text-[#3d4b3e] dark:text-[#d3ded4] p-3.5 rounded-2xl liquid-glass-card border border-white/70 dark:border-white/10 shadow-xs">
+                  <div className="p-2 rounded-xl liquid-glass-pill text-[#3d4b3e] dark:text-[#a8bba9] border border-white/60 dark:border-white/10">
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
@@ -152,8 +152,8 @@ export default function ContactSection({ profile, settings }) {
               )}
 
               {profile?.phone && (
-                <div className="flex items-center gap-3 text-[#3d4b3e] dark:text-[#d3ded4] p-3 rounded-2xl bg-white/70 dark:bg-white/5 border border-[#dfd6c7] dark:border-white/10">
-                  <div className="p-2 rounded-xl bg-[#c66a3d]/10 text-[#c66a3d]">
+                <div className="flex items-center gap-3 text-[#3d4b3e] dark:text-[#d3ded4] p-3.5 rounded-2xl liquid-glass-card border border-white/70 dark:border-white/10 shadow-xs">
+                  <div className="p-2 rounded-xl liquid-glass-pill text-[#c66a3d] dark:text-[#e48358] border border-white/60 dark:border-white/10">
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
@@ -164,11 +164,11 @@ export default function ContactSection({ profile, settings }) {
               )}
           </div>
 
-          {/* Contact Form Card - Centered */}
-          <div className="liquid-glass-card p-6 md:p-8 relative overflow-hidden border-[#dfd6c7]/80">
+          {/* Contact Form Card - Centered with Liquid Glass Container */}
+          <div className="liquid-glass-container relative glossy-glare-edge p-6 md:p-8 rounded-3xl shadow-2xl border border-white/80 dark:border-white/10 overflow-hidden">
             {isSuccess ? (
               <div className="py-12 text-center flex flex-col items-center justify-center animate-fade-in">
-                <div className="w-16 h-16 rounded-full bg-[#3d4b3e]/15 text-[#3d4b3e] dark:text-[#a8bba9] flex items-center justify-center mb-4 shadow-lg shadow-[#3d4b3e]/20">
+                <div className="w-16 h-16 rounded-full liquid-glass-card text-[#3d4b3e] dark:text-[#a8bba9] flex items-center justify-center mb-4 shadow-lg border border-white/70">
                   <CheckCircle2 className="w-8 h-8 text-[#c66a3d]" />
                 </div>
                 <h3 className="text-xl font-serif font-bold text-[#222723] dark:text-[#f3eee5] mb-2">
@@ -180,7 +180,7 @@ export default function ContactSection({ profile, settings }) {
                 <button
                   type="button"
                   onClick={() => setIsSuccess(false)}
-                  className="px-5 py-2.5 rounded-full bg-[#faf7f2] dark:bg-white/5 hover:bg-[#eae3d5] dark:hover:bg-white/10 text-xs font-semibold text-[#222723] dark:text-[#f3eee5] transition-all border border-[#dfd6c7]"
+                  className="px-6 py-2.5 rounded-full liquid-glass-pill text-xs font-semibold text-[#222723] dark:text-[#f3eee5] transition-all border border-white/70 dark:border-white/15 cursor-pointer hover:scale-105"
                 >
                   Send Another Message
                 </button>
@@ -210,7 +210,7 @@ export default function ContactSection({ profile, settings }) {
                       placeholder="Jane Doe"
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-black/30 border border-[#dfd6c7] dark:border-white/10 text-xs text-[#222723] dark:text-[#f3eee5] placeholder-[#a09a8d] focus:outline-none focus:ring-2 focus:ring-[#c66a3d]/40 transition-all font-sans"
+                      className="w-full px-4 py-2.5 rounded-2xl liquid-glass-input text-xs text-[#222723] dark:text-[#f3eee5] placeholder-[#a09a8d] focus:outline-none transition-all font-sans"
                     />
                   </div>
 
@@ -225,7 +225,7 @@ export default function ContactSection({ profile, settings }) {
                       placeholder="jane@company.com"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-black/30 border border-[#dfd6c7] dark:border-white/10 text-xs text-[#222723] dark:text-[#f3eee5] placeholder-[#a09a8d] focus:outline-none focus:ring-2 focus:ring-[#c66a3d]/40 transition-all font-sans"
+                      className="w-full px-4 py-2.5 rounded-2xl liquid-glass-input text-xs text-[#222723] dark:text-[#f3eee5] placeholder-[#a09a8d] focus:outline-none transition-all font-sans"
                     />
                   </div>
                 </div>
@@ -240,7 +240,7 @@ export default function ContactSection({ profile, settings }) {
                     placeholder="Project Inquiry / Full-time Opportunity"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-black/30 border border-[#dfd6c7] dark:border-white/10 text-xs text-[#222723] dark:text-[#f3eee5] placeholder-[#a09a8d] focus:outline-none focus:ring-2 focus:ring-[#c66a3d]/40 transition-all font-sans"
+                    className="w-full px-4 py-2.5 rounded-2xl liquid-glass-input text-xs text-[#222723] dark:text-[#f3eee5] placeholder-[#a09a8d] focus:outline-none transition-all font-sans"
                   />
                 </div>
 
@@ -255,14 +255,14 @@ export default function ContactSection({ profile, settings }) {
                     placeholder="Describe your project, timeline, or position requirements..."
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-black/30 border border-[#dfd6c7] dark:border-white/10 text-xs text-[#222723] dark:text-[#f3eee5] placeholder-[#a09a8d] focus:outline-none focus:ring-2 focus:ring-[#c66a3d]/40 transition-all resize-none font-sans"
+                    className="w-full px-4 py-2.5 rounded-2xl liquid-glass-input text-xs text-[#222723] dark:text-[#f3eee5] placeholder-[#a09a8d] focus:outline-none transition-all resize-none font-sans"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 rounded-2xl bg-[#c66a3d] hover:bg-[#b2572b] text-white font-bold text-xs shadow-lg shadow-[#c66a3d]/25 transition-all flex items-center justify-center gap-2 group disabled:opacity-50 tracking-wider uppercase font-sans"
+                  className="w-full py-3.5 rounded-full liquid-glass-amber-btn text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2 group disabled:opacity-50 tracking-wider uppercase font-sans cursor-pointer"
                 >
                   {isSubmitting ? (
                     <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

@@ -36,7 +36,7 @@ export default function EducationSection() {
           {/* Education Column */}
           <div>
             <div className="mb-8">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#3d4b3e]/10 text-[#3d4b3e] dark:text-[#a8bba9] text-xs font-bold uppercase tracking-wider mb-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-glass-pill text-[#3d4b3e] dark:text-[#a8bba9] text-xs font-bold uppercase tracking-wider mb-3 border border-white/60 dark:border-white/10 shadow-xs">
                 <GraduationCap className="w-3.5 h-3.5 text-[#c66a3d]" />
                 <span>Academia</span>
               </div>
@@ -61,7 +61,7 @@ export default function EducationSection() {
                     viewport={{ once: true, margin: '-30px' }}
                     transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     whileHover={{ y: -4, scale: 1.01 }}
-                    className="liquid-glass-card p-6 transition-shadow border-[#dfd6c7]/80 hover:shadow-[0_16px_36px_-10px_rgba(68,62,51,0.12)]"
+                    className="liquid-glass-card relative glossy-glare-edge p-6 transition-all border border-white/70 dark:border-white/10 hover:shadow-[0_20px_45px_-12px_rgba(68,62,51,0.16)] dark:hover:shadow-[0_20px_45px_-12px_rgba(0,0,0,0.7)]"
                   >
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div>
@@ -72,7 +72,7 @@ export default function EducationSection() {
                           {item.institution}
                         </p>
                       </div>
-                      <span className="liquid-glass-pill px-2.5 py-1 text-[10px] font-semibold text-[#6b675d] dark:text-[#a8a397] flex items-center gap-1 flex-shrink-0">
+                      <span className="liquid-glass-pill px-2.5 py-1 text-[10px] font-semibold text-[#6b675d] dark:text-[#a8a397] flex items-center gap-1 flex-shrink-0 border border-white/60 dark:border-white/10 shadow-xs">
                         <Calendar className="w-3 h-3 text-[#c66a3d]" />
                         <span>{item.startYear} &mdash; {item.endYear || 'Present'}</span>
                       </span>
@@ -104,7 +104,7 @@ export default function EducationSection() {
           {/* Certifications Column */}
           <div>
             <div className="mb-8">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#3d4b3e]/10 text-[#3d4b3e] dark:text-[#a8bba9] text-xs font-bold uppercase tracking-wider mb-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-glass-pill text-[#3d4b3e] dark:text-[#a8bba9] text-xs font-bold uppercase tracking-wider mb-3 border border-white/60 dark:border-white/10 shadow-xs">
                 <Award className="w-3.5 h-3.5 text-[#c66a3d]" />
                 <span>Credentials</span>
               </div>
@@ -116,7 +116,7 @@ export default function EducationSection() {
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2].map((i) => (
-                  <div key={i} className="h-32 rounded-3xl bg-slate-200/50 dark:bg-white/5 animate-pulse" />
+                  <div key={i} className="h-32 rounded-3xl bg-[#eae3d5]/50 dark:bg-white/5 animate-pulse" />
                 ))}
               </div>
             ) : certifications.length > 0 ? (
@@ -129,14 +129,14 @@ export default function EducationSection() {
                     viewport={{ once: true, margin: '-30px' }}
                     transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     whileHover={{ y: -4, scale: 1.01 }}
-                    className="liquid-glass-card p-6 transition-shadow hover:shadow-[0_16px_36px_-10px_rgba(68,62,51,0.12)]"
+                    className="liquid-glass-card relative glossy-glare-edge p-6 transition-all border border-white/70 dark:border-white/10 hover:shadow-[0_20px_45px_-12px_rgba(68,62,51,0.16)] dark:hover:shadow-[0_20px_45px_-12px_rgba(0,0,0,0.7)]"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                        <h3 className="text-base font-bold text-[#222723] dark:text-[#f3eee5]">
                           {cert.name}
                         </h3>
-                        <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 mt-0.5">
+                        <p className="text-xs font-semibold text-[#c66a3d] dark:text-[#e48358] mt-0.5">
                           {cert.issuingOrganization}
                         </p>
                       </div>
@@ -146,7 +146,7 @@ export default function EducationSection() {
                           href={cert.credentialUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="p-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-indigo-500 hover:text-white text-slate-600 dark:text-slate-300 transition-all shadow-xs"
+                          className="p-2 rounded-xl liquid-glass-pill hover:bg-white dark:hover:bg-white/15 text-[#5c5950] dark:text-[#c4beb3] transition-all border border-white/60 dark:border-white/10 shadow-xs"
                           title="Verify Credential"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />

@@ -105,7 +105,7 @@ export default function SkillsSection() {
       </div>
 
       {/* Category Filter Tabs */}
-      <div className="flex flex-wrap items-center gap-2 mb-8">
+      <div className="flex flex-wrap items-center gap-1.5 mb-8 p-1.5 rounded-full liquid-glass-pill shadow-xs border border-white/60 dark:border-white/10 w-fit">
         {categories.map((cat) => {
           const isActive = activeCategory === cat;
           return (
@@ -115,7 +115,7 @@ export default function SkillsSection() {
               className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
                 isActive
                   ? 'bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f3eee5] dark:text-[#1a241d] shadow-md scale-105'
-                  : 'liquid-glass-pill text-[#5c5950] dark:text-[#c4beb3] hover:text-[#1a241d] dark:hover:text-white'
+                  : 'text-[#5c5950] dark:text-[#c4beb3] hover:text-[#1a241d] dark:hover:text-white hover:bg-white/60 dark:hover:bg-white/10'
               }`}
             >
               {cat}
@@ -146,7 +146,7 @@ export default function SkillsSection() {
                 viewport={{ once: true, margin: '-30px' }}
                 transition={{ duration: 0.45, delay: (idx % 6) * 0.06, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -6, scale: 1.025 }}
-                className="liquid-glass-card p-6 flex flex-col justify-between relative overflow-hidden group transition-shadow hover:shadow-[0_20px_40px_-10px_rgba(68,62,51,0.12)] dark:hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.6)]"
+                className="liquid-glass-card relative glossy-glare-edge p-6 flex flex-col justify-between overflow-hidden group transition-all border border-white/70 dark:border-white/10 hover:shadow-[0_20px_45px_-10px_rgba(68,62,51,0.16)] dark:hover:shadow-[0_20px_45px_-10px_rgba(0,0,0,0.7)]"
               >
                 {/* Background Category Watermark */}
                 <div className="absolute right-3 -bottom-2 pointer-events-none select-none opacity-[0.05] dark:opacity-[0.03] font-black text-6xl tracking-widest text-[#2d3a2e] dark:text-white uppercase font-mono">
@@ -155,7 +155,7 @@ export default function SkillsSection() {
 
                 {/* Top Row: Icon + Category Badge */}
                 <div className="flex items-center justify-between gap-3 mb-4 relative z-10">
-                  <div className="w-11 h-11 rounded-2xl bg-white dark:bg-white/5 border border-[#dfd6c7] dark:border-white/10 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                  <div className="w-11 h-11 rounded-2xl liquid-glass-pill flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform border border-white/80 dark:border-white/10">
                     <Icon className={`w-5 h-5 ${colorClass.split(' ')[0]}`} />
                   </div>
 
@@ -180,7 +180,7 @@ export default function SkillsSection() {
                     <span>Proficiency</span>
                     <span className="text-[#c66a3d] font-mono">{proficiency}%</span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-[#dfd6c7]/70 dark:bg-white/10 overflow-hidden">
+                  <div className="w-full h-2.5 rounded-full bg-black/5 dark:bg-black/40 p-0.5 border border-white/40 dark:border-white/5 shadow-inner overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       whileInView={{ width: `${proficiency}%` }}

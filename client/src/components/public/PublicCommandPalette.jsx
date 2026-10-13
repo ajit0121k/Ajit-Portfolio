@@ -165,10 +165,10 @@ export default function PublicCommandPalette({ isOpen, onClose }) {
       }}
       className="fixed inset-0 z-[100] flex items-start justify-center pt-20 sm:pt-28 p-4 bg-slate-950/75 backdrop-blur-md animate-fade-in"
     >
-      <div className="w-full max-w-xl specular-glass-container rounded-3xl shadow-2xl overflow-hidden animate-slide-down border border-white/80 dark:border-white/10 bg-white/95 dark:bg-slate-900/95">
+      <div className="w-full max-w-xl liquid-glass-container relative glossy-glare-edge rounded-3xl shadow-2xl overflow-hidden animate-slide-down border border-white/80 dark:border-white/15">
         {/* Search Header */}
-        <div className="p-4 border-b border-slate-200/80 dark:border-white/10 flex items-center gap-3 bg-white/60 dark:bg-white/5">
-          <Search className="w-5 h-5 text-primary-500 flex-shrink-0" />
+        <div className="p-4 border-b border-black/5 dark:border-white/10 flex items-center gap-3 bg-white/40 dark:bg-black/20 backdrop-blur-md">
+          <Search className="w-5 h-5 text-[#c66a3d] flex-shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -178,12 +178,12 @@ export default function PublicCommandPalette({ isOpen, onClose }) {
               setQuery(e.target.value);
               setSelectedIndex(0);
             }}
-            className="flex-1 bg-transparent text-sm font-medium text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none"
+            className="flex-1 bg-transparent text-sm font-medium text-[#222723] dark:text-[#f3eee5] placeholder-[#a09a8d] focus:outline-none font-sans"
           />
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-slate-200/60 dark:hover:bg-white/10 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all"
+            className="p-1.5 rounded-full hover:bg-white/60 dark:hover:bg-white/10 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all cursor-pointer"
             title="Close (Esc)"
           >
             <X className="w-4 h-4" />
@@ -203,10 +203,10 @@ export default function PublicCommandPalette({ isOpen, onClose }) {
                   type="button"
                   onClick={cmd.action}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs font-semibold transition-all group text-left ${
+                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs font-semibold transition-all group text-left cursor-pointer ${
                     isSelected
-                      ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950 shadow-md'
-                      : 'text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5'
+                      ? 'bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f3eee5] dark:text-[#1a241d] shadow-md'
+                      : 'text-[#2c2b29] dark:text-[#f3eee5] hover:bg-white/60 dark:hover:bg-white/10'
                   }`}
                 >
                   <div className="flex items-center gap-3 truncate">

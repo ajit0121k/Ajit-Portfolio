@@ -89,11 +89,11 @@ export default function ProjectsSection() {
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -6, scale: 1.012 }}
-                className="liquid-glass-card p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-shadow group border-[#dfd6c7]/80 hover:shadow-[0_20px_45px_-12px_rgba(68,62,51,0.15)] dark:hover:shadow-[0_20px_45px_-12px_rgba(0,0,0,0.7)]"
+                className="liquid-glass-card relative glossy-glare-edge p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all group border border-white/70 dark:border-white/10 hover:shadow-[0_22px_50px_-12px_rgba(68,62,51,0.18)] dark:hover:shadow-[0_22px_50px_-12px_rgba(0,0,0,0.75)]"
               >
                 {/* Number & Title */}
-                <div className="flex items-center gap-6">
-                  <span className="text-sm sm:text-base font-serif font-bold text-[#c66a3d]">
+                <div className="flex items-center gap-5 sm:gap-6">
+                  <span className="w-9 h-9 rounded-full liquid-glass-pill flex items-center justify-center text-sm font-serif font-bold text-[#c66a3d] border border-white/80 dark:border-white/15 flex-shrink-0 shadow-xs">
                     {numStr}
                   </span>
                   <div>
@@ -125,7 +125,7 @@ export default function ProjectsSection() {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="p-2.5 rounded-full hover:bg-[#eae3d5] dark:hover:bg-white/10 text-[#5c5950] dark:text-[#c4beb3] transition-all"
+                      className="p-2.5 rounded-full liquid-glass-pill hover:bg-white dark:hover:bg-white/10 text-[#5c5950] dark:text-[#c4beb3] transition-all border border-white/60 dark:border-white/10"
                       title="GitHub Repository"
                     >
                       <Github className="w-4 h-4" />
@@ -134,7 +134,7 @@ export default function ProjectsSection() {
 
                   <Link
                     to={`/projects/${project.slug}`}
-                    className="liquid-glass-pill hover:bg-[#2d3a2e] hover:text-[#f5f0e8] dark:hover:bg-[#f3eee5] dark:hover:text-[#1a241d] text-xs font-bold transition-all flex items-center gap-1.5 px-4 py-2"
+                    className="liquid-glass-pill hover:bg-[#2d3a2e] hover:text-[#f5f0e8] dark:hover:bg-[#f3eee5] dark:hover:text-[#1a241d] text-xs font-bold transition-all flex items-center gap-1.5 px-4 py-2 border border-white/60 dark:border-white/10 shadow-xs"
                   >
                     <span>Read Case Study</span>
                     <ArrowRight className="w-3.5 h-3.5" />

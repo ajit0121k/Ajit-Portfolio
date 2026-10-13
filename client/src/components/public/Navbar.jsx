@@ -89,12 +89,12 @@ export default function Navbar({ onOpenCommandPalette }) {
   };
 
   return (
-    <header className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
+    <header className="fixed top-3 sm:top-4 inset-x-0 z-50 flex justify-center px-3 sm:px-4 pointer-events-none">
       <nav
-        className={`pointer-events-auto transition-all duration-300 rounded-full px-3.5 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-6 max-w-5xl w-full ${
+        className={`pointer-events-auto transition-all duration-300 rounded-full flex items-center justify-between gap-2 sm:gap-6 max-w-5xl w-full relative glossy-glare-edge liquid-glass-container ${
           isScrolled
-            ? 'liquid-glass-container shadow-2xl py-1.5 sm:py-2 px-4 sm:px-6'
-            : 'backdrop-blur-xl bg-[#f5f0e8]/85 dark:bg-[#1b251e]/85 border border-[#dfd6c7] dark:border-white/10 shadow-lg'
+            ? 'shadow-2xl py-1.5 sm:py-2 px-3.5 sm:px-6 scale-[0.99]'
+            : 'shadow-xl py-2 sm:py-2.5 px-3.5 sm:px-6'
         }`}
       >
         {/* Brand / Logo */}
@@ -102,7 +102,7 @@ export default function Navbar({ onOpenCommandPalette }) {
           to="/"
           className="flex items-center gap-2 text-sm font-bold tracking-tight text-[#2c2b29] dark:text-[#f3eee5] group min-w-0"
         >
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f5f0e8] dark:text-[#2d3a2e] p-0.5 shadow-md group-hover:scale-105 transition-transform flex items-center justify-center font-serif font-black text-xs flex-shrink-0">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#2d3a2e] text-[#f5f0e8] dark:bg-[#f5f0e8] dark:text-[#2d3a2e] p-0.5 shadow-md group-hover:scale-105 transition-transform flex items-center justify-center font-serif font-black text-xs flex-shrink-0 border border-white/30">
             AK
           </div>
           <span className="font-serif font-bold text-[#2c2b29] dark:text-[#f3eee5] text-xs sm:text-base tracking-tight truncate max-w-[130px] xs:max-w-none">
@@ -111,7 +111,7 @@ export default function Navbar({ onOpenCommandPalette }) {
         </NavLink>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-1 bg-[#eae3d5]/90 dark:bg-black/30 p-1.5 rounded-full border border-[#dcd2c0] dark:border-white/15 backdrop-blur-md shadow-xs">
+        <div className="hidden md:flex items-center gap-1 liquid-glass-pill p-1 shadow-xs border border-white/60 dark:border-white/10">
           {navLinks
             .filter((link) => link.show)
             .map((link, idx) => {
@@ -141,7 +141,7 @@ export default function Navbar({ onOpenCommandPalette }) {
           {/* Search Button (Circular Icon Button) */}
           <button
             onClick={onOpenCommandPalette}
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[#5a574f] dark:text-[#c4beb3] bg-white/80 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border border-[#dfd6c7] dark:border-white/15 shadow-sm transition-all duration-300 active:scale-90 group"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[#5a574f] dark:text-[#c4beb3] liquid-glass-pill hover:bg-white dark:hover:bg-white/15 border border-white/70 dark:border-white/15 shadow-sm transition-all duration-300 active:scale-90 group"
             title="Search projects, skills & pages (Ctrl+K)"
             aria-label="Search"
           >
@@ -154,7 +154,7 @@ export default function Navbar({ onOpenCommandPalette }) {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 sm:p-2 rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 cursor-pointer active:scale-95"
+            className="md:hidden p-1.5 sm:p-2 rounded-full text-slate-700 dark:text-slate-200 hover:bg-white/60 dark:hover:bg-white/10 cursor-pointer active:scale-95"
             aria-label="Open Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -164,20 +164,20 @@ export default function Navbar({ onOpenCommandPalette }) {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="pointer-events-auto fixed inset-x-3 sm:inset-x-4 top-18 sm:top-20 liquid-glass-container rounded-3xl p-5 border border-white/40 dark:border-white/10 shadow-2xl animate-slide-down md:hidden z-50">
+        <div className="pointer-events-auto fixed inset-x-3 sm:inset-x-4 top-18 sm:top-20 liquid-glass-container relative glossy-glare-edge rounded-3xl p-5 border border-white/60 dark:border-white/15 shadow-2xl animate-slide-down md:hidden z-50">
           <div className="flex flex-col gap-2">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenCommandPalette();
               }}
-              className="flex items-center justify-between px-4 py-3 rounded-2xl bg-white/70 dark:bg-white/10 text-xs font-bold text-slate-900 dark:text-white border border-slate-200 dark:border-white/10 mb-2 cursor-pointer active:scale-95 transition-all"
+              className="flex items-center justify-between px-4 py-3 rounded-2xl liquid-glass-pill text-xs font-bold text-slate-900 dark:text-white border border-white/60 dark:border-white/15 mb-2 cursor-pointer active:scale-95 transition-all shadow-xs"
             >
               <span className="flex items-center gap-2">
                 <Search className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>Search Anything...</span>
               </span>
-              <kbd className="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[10px] font-mono font-bold">⌘K</kbd>
+              <kbd className="px-2 py-0.5 rounded bg-black/10 dark:bg-white/10 text-[10px] font-mono font-bold">⌘K</kbd>
             </button>
 
             {navLinks

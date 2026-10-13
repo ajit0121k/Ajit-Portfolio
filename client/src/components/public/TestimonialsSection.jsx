@@ -30,7 +30,7 @@ export default function TestimonialsSection() {
     <section id="testimonials" className="py-20 px-4 relative">
       <div className="max-w-5xl mx-auto">
         <div className="mb-12 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#3d4b3e]/10 text-[#3d4b3e] dark:text-[#a8bba9] text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-glass-pill text-[#3d4b3e] dark:text-[#a8bba9] text-xs font-bold uppercase tracking-wider mb-3 border border-white/60 dark:border-white/10 shadow-xs">
             <MessageSquareQuote className="w-3.5 h-3.5 text-[#c66a3d]" />
             <span>Endorsements</span>
           </div>
@@ -43,7 +43,7 @@ export default function TestimonialsSection() {
           {testimonials.map((t, idx) => (
             <div
               key={t.id || t._id || idx}
-              className="liquid-glass-card p-6 flex flex-col justify-between hover:scale-[1.02] transition-all border-[#dfd6c7]/80"
+              className="liquid-glass-card relative glossy-glare-edge p-6 flex flex-col justify-between hover:scale-[1.02] transition-all border border-white/70 dark:border-white/10 hover:shadow-[0_20px_45px_-12px_rgba(68,62,51,0.16)] dark:hover:shadow-[0_20px_45px_-12px_rgba(0,0,0,0.7)]"
             >
               <div>
                 <Quote className="w-6 h-6 text-[#c66a3d]/60 mb-3" />
@@ -53,7 +53,7 @@ export default function TestimonialsSection() {
               </div>
 
               <div className="flex items-center gap-3 pt-4 border-t border-[#dfd6c7]/60 dark:border-white/10">
-                <div className="w-10 h-10 rounded-full overflow-hidden bg-[#3d4b3e]/15 text-[#3d4b3e] dark:text-[#a8bba9] font-bold text-xs flex items-center justify-center border border-[#3d4b3e]/20 flex-shrink-0">
+                <div className="w-10 h-10 rounded-full overflow-hidden bg-[#3d4b3e]/15 text-[#3d4b3e] dark:text-[#a8bba9] font-bold text-xs flex items-center justify-center border-2 border-white/80 dark:border-white/20 flex-shrink-0 shadow-xs">
                   {t.avatar?.url ? (
                     <img src={resolveAssetUrl(t.avatar.url)} alt={t.name} className="w-full h-full object-cover" />
                   ) : (
