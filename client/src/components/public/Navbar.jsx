@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import {
-  Sparkles,
-  Menu,
-  X,
-  FileDown,
-  Search,
-} from 'lucide-react';
+import { Search } from 'lucide-react';
 import ThemeToggle from './ThemeToggle.jsx';
 import api from '../../services/api.js';
 import { usePortfolioSync } from '../../services/syncBus.js';
 
 export default function Navbar({ onOpenCommandPalette }) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const [settings, setSettings] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -66,12 +59,10 @@ export default function Navbar({ onOpenCommandPalette }) {
     { label: 'Skills', href: '#skills', id: 'skills', show: settings?.sectionVisibility?.skills !== false },
     { label: 'Experience', href: '#experience', id: 'experience', show: settings?.sectionVisibility?.experience !== false },
     { label: 'Projects', href: '#projects', id: 'projects', show: settings?.sectionVisibility?.projects !== false },
-
     { label: 'Contact', href: '#contact', id: 'contact', show: settings?.sectionVisibility?.contact !== false },
   ];
 
   const handleNavClick = (link) => {
-    setMobileMenuOpen(false);
     if (link.isRoute) {
       navigate(link.to);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -136,7 +127,7 @@ export default function Navbar({ onOpenCommandPalette }) {
             })}
         </div>
 
-        {/* Right Actions: Search Pill, Day/Night Toggle & Mobile Menu */}
+        {/* Right Actions: Search Pill & Day/Night Toggle */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {/* Search Button (Circular Icon Button) */}
           <button
@@ -150,58 +141,8 @@ export default function Navbar({ onOpenCommandPalette }) {
 
           {/* Day / Night Theme Toggle Switch */}
           <ThemeToggle />
-
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-200 liquid-glass-pill hover:bg-white/80 dark:hover:bg-white/15 border border-white/70 dark:border-white/15 shadow-sm transition-all duration-300 active:scale-95 cursor-pointer shrink-0"
-            aria-label="Open Navigation Menu"
-          >
-            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-          </button>
         </div>
-
-        {/* Mobile Drawer Menu - Positioned cleanly right beneath the navbar */}
-        {mobileMenuOpen && (
-          <div className="pointer-events-auto absolute top-full left-0 right-0 mt-2.5 w-full liquid-glass-container glossy-glare-edge rounded-3xl p-4 sm:p-5 border border-white/60 dark:border-white/15 shadow-2xl animate-slide-down md:hidden z-50">
-            <div className="flex flex-col gap-2">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenCommandPalette();
-                }}
-                className="flex items-center justify-between px-4 py-3 rounded-2xl liquid-glass-pill text-xs font-bold text-slate-900 dark:text-white border border-white/60 dark:border-white/15 mb-1 cursor-pointer active:scale-95 transition-all shadow-xs"
-              >
-                <span className="flex items-center gap-2.5">
-                  <Search className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                  <span>Search Anything...</span>
-                </span>
-                <kbd className="px-2 py-0.5 rounded bg-black/10 dark:bg-white/10 text-[10px] font-mono font-bold">⌘K</kbd>
-              </button>
-
-              {navLinks
-                .filter((l) => l.show)
-                .map((link, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleNavClick(link)}
-                    className="w-full text-left px-4 py-3 rounded-2xl text-xs font-bold text-slate-800 dark:text-slate-200 hover:bg-[#2d3a2e] hover:text-white dark:hover:bg-white dark:hover:text-[#1a241d] transition-all cursor-pointer active:scale-[0.98]"
-                  >
-                    {link.label}
-                  </button>
-                ))}
-            </div>
-          </div>
-        )}
       </nav>
-
-      {/* Backdrop overlay when mobile menu is open */}
-      {mobileMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-xs -z-10 md:hidden pointer-events-auto animate-fade-in"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
     </header>
   );
 }
