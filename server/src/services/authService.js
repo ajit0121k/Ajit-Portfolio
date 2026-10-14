@@ -256,14 +256,40 @@ export const login = async ({ email, password }) => {
 
   // Check if account is locked
   if (admin.isLocked()) {
-    throw ApiError.forbidden('Account is temporarily locked. Try again later.');
+    const remainingSec = admin.getRemainingLockSeconds();
+    const remainingMin = Math.max(1, Math.ceil(remainingSec / 60));
+    const err = ApiError.forbidden(
+      `Account is temporarily locked due to excessive failed attempts. Please try again in ${remainingMin} minute${remainingMin > 1 ? 's' : ''}.`
+    );
+    err.data = {
+      isLocked: true,
+      lockedUntil: admin.lockedUntil,
+      remainingSeconds: remainingSec
+    };
+    throw err;
   }
 
   // Compare password
   const isMatch = await admin.comparePassword(password);
   if (!isMatch) {
     await admin.incrementFailedAttempts();
-    throw ApiError.unauthorized('Invalid credentials');
+    if (admin.isLocked()) {
+      const remainingSec = admin.getRemainingLockSeconds();
+      const remainingMin = Math.max(1, Math.ceil(remainingSec / 60));
+      const err = ApiError.forbidden(
+        `Account locked for ${remainingMin} minute${remainingMin > 1 ? 's' : ''} after 5 failed attempts.`
+      );
+      err.data = {
+        isLocked: true,
+        lockedUntil: admin.lockedUntil,
+        remainingSeconds: remainingSec
+      };
+      throw err;
+    }
+    const remainingAttempts = Math.max(0, 5 - admin.failedLoginAttempts);
+    throw ApiError.unauthorized(
+      `Invalid credentials. ${remainingAttempts} attempt${remainingAttempts === 1 ? '' : 's'} remaining before 10-minute lockout.`
+    );
   }
 
   // If Two-Factor is disabled, log in directly

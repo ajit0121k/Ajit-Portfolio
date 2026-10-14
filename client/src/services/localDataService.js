@@ -128,7 +128,56 @@ export function handleLocalRequest(method, url, data) {
 
   // 1. AUTH
   if (resource === "auth") {
+    const LOCKOUT_KEY = "portfolio_cms_auth_lockout";
+    const getLockoutState = () => {
+      try {
+        const raw = localStorage.getItem(LOCKOUT_KEY);
+        return raw ? JSON.parse(raw) : { attempts: 0, lockedUntil: null };
+      } catch (e) {
+        return { attempts: 0, lockedUntil: null };
+      }
+    };
+    const setLockoutState = (st) => {
+      try {
+        localStorage.setItem(LOCKOUT_KEY, JSON.stringify(st));
+      } catch (e) {}
+    };
+
+    if (subOrId === "lockout-status" && upperMethod === "GET") {
+      const lockout = getLockoutState();
+      const now = Date.now();
+      const isLocked = !!(lockout.lockedUntil && lockout.lockedUntil > now);
+      const remainingSeconds = isLocked ? Math.ceil((lockout.lockedUntil - now) / 1000) : 0;
+      return {
+        success: true,
+        data: {
+          isLocked,
+          lockedUntil: lockout.lockedUntil,
+          remainingSeconds,
+          attempts: lockout.attempts || 0
+        }
+      };
+    }
+
     if (subOrId === "login" && upperMethod === "POST") {
+      const lockout = getLockoutState();
+      const now = Date.now();
+
+      // Check if locked
+      if (lockout.lockedUntil && lockout.lockedUntil > now) {
+        const remainingSec = Math.ceil((lockout.lockedUntil - now) / 1000);
+        const remainingMin = Math.max(1, Math.ceil(remainingSec / 60));
+        return {
+          __errorStatus: 403,
+          message: `Account is temporarily locked. Please try again in ${remainingMin} minute${remainingMin > 1 ? 's' : ''}.`,
+          data: {
+            isLocked: true,
+            lockedUntil: lockout.lockedUntil,
+            remainingSeconds: remainingSec
+          }
+        };
+      }
+
       const email = (body?.email || "").trim().toLowerCase();
       const pass = (body?.password || "").trim();
       const isAuth =
@@ -136,6 +185,9 @@ export function handleLocalRequest(method, url, data) {
         (pass === "Ajit9792625929" || pass === "Ajit@1234");
 
       if (isAuth) {
+        // Reset lockout on successful login
+        setLockoutState({ attempts: 0, lockedUntil: null });
+
         const token = "local_auth_jwt_" + Date.now();
         const adminData = {
           id: "admin_master_primary",
@@ -159,9 +211,38 @@ export function handleLocalRequest(method, url, data) {
           }
         };
       }
+
+      // Failed attempt
+      const newAttempts = (lockout.attempts || 0) + 1;
+      if (newAttempts >= 5) {
+        // Progressive backoff: 5 attempts = 10 min, then 20m, 40m, max 60m (1 hr)
+        const exponent = newAttempts - 5;
+        const multiplier = Math.pow(2, exponent);
+        const lockMinutes = Math.min(10 * multiplier, 60);
+        const newLockedUntil = now + lockMinutes * 60 * 1000;
+        const remainingSec = lockMinutes * 60;
+        setLockoutState({ attempts: newAttempts, lockedUntil: newLockedUntil });
+
+        return {
+          __errorStatus: 403,
+          message: `Account has been locked for ${lockMinutes} minutes after 5 failed attempts.`,
+          data: {
+            isLocked: true,
+            lockedUntil: newLockedUntil,
+            remainingSeconds: remainingSec
+          }
+        };
+      }
+
+      setLockoutState({ attempts: newAttempts, lockedUntil: null });
+      const remainingAttempts = 5 - newAttempts;
       return {
         __errorStatus: 401,
-        message: "Invalid Email ID or Password. Please try again."
+        message: `Invalid Email ID or Password. ${remainingAttempts} attempt${remainingAttempts === 1 ? '' : 's'} remaining before 10-minute lockout.`,
+        data: {
+          attempts: newAttempts,
+          remainingAttempts
+        }
       };
     }
 

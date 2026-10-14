@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User, Lock, Eye, EyeOff, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { User, Lock, Eye, EyeOff, ArrowLeft, ShieldCheck, ShieldAlert, Clock, AlertTriangle } from 'lucide-react';
 import useAuthStore from '../../store/authStore.js';
 import toast from 'react-hot-toast';
 
@@ -19,8 +19,74 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  // Lockout states
+  const [lockoutUntil, setLockoutUntil] = useState(null);
+  const [remainingSeconds, setRemainingSeconds] = useState(0);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+
+  // Check initial lockout state from localStorage on mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('portfolio_cms_auth_lockout');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const now = Date.now();
+        if (parsed.lockedUntil && parsed.lockedUntil > now) {
+          const diff = Math.ceil((parsed.lockedUntil - now) / 1000);
+          setLockoutUntil(parsed.lockedUntil);
+          setRemainingSeconds(diff);
+          setFailedAttempts(parsed.attempts || 5);
+        } else if (parsed.attempts) {
+          setFailedAttempts(parsed.attempts);
+        }
+      }
+    } catch (e) {}
+  }, []);
+
+  // Live countdown timer effect (ticks every second)
+  useEffect(() => {
+    if (!lockoutUntil) return;
+
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const diff = Math.ceil((lockoutUntil - now) / 1000);
+
+      if (diff <= 0) {
+        setRemainingSeconds(0);
+        setLockoutUntil(null);
+        toast.success('Lockout expired. You can try logging in now.');
+        clearInterval(interval);
+      } else {
+        setRemainingSeconds(diff);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [lockoutUntil]);
+
+  // Format seconds to MM:SS or HH:MM:SS
+  const formatTime = (secs) => {
+    const totalSecs = Math.max(0, secs);
+    const m = Math.floor(totalSecs / 60);
+    const s = totalSecs % 60;
+    const h = Math.floor(m / 60);
+
+    if (h > 0) {
+      const remM = m % 60;
+      return `${h}:${String(remM).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  };
+
+  const isLocked = remainingSeconds > 0;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isLocked) {
+      toast.error(`Account is locked. Please wait ${formatTime(remainingSeconds)}.`);
+      return;
+    }
 
     const cleanEmail = email.trim().toLowerCase();
     if (!cleanEmail || !password) {
@@ -30,11 +96,36 @@ export default function LoginPage() {
 
     try {
       await login(cleanEmail, password);
+      // Reset attempts on successful login
+      try {
+        localStorage.removeItem('portfolio_cms_auth_lockout');
+      } catch (e) {}
+      setFailedAttempts(0);
+      setLockoutUntil(null);
+      setRemainingSeconds(0);
+
       toast.success('Welcome back, Admin!');
       const destination = location.state?.from?.pathname || '/admin/dashboard';
       navigate(destination, { replace: true });
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Invalid Email ID or Password. Please try again.');
+      const resData = err.response?.data?.data || {};
+      const status = err.response?.status;
+
+      if (resData.isLocked || status === 423 || status === 403) {
+        const lockUntilTime = resData.lockedUntil || (Date.now() + (resData.remainingSeconds || 600) * 1000);
+        const secs = resData.remainingSeconds || Math.ceil((lockUntilTime - Date.now()) / 1000);
+        setLockoutUntil(lockUntilTime);
+        setRemainingSeconds(secs);
+        setFailedAttempts(resData.attempts || 5);
+        toast.error(err.response?.data?.message || 'Account locked due to excessive failed attempts.');
+      } else {
+        if (resData.attempts !== undefined) {
+          setFailedAttempts(resData.attempts);
+        } else {
+          setFailedAttempts((prev) => prev + 1);
+        }
+        toast.error(err.response?.data?.message || 'Invalid Email ID or Password. Please try again.');
+      }
     }
   };
 
@@ -66,7 +157,11 @@ export default function LoginPage() {
         
         {/* Top Avatar Circle Badge with Gradient */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20 w-20 h-20 rounded-full bg-gradient-to-b from-[#28462b] via-[#1c321e] to-[#122214] border-2 border-white/25 shadow-[0_12px_28px_rgba(0,0,0,0.55)] flex items-center justify-center text-white">
-          <User className="w-9 h-9 text-white stroke-[1.5]" />
+          {isLocked ? (
+            <ShieldAlert className="w-9 h-9 text-red-400 stroke-[1.5] animate-pulse" />
+          ) : (
+            <User className="w-9 h-9 text-white stroke-[1.5]" />
+          )}
         </div>
 
         {/* Frosted Glass Card with Gradient Sheen */}
@@ -81,8 +176,42 @@ export default function LoginPage() {
             <input type="text" name="prevent_autofill_user" className="hidden" tabIndex={-1} autoComplete="off" />
             <input type="password" name="prevent_autofill_pwd" className="hidden" tabIndex={-1} autoComplete="off" />
 
+            {/* Lockout Timer Banner (Active after 5 failed attempts) */}
+            {isLocked && (
+              <div className="rounded-2xl p-3.5 bg-gradient-to-b from-red-950/70 to-red-900/50 border border-red-500/40 backdrop-blur-xl shadow-lg flex flex-col items-center text-center space-y-2 animate-fade-in">
+                <div className="flex items-center gap-1.5 text-red-300 font-bold text-xs tracking-wide">
+                  <ShieldAlert className="w-4 h-4 text-red-400" />
+                  <span>Account Temporarily Locked</span>
+                </div>
+                <p className="text-[11px] text-red-200/80 leading-snug">
+                  5 failed login attempts reached. Security cooldown is active.
+                </p>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/50 border border-red-400/40 shadow-inner">
+                  <Clock className="w-3.5 h-3.5 text-red-400 animate-spin" style={{ animationDuration: '6s' }} />
+                  <span className="font-mono text-base font-black tracking-widest text-red-300">
+                    {formatTime(remainingSeconds)}
+                  </span>
+                </div>
+                <span className="text-[10px] text-red-300/60 italic">
+                  Cooldown scales progressively up to 1 hr on repeat locks.
+                </span>
+              </div>
+            )}
+
+            {/* Remaining Attempts Warning (When between 1 and 4 failed attempts) */}
+            {!isLocked && failedAttempts > 0 && failedAttempts < 5 && (
+              <div className="rounded-xl p-2.5 bg-amber-950/40 border border-amber-500/35 flex items-center gap-2 text-amber-200 text-[11px] leading-tight animate-fade-in">
+                <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                <span>
+                  <strong>{5 - failedAttempts} attempt{5 - failedAttempts === 1 ? '' : 's'} remaining</strong> before a 10-minute security lockout.
+                </span>
+              </div>
+            )}
+
             {/* Email ID Field */}
-            <div className="flex items-center rounded-md bg-[#e4e7e4] overflow-hidden shadow-sm border border-black/10 focus-within:ring-2 focus-within:ring-[#2d4c2e]/60 transition-all">
+            <div className={`flex items-center rounded-md bg-[#e4e7e4] overflow-hidden shadow-sm border border-black/10 transition-all ${
+              isLocked ? 'opacity-50 pointer-events-none' : 'focus-within:ring-2 focus-within:ring-[#2d4c2e]/60'
+            }`}>
               <div className="w-11 h-11 flex items-center justify-center bg-black/5 text-slate-700 border-r border-black/10 shrink-0">
                 <User className="w-4 h-4" />
               </div>
@@ -93,15 +222,18 @@ export default function LoginPage() {
                 autoComplete="off"
                 spellCheck="false"
                 required
+                disabled={isLocked}
                 placeholder="Email ID"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-sm font-medium placeholder:text-slate-500 focus:outline-none"
+                className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-sm font-medium placeholder:text-slate-500 focus:outline-none disabled:cursor-not-allowed"
               />
             </div>
 
             {/* Password Field */}
-            <div className="flex items-center rounded-md bg-[#e4e7e4] overflow-hidden shadow-sm border border-black/10 focus-within:ring-2 focus-within:ring-[#2d4c2e]/60 transition-all">
+            <div className={`flex items-center rounded-md bg-[#e4e7e4] overflow-hidden shadow-sm border border-black/10 transition-all ${
+              isLocked ? 'opacity-50 pointer-events-none' : 'focus-within:ring-2 focus-within:ring-[#2d4c2e]/60'
+            }`}>
               <div className="w-11 h-11 flex items-center justify-center bg-black/5 text-slate-700 border-r border-black/10 shrink-0">
                 <Lock className="w-4 h-4" />
               </div>
@@ -111,15 +243,17 @@ export default function LoginPage() {
                 id="admin_password_val"
                 autoComplete="new-password"
                 required
+                disabled={isLocked}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-sm font-medium placeholder:text-slate-500 focus:outline-none"
+                className="w-full px-3 py-2.5 bg-transparent text-slate-900 text-sm font-medium placeholder:text-slate-500 focus:outline-none disabled:cursor-not-allowed"
               />
               <button
                 type="button"
+                disabled={isLocked}
                 onClick={() => setShowPassword(!showPassword)}
-                className="px-2.5 text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+                className="px-2.5 text-slate-600 hover:text-slate-900 transition-colors cursor-pointer disabled:cursor-not-allowed"
                 tabIndex={-1}
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -133,17 +267,26 @@ export default function LoginPage() {
                 Protected Admin Area
               </span>
               <span className="text-white/60 italic text-[10px]">
-                Credentials Required
+                {isLocked ? 'Cooldown Active' : 'Credentials Required'}
               </span>
             </div>
 
-            {/* LOGIN Button with Gradient */}
+            {/* LOGIN Button with Gradient & Lockout State */}
             <button
               type="submit"
-              disabled={isLoading}
-              className="w-full mt-5 py-3 rounded-md bg-gradient-to-r from-[#1b341f] via-[#2a502f] to-[#1c3621] hover:from-[#234428] hover:via-[#35633b] hover:to-[#24472a] text-white text-xs font-black uppercase tracking-[0.25em] shadow-[0_4px_16px_rgba(0,0,0,0.35)] border border-white/15 active:scale-[0.98] disabled:opacity-60 cursor-pointer flex items-center justify-center gap-2 transition-all duration-200"
+              disabled={isLoading || isLocked}
+              className={`w-full mt-5 py-3 rounded-md text-xs font-black uppercase tracking-[0.25em] shadow-[0_4px_16px_rgba(0,0,0,0.35)] border transition-all duration-200 flex items-center justify-center gap-2 ${
+                isLocked
+                  ? 'bg-red-950/60 border-red-500/40 text-red-300/80 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-[#1b341f] via-[#2a502f] to-[#1c3621] hover:from-[#234428] hover:via-[#35633b] hover:to-[#24472a] text-white border-white/15 active:scale-[0.98] cursor-pointer'
+              }`}
             >
-              {isLoading ? (
+              {isLocked ? (
+                <span className="flex items-center gap-1.5">
+                  <Lock className="w-3.5 h-3.5 text-red-400" />
+                  <span>LOCKED ({formatTime(remainingSeconds)})</span>
+                </span>
+              ) : isLoading ? (
                 <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
                 <span>LOGIN</span>

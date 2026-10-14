@@ -112,15 +112,23 @@ adminSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 adminSchema.methods.isLocked = function () {
-  return !!(this.lockedUntil && this.lockedUntil > Date.now());
+  return !!(this.lockedUntil && this.lockedUntil.getTime() > Date.now());
+};
+
+adminSchema.methods.getRemainingLockSeconds = function () {
+  if (!this.lockedUntil || this.lockedUntil.getTime() <= Date.now()) return 0;
+  return Math.ceil((this.lockedUntil.getTime() - Date.now()) / 1000);
 };
 
 adminSchema.methods.incrementFailedAttempts = async function () {
   if (this.isLocked()) return;
-  this.failedLoginAttempts += 1;
-  // Lock after 5 attempts for 30 minutes
+  this.failedLoginAttempts = (this.failedLoginAttempts || 0) + 1;
+  // Lock after 5 attempts: 10 minutes, then 20m, 40m, up to maximum 60 minutes (1 hour)
   if (this.failedLoginAttempts >= 5) {
-    this.lockedUntil = new Date(Date.now() + 30 * 60 * 1000);
+    const exponent = this.failedLoginAttempts - 5;
+    const multiplier = Math.pow(2, exponent);
+    const lockMinutes = Math.min(10 * multiplier, 60);
+    this.lockedUntil = new Date(Date.now() + lockMinutes * 60 * 1000);
   }
   await this.save();
 };
