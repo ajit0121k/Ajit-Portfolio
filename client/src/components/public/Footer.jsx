@@ -18,16 +18,16 @@ export default function Footer({ profile, settings }) {
           <span className="text-[11px] font-medium tracking-tight">Production MERN & AI Architecture</span>
         </div>
 
-        {/* Upper Arrow Long Box */}
-        <div className="w-full md:w-auto flex justify-center md:justify-end">
+        {/* Fully Expanded "Back to Top" Box */}
+        <div className="w-full md:w-auto flex-1 md:flex-initial flex items-center justify-center md:justify-end">
           <button
             type="button"
             onClick={scrollToTop}
-            className="liquid-glass-card relative glossy-glare-edge px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl sm:rounded-full flex items-center justify-center gap-2 border border-white/70 dark:border-white/10 text-xs font-bold text-[#4a473f] dark:text-[#d3ded4] hover:bg-[#2d3a2e] hover:text-[#f5f0e8] dark:hover:bg-[#f3eee5] dark:hover:text-[#1a241d] shadow-md transition-all duration-300 active:scale-95 group hover:scale-[1.02] cursor-pointer"
+            className="w-full md:w-auto liquid-glass-card relative glossy-glare-edge px-6 sm:px-8 py-3 rounded-2xl sm:rounded-full flex items-center justify-center gap-2.5 border border-white/70 dark:border-white/10 text-xs sm:text-sm font-bold text-[#4a473f] dark:text-[#d3ded4] hover:bg-[#2d3a2e] hover:text-[#f5f0e8] dark:hover:bg-[#f3eee5] dark:hover:text-[#1a241d] shadow-md transition-all duration-300 active:scale-[0.98] group hover:scale-[1.01] cursor-pointer select-none"
             title="Scroll back to top"
           >
-            <span className="tracking-tight font-semibold">Back to Top</span>
-            <ArrowUp className="w-3.5 h-3.5 text-[#c66a3d] dark:text-[#e48358] group-hover:-translate-y-0.5 transition-transform" />
+            <span className="tracking-wide font-semibold">Back to Top</span>
+            <ArrowUp className="w-4 h-4 text-[#c66a3d] dark:text-[#e48358] group-hover:-translate-y-1 transition-transform duration-300" />
           </button>
         </div>
       </div>
